@@ -73,6 +73,14 @@
             db-dotum:
               parent: dotum
               name: Database
+            docmost:
+              hide: true
+            docmost-db:
+              hide: true
+            docmost-redis:
+              hide: true
+            filebrowser:
+              hide: true
             prometheus-manejo:
               parent: manejo
               name: Prometheus
