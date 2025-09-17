@@ -1,0 +1,385 @@
+- name: Homelab
+  columns:
+    - size: small
+      widgets:
+      - type: custom-api
+        cache: 1h
+        title: Speedtest
+        title-url: ${SPEEDTEST_URL}
+        url: ${SPEEDTEST_URL}/api/v1/results/latest
+        headers:
+          Authorization: Bearer ${SPEEDTEST_TRACKER_API_TOKEN}
+          Accept: application/json
+        subrequests:
+          stats:
+            url: ${SPEEDTEST_URL}/api/v1/stats
+            headers:
+              Authorization: Bearer ${SPEEDTEST_TRACKER_API_TOKEN}
+              Accept: application/json
+        options:
+          showPercentageDiff: true
+        template: |
+          {{ $showPercentage := .Options.BoolOr "showPercentageDiff" true }}
+
+          {{ $stats := .Subrequest "stats" }}
+          <div class="flex justify-between text-center margin-block-3">
+          <div>
+              {{ $downloadChange := percentChange ($stats.JSON.Float "data.download.avg_bits") (.JSON.Float "data.download_bits")
+              }}
+              {{ if $showPercentage }}
+              <div
+              class="size-small {{ if gt $downloadChange 0.0 }}color-positive{{ else if lt $downloadChange 0.0 }}color-negative{{ else }}color-primary{{ end }}"
+              style="display: inline-flex; align-items: center;">
+              {{ $downloadChange | printf "%+.1f%%" }}
+              {{ if gt $downloadChange 0.0 }}
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
+                  style="height: 1em; margin-left: 0.25em;" class="size-4">
+                  <path fill-rule="evenodd"
+                  d="M9.808 4.057a.75.75 0 0 1 .92-.527l3.116.849a.75.75 0 0 1 .528.915l-.823 3.121a.75.75 0 0 1-1.45-.382l.337-1.281a23.484 23.484 0 0 0-3.609 3.056.75.75 0 0 1-1.07.01L6 8.06l-3.72 3.72a.75.75 0 1 1-1.06-1.061l4.25-4.25a.75.75 0 0 1 1.06 0l1.756 1.755a25.015 25.015 0 0 1 3.508-2.85l-1.46-.398a.75.75 0 0 1-.526-.92Z"
+                  clip-rule="evenodd" />
+              </svg>
+              {{ else if lt $downloadChange 0.0 }}
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
+                  style="height: 1em; margin-left: 0.25em;" class="size-4">
+                  <path fill-rule="evenodd"
+                  d="M1.22 4.22a.75.75 0 0 1 1.06 0L6 7.94l2.761-2.762a.75.75 0 0 1 1.158.12 24.9 24.9 0 0 1 2.718 5.556l.729-1.261a.75.75 0 0 1 1.299.75l-1.591 2.755a.75.75 0 0 1-1.025.275l-2.756-1.591a.75.75 0 1 1 .75-1.3l1.097.634a23.417 23.417 0 0 0-1.984-4.211L6.53 9.53a.75.75 0 0 1-1.06 0L1.22 5.28a.75.75 0 0 1 0-1.06Z"
+                  clip-rule="evenodd" />
+              </svg>
+              {{ end }}
+              </div>
+              {{ end }}
+              <div class="color-highlight size-h3">{{ .JSON.Float "data.download_bits" | mul 0.000001 | printf "%.1f" }}</div>
+              <div class="size-h6">DOWNLOAD</div>
+          </div>
+          <div>
+              {{ $uploadChange := percentChange ($stats.JSON.Float "data.upload.avg_bits") (.JSON.Float "data.upload_bits") }}
+              {{ if $showPercentage }}
+              <div
+              class="size-small {{ if gt $uploadChange 0.0 }}color-positive{{ else if lt $uploadChange 0.0 }}color-negative{{ else }}color-primary{{ end }}"
+              style="display: inline-flex; align-items: center;">
+              {{ $uploadChange | printf "%+.1f%%" }}
+              {{ if gt $uploadChange 0.0 }}
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
+                  style="height: 1em; margin-left: 0.25em;" class="size-4">
+                  <path fill-rule="evenodd"
+                  d="M9.808 4.057a.75.75 0 0 1 .92-.527l3.116.849a.75.75 0 0 1 .528.915l-.823 3.121a.75.75 0 0 1-1.45-.382l.337-1.281a23.484 23.484 0 0 0-3.609 3.056.75.75 0 0 1-1.07.01L6 8.06l-3.72 3.72a.75.75 0 1 1-1.06-1.061l4.25-4.25a.75.75 0 0 1 1.06 0l1.756 1.755a25.015 25.015 0 0 1 3.508-2.85l-1.46-.398a.75.75 0 0 1-.526-.92Z"
+                  clip-rule="evenodd" />
+              </svg>
+              {{ else if lt $uploadChange 0.0 }}
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
+                  style="height: 1em; margin-left: 0.25em;" class="size-4">
+                  <path fill-rule="evenodd"
+                  d="M1.22 4.22a.75.75 0 0 1 1.06 0L6 7.94l2.761-2.762a.75.75 0 0 1 1.158.12 24.9 24.9 0 0 1 2.718 5.556l.729-1.261a.75.75 0 0 1 1.299.75l-1.591 2.755a.75.75 0 0 1-1.025.275l-2.756-1.591a.75.75 0 1 1 .75-1.3l1.097.634a23.417 23.417 0 0 0-1.984-4.211L6.53 9.53a.75.75 0 0 1-1.06 0L1.22 5.28a.75.75 0 0 1 0-1.06Z"
+                  clip-rule="evenodd" />
+              </svg>
+              {{ end }}
+              </div>
+              {{ end }}
+              <div class="color-highlight size-h3">{{ .JSON.Float "data.upload_bits" | mul 0.000001 | printf "%.1f" }}</div>
+              <div class="size-h6">UPLOAD</div>
+          </div>
+          <div>
+              {{ $pingChange := percentChange ($stats.JSON.Float "data.ping.avg") (.JSON.Float "data.ping") }}
+              {{ if $showPercentage }}
+              <div
+              class="size-small {{ if gt $pingChange 0.0 }}color-negative{{ else if lt $pingChange 0.0 }}color-positive{{ else }}color-primary{{ end }}"
+              style="display: inline-flex; align-items: center;">
+              {{ $pingChange | printf "%+.1f%%" }}
+              {{ if lt $pingChange 0.0 }}
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
+                  style="height: 1em; margin-left: 0.25em;" class="size-4">
+                  <path fill-rule="evenodd"
+                  d="M1.22 4.22a.75.75 0 0 1 1.06 0L6 7.94l2.761-2.762a.75.75 0 0 1 1.158.12 24.9 24.9 0 0 1 2.718 5.556l.729-1.261a.75.75 0 0 1 1.299.75l-1.591 2.755a.75.75 0 0 1-1.025.275l-2.756-1.591a.75.75 0 1 1 .75-1.3l1.097.634a23.417 23.417 0 0 0-1.984-4.211L6.53 9.53a.75.75 0 0 1-1.06 0L1.22 5.28a.75.75 0 0 1 0-1.06Z"
+                  clip-rule="evenodd" />
+              </svg>
+              {{ else if gt $pingChange 0.0 }}
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
+                  style="height: 1em; margin-left: 0.25em;" class="size-4">
+                  <path fill-rule="evenodd"
+                  d="M9.808 4.057a.75.75 0 0 1 .92-.527l3.116.849a.75.75 0 0 1 .528.915l-.823 3.121a.75.75 0 0 1-1.45-.382l.337-1.281a23.484 23.484 0 0 0-3.609 3.056.75.75 0 0 1-1.07.01L6 8.06l-3.72 3.72a.75.75 0 1 1-1.06-1.061l4.25-4.25a.75.75 0 0 1 1.06 0l1.756 1.755a25.015 25.015 0 0 1 3.508-2.85l-1.46-.398a.75.75 0 0 1-.526-.92Z"
+                  clip-rule="evenodd" />
+              </svg>
+              {{ end }}
+              </div>
+              {{ end }}
+              <div class="color-highlight size-h3">{{ .JSON.Float "data.ping" | printf "%.0f ms" }}</div>
+              <div class="size-h6">PING</div>
+          </div>
+          </div>
+      
+      - type: custom-api
+        title: Tailscale Devices
+        title-url: https://login.tailscale.com/admin/machines
+        url: https://api.tailscale.com/api/v2/tailnet/-/devices
+        headers:
+          Authorization: Bearer ${TAILSCALE_API_KEY}
+        cache: 10m
+        template: |
+          {{/* User Variables */}}
+          {{/* Set to true if you'd like an indicator for online devices */}}
+          {{ $enableOnlineIndicator := false }}
+
+          <style>
+            .device-info-container {
+              position: relative;
+              overflow: hidden;
+              height: 1.5em;
+            }
+
+            .device-info {
+              display: flex;
+              transition: transform 0.2s ease, opacity 0.2s ease;
+            }
+
+            .device-ip {
+              position: absolute;
+              top: 0;
+              left: 0;
+              transform: translateY(-100%);
+              opacity: 0;
+              transition: transform 0.2s ease, opacity 0.2s ease;
+            }
+
+            .device-info-container:hover .device-info {
+              transform: translateY(100%);
+              opacity: 0;
+            }
+
+            .device-info-container:hover .device-ip {
+              transform: translateY(0);
+              opacity: 1;
+            }
+
+            .update-indicator {
+              width: 8px;
+              height: 8px;
+              border-radius: 50%;
+              background-color: var(--color-primary);
+              display: inline-block;
+              margin-left: 4px;
+              vertical-align: middle;
+            }
+
+            .offline-indicator {
+              width: 8px;
+              height: 8px;
+              border-radius: 50%;
+              background-color: var(--color-negative);
+              display: inline-block;
+              margin-left: 4px;
+              vertical-align: middle;
+            }
+
+            .online-indicator {
+              width: 8px;
+              height: 8px;
+              border-radius: 50%;
+              background-color: var(--color-positive);
+              display: inline-block;
+              margin-left: 4px;
+              vertical-align: middle;
+            }
+
+            .device-name-container {
+              display: flex;
+              align-items: center;
+              gap: 8px;
+            }
+
+            .indicators-container {
+              display: flex;
+              align-items: center;
+              gap: 4px;
+            }
+          </style>
+          <ul class="list list-gap-10 collapsible-container" data-collapse-after="4">
+            {{ range .JSON.Array "devices" }}
+            <li>
+              <div class="flex items-center gap-10">
+                <div class="device-name-container grow">
+                  <span class="size-h4 block text-truncate color-primary">
+                    {{ findMatch "^([^.]+)" (.String "name") }}
+                  </span>
+                  <div class="indicators-container">
+                    {{ if (.Bool "updateAvailable") }}
+                    <span class="update-indicator" data-popover-type="text" data-popover-text="Update Available"></span>
+                    {{ end }}
+
+                    {{ $lastSeen := .String "lastSeen" | parseTime "rfc3339" }}
+                    {{ if not ($lastSeen.After (offsetNow "-10s")) }}
+                    {{ $lastSeenTimezoned := $lastSeen.In now.Location }}
+                    <span class="offline-indicator" data-popover-type="text"
+                      data-popover-text="Offline - Last seen {{ $lastSeenTimezoned.Format " Jan 2 3:04pm" }}"></span>
+                    {{ else if $enableOnlineIndicator }}
+                      <span class="online-indicator" data-popover-type="text" data-popover-text="Online"></span>
+                    {{ end }}
+                  </div>
+                </div>
+              </div>
+              <div class="device-info-container">
+                <ul class="list-horizontal-text device-info">
+                  <li>{{ .String "os" }}</li>
+                  <li>{{ .String "user" }}</li>
+                </ul>
+                <div class="device-ip">
+                  {{ .String "addresses.0"}}
+                </div>
+              </div>
+            </li>
+            {{ end }}
+          </ul>
+
+      - type: monitor
+        cache: 1m
+        title: Sites
+        style: compact
+        sites:
+          - title: Henrique Sebastião
+            url: https://henriquesebastiao.com
+          - title: Vida
+            url: https://life.henriquesebastiao.com
+          - title: TCC
+            url: https://tcc.henriquesebastiao.com
+          - title: CHR
+            url: http://chr.henriquesebastiao.com:3520
+
+    - size: full
+      widgets:
+        - type: docker-containers
+          containers:
+            adminer-manejo:
+              hide: true
+            client-dotum:
+              hide: true
+            compose-zabbix-database-1:
+              parent: zabbix
+              name: Database
+            confy-redis:
+              hide: true
+            db-manejo:
+              hide: true
+            app-dotum:
+              hide: true
+            app-manejo:
+              hide: true
+            compose-zabbix-agent-1:
+              parent: zabbix
+              name: Agent
+            downtify:
+              hide: true
+            app-poupy:
+              hide: true
+            compose-zabbix-server-1:
+              id: zabbix
+              name: Zabbix
+              url: http://server.local:8003/
+              icon: di:zabbix
+            db-poupy:
+              hide: true
+            db-dotum:
+              hide: true
+            prometheus-manejo:
+              hide: true
+            umami-db:
+              parent: umami
+              name: Database
+            web-manejo:
+              hide: true
+            glance:
+              hide: true
+            postgres-projects:
+              hide: true
+            confy-server:
+              hide: true
+            grafana-manejo:
+              hide: true
+            tempo-manejo:
+              hide: true
+            web-confy-server:
+              hide: true
+            web-check:
+              name: Web Check
+              url: http://server.local:8012
+              icon: di:web-check-dark
+            it-tools:
+              name: IT Tools
+              url: http://server.local:8013
+              icon: di:it-tools-light
+            stirling-pdf:
+              name: Stirling PDF
+              url: http://server.local:8011/?lang=pt_BR
+              icon: di:stirling-pdf
+            docmost:
+              id: docmost
+              name: Docmost
+              url: http://server.local:8016
+              icon: di:notion-light
+            docmost-db:
+              parent: docmost
+              name: Database
+            docmost-redis:
+              parent: docmost
+              name: Redis
+            excalidraw:
+              name: Excalidraw
+              url: http://server.local:8010
+              icon: di:excalidraw
+            filebrowser:
+              name: File Browser
+              url: http://server.local:8015
+              icon: di:filebrowser
+            portainer:
+              name: Portainer
+              url: http://server.local:8009/#!/3/docker/containers
+              icon: di:portainer-dark
+            speedtest-tracker:
+              name: Speedtest
+              url: http://server.local:8008/admin
+              icon: si:speedtest
+            pihole:
+              name: Pi-hole
+              url: http://server.local:8001/admin/
+              icon: di:pi-hole
+            uptime-kuma:
+              name: Uptime Kuma
+              url: http://server.local:3001/dashboard
+              icon: di:uptime-kuma
+            compose-zabbix-frontend-1:
+              parent: zabbix
+              name: Front End
+            nextcloud:
+              name: Nextcloud
+              url: http://server.local:8002/apps/dashboard/
+              icon: di:nextcloud
+            grafana:
+              name: Grafana
+              url: http://server.local:8004/
+              icon: di:grafana
+            cloudflared:
+              name: Cloudflared
+              icon: di:cloudflare
+            dozzle:
+              name: Dozzle
+              url: http://server.local:8005/
+              icon: di:dozzle
+            umami:
+              name: Umami
+              url: http://server.local:8006/dashboard
+              icon: di:umami-light
+              id: umami
+            jellyfin:
+              name: Jellyfin
+              url: http://server.local:8096/web/#/home.html
+              icon: di:jellyfin
+
+    - size: small
+      widgets:
+        - type: server-stats
+          servers:
+            - type: local
+              name: Servidor
+        - type: dns-stats
+          service: pihole-v6
+          url: http://172.16.0.2:8001
+          password: 35218785
+          hour-format: 24h

@@ -1,0 +1,149 @@
+- name: Projects
+  columns:
+    - size: small
+      widgets:
+      - type: monitor
+        cache: 1m
+        title: Sites
+        style: compact
+        sites:
+          - title: Confy Server
+            url: https://confy-server.henriquesebastiao.com/docs
+          - title: Dotum Server
+            url: https://dotum.henriquesebastiao.com
+          - title: Dotum Web
+            url: https://dotum-web.henriquesebastiao.com
+          - title: Poupy
+            url: https://poupy.henriquesebastiao.com
+          - title: Manejo
+            url: https://manejo.henriquesebastiao.com
+          - title: Netmikro
+            url: https://netmikro.henriquesebastiao.com/en/latest
+          - title: Skyport
+            url: https://skyport.henriquesebastiao.com/en/latest
+          - title: Downtify
+            url: https://downtify.henriquesebastiao.com
+          - title: Status
+            url: https://status.henriquesebastiao.com/status/projetos-pessoais
+    
+    - size: full
+      widgets:
+        - type: docker-containers
+          containers:
+            adminer-manejo:
+              parent: manejo
+              name: Adminer
+            client-dotum:
+              parent: dotum
+              name: Streamlit
+            compose-zabbix-database-1:
+              hide: true
+            confy-redis:
+              parent: confy
+              name: Redis
+            db-manejo:
+              parent: manejo
+              name: Database
+            app-dotum:
+              id: dotum
+              name: Dotum
+              url: http://server.local:9004
+              icon: si:streamlit
+            app-manejo:
+              id: manejo
+              name: Manejo
+              url: http://server.local:9000
+              icon: si:fastapi
+            compose-zabbix-agent-1:
+              hide: true
+            downtify:
+              name: Downtify
+              url: http://server.local:9002
+              icon: si:fastapi
+            app-poupy:
+              id: poupy
+              name: Poupy
+              url: https://poupy.henriquesebastiao.com
+              icon: si:django
+            compose-zabbix-server-1:
+              hide: true
+            db-poupy:
+              parent: poupy
+              name: Database
+            db-dotum:
+              parent: dotum
+              name: Database
+            prometheus-manejo:
+              parent: manejo
+              name: Prometheus
+            umami-db:
+              hide: true
+            web-manejo:
+              parent: manejo
+              name: Nginx
+            glance:
+              hide: true
+            postgres-projects:
+              name: Postgres
+              icon: si:postgresql
+            confy-server:
+              id: confy
+              name: Confy Server
+              url: http://server.local:9005/docs
+              icon: si:fastapi
+            grafana-manejo:
+              parent: manejo
+              name: Grafana
+            tempo-manejo:
+              parent: manejo
+              name: Tempo
+            web-confy-server:
+              parent: confy
+              name: Nginx
+            web-check:
+              hide: true
+            it-tools:
+              hide: true
+            stirling-pdf:
+              hide: true
+            excalidraw:
+              hide: true
+            portainer:
+              hide: true
+            speedtest-tracker:
+              hide: true
+            pihole:
+              hide: true
+            uptime-kuma:
+              hide: true
+            compose-zabbix-frontend-1:
+              hide: true
+            nextcloud:
+              hide: true
+            grafana:
+              hide: true
+            cloudflared:
+              hide: true
+            dozzle:
+              hide: true
+            umami:
+              hide: true
+            jellyfin:
+              hide: true
+    
+    - size: small
+      widgets:
+        - type: releases
+          cache: 1d
+          show-source-icon: true
+          repositories:
+            - fastapi/fastapi
+            - pydantic/pydantic
+            - streamlit/streamlit
+            - Kludex/uvicorn
+            - astral-sh/ruff
+            - taskipy/taskipy
+            - sqlalchemy/alembic
+            - sqlalchemy/sqlalchemy
+            - pytest-dev/pytest
+            - locustio/locust

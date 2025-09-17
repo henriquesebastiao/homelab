@@ -1,0 +1,112 @@
+- name: Home
+  # Optionally, if you only have a single page you can hide the desktop navigation for a cleaner look
+  # hide-desktop-navigation: true
+  columns:
+    - size: small
+      widgets:
+        - type: calendar
+          first-day-of-week: sunday
+
+        - type: bookmarks
+          groups:
+            - links:
+                - title: Agenda
+                  url: https://calendar.google.com
+                - title: Email
+                  url: https://mail.google.com/mail/u/0/#inbox
+                - title: Drive
+                  url: https://drive.google.com/drive/u/0/my-drive
+                - title: GitHub
+                  url: https://github.com/henriquesebastiao
+            - title: Social
+              color: 200 50 50
+              links:
+                - title: Reddit
+                  url: https://www.reddit.com
+                - title: Mastodon
+                  url: https://bolha.us/home
+                - title: WhatsApp
+                  url: https://web.whatsapp.com
+            - title: Others
+              color: 237 51 59
+              links:
+                - title: Flightradar24
+                  url: https://www.flightradar24.com/-10.21,-59.46/9
+
+        - type: twitch-channels
+          channels:
+            - dunossauro
+            - julialabs
+
+    - size: full
+      widgets:
+        - type: search
+          search-engine: duckduckgo
+          new-tab: true
+          bangs:
+            - title: YouTube
+              shortcut: "!yt"
+              url: https://www.youtube.com/results?search_query={QUERY}
+
+        - type: rss
+          limit: 10
+          collapse-after: 5
+          cache: 12h
+          feeds:
+            - url: https://www.almaobservatory.org/en/feed/
+              title: ALMA Observatory
+            - url: https://www.eso.org/public/portugal/news/feed/
+              title: ESO
+            - url: https://blogs.nasa.gov/webb/feed/
+              title: James Webb Space Telescope
+            - url: https://blog.dunossauro.com/feed.xml
+              title: Blog do Dunossauro
+            - url: https://www.memedecarbono.com.br/feed/
+              title: Meme de Carbono
+            - url: https://indieweb.org/this-week/feed.xml
+              title: This Week in the IndieWeb
+
+        - type: videos
+          channels:
+            - UCEf5U1dB5a2e2S-XUlnhxSA # Diolinux
+            - UCcGk83PAQ5aGR7IVlD_cBaw # Brincando com Ideias
+            - UCQQNn842GN-Jh4GaK0WcGuA # Daniel Romero
+            - UC8EGrwe_DXSzrCQclf_pv9g # debxp
+            - UCAaKeg-BocRqphErdtIUFFw # Eduardo Mendes
+            - UCib793mnUOhWymCh2VJKplQ # Fabio Akita
+            - UCqNBcXkVNrotGBQZmE3Hyaw # infinitamente
+            - UCcw2dzrBBmt4HriBCg_iLng # Julio Lobo
+            - UCJnKVGmXRXrH49Tvrx5X0Sw # LINUXtips
+            - UCR9sFzaG9Ia_kXJhfxtFMBA # melodysheep
+            - UClQfWNWk9UsUj317ce5FtXg # Sobrevivencialismo
+            - UC7Xog4-zhRQKbahvs27I7Ow # Pinho
+
+        - type: group
+          widgets:
+            - type: reddit
+              subreddit: amateursatellites
+              show-thumbnails: true
+            - type: reddit
+              subreddit: selfhosted
+              show-thumbnails: true
+            - type: reddit
+              subreddit: Quansheng
+              show-thumbnails: true
+
+    - size: small
+      widgets:
+        - type: weather
+          location: Aripuanã, Brazil
+          units: metric # alternatively "imperial"
+          hour-format: 24h # alternatively "24h"
+
+        - type: to-do
+
+        - type: releases
+          cache: 1d
+          show-source-icon: true
+          repositories:
+            - jocmp/capyreader
+            - fastapi/fastapi
+            - pydantic/pydantic
+            - amir20/dozzle
