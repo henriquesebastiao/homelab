@@ -58,6 +58,20 @@ services:
     environment:
       - FB_ROOT=/data
       - FB_NOAUTH=true
+  
+  glance:
+    container_name: glance
+    image: glanceapp/glance
+    restart: unless-stopped
+    volumes:
+      - /home/hick/homelab/containers/glance/config:/app/config
+      - /home/hick/homelab/containers/glance/assets:/app/assets
+      - /etc/localtime:/etc/localtime:ro
+      # Optionally, also mount docker socket if you want to use the docker containers widget
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    ports:
+      - 8007:8080
+    env_file: /home/hick/homelab/containers/glance/.env
 
   it-tools:
     image: corentinth/it-tools:latest
