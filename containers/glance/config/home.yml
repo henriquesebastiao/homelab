@@ -37,6 +37,9 @@
           channels:
             - dunossauro
             - julialabs
+            - blauaraujo
+            - universidade_livre
+            - codeshow
 
     - size: full
       widgets:
