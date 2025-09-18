@@ -42,6 +42,19 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - 8005:8080
+  
+  duplicati:
+    image: duplicati/duplicati:latest
+    container_name: duplicati
+    restart: unless-stopped
+    ports:
+      - 8018:8200
+    volumes:
+      - /home/hick/homelab/containers/duplicati/data:/data
+    environment:
+      DUPLICATI__WEBSERVICE_ALLOWED_HOSTNAMES: server.local
+      DUPLICATI__WEBSERVICE_PASSWORD: duplicati-pass
+      TZ: "America/Cuiaba"
 
   filebrowser:
     image: filebrowser/filebrowser

@@ -1,3 +1,4 @@
 .env
 containers/pinepods/data/
 containers/homeassistant/data/
+containers/duplicati/data/

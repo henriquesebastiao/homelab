@@ -278,6 +278,10 @@
               hide: true
             db-dotum:
               hide: true
+            duplicati:
+              name: Duplicati
+              url: http://server.local:8018
+              icon: di:duplicati
             prometheus-manejo:
               hide: true
             umami-db:

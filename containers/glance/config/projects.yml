@@ -102,6 +102,8 @@
             grafana-manejo:
               parent: manejo
               name: Grafana
+            duplicati:
+              hide: true
             homeassistant:
               hide: true
             tempo-manejo:
