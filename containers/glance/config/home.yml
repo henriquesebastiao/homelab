@@ -113,6 +113,20 @@
                 # Notícias
                 - url: https://www.intercept.com.br/feed/
                   title: Intercept Brasil
+            
+            - type: hacker-news
+              limit: 10
+              collapse-after: 5
+            
+            - type: lobsters
+              sort-by: hot
+              tags:
+                - python
+                - security
+                - privacy
+                - linux
+              limit: 15
+              collapse-after: 5
 
         - type: videos
           channels:
