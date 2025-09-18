@@ -72,6 +72,17 @@ services:
     ports:
       - 8007:8080
     env_file: /home/hick/homelab/containers/glance/.env
+  
+  homeassistant:
+    container_name: homeassistant
+    image: ghcr.io/home-assistant/home-assistant:stable
+    volumes:
+      - /home/hick/homelab/containers/homeassistant/data/config:/config
+      - /etc/localtime:/etc/localtime:ro
+      - /run/dbus:/run/dbus:ro
+    restart: unless-stopped
+    privileged: true
+    network_mode: host  # Port 8123
 
   it-tools:
     image: corentinth/it-tools:latest
