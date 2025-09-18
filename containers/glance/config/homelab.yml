@@ -401,6 +401,17 @@
             grampsweb-celery:
               parent: grampsweb
               name: Celery
+            ocular-backend:
+              id: ocular
+              name: Ocular
+              url: http://server.local:8020
+              icon: di:ocular
+            ocular-frontend:
+              parent: ocular
+              name: Front-end
+            ocular-nginx:
+              parent: ocular
+              name: Nginx
 
     - size: small
       widgets:
