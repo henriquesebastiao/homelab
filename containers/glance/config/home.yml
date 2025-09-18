@@ -155,6 +155,15 @@
             - type: reddit
               subreddit: Quansheng
               show-thumbnails: true
+            - type: reddit
+              subreddit: ObsidianMD
+              show-thumbnails: true
+            - type: reddit
+              subreddit: linuxbrasil
+              show-thumbnails: true
+            - type: reddit
+              subreddit: brdev
+              show-thumbnails: true
 
     - size: small
       widgets:
