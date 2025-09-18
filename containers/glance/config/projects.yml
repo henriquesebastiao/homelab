@@ -122,6 +122,12 @@
               hide: true
             pihole:
               hide: true
+            pinepods:
+              hide: true
+            pinepods-valkey:
+              hide: true
+            pinepods-db:
+              hide: true
             uptime-kuma:
               hide: true
             compose-zabbix-frontend-1:

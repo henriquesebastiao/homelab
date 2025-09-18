@@ -80,6 +80,66 @@ services:
     ports:
       - 8013:80
   
+  pinepods-db:
+    container_name: pinepods-db
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: pinepods_database
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: myS3curepass
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - /home/hick/homelab/containers/pinepods/data/pgdata:/var/lib/postgresql/data
+    restart: always
+
+  pinepods-valkey:
+    image: valkey/valkey:8-alpine
+    restart: unless-stopped
+    container_name: pinepods-valkey
+
+  pinepods:
+    image: madeofpendletonwool/pinepods:latest
+    container_name: pinepods
+    restart: unless-stopped
+    ports:
+      - "8017:8040"
+    environment:
+      # Basic Server Info
+      SEARCH_API_URL: 'https://search.pinepods.online/api/search'
+      PEOPLE_API_URL: 'https://people.pinepods.online'
+      HOSTNAME: 'http://localhost:8040'
+      # Default Admin User Information
+      USERNAME: hick
+      PASSWORD: pinepods-pass
+      FULLNAME: Henrique Sebastião
+      EMAIL: contato@henriquesebastiao.com
+      # Database Vars
+      DB_TYPE: postgresql
+      DB_HOST: pinepods-db
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: myS3curepass
+      DB_NAME: pinepods_database
+      # Valkey Settings
+      VALKEY_HOST: pinepods-valkey
+      VALKEY_PORT: 6379
+      # Enable or Disable Debug Mode for additional Printing
+      DEBUG_MODE: false
+      PUID: 1000
+      PGID: 1000
+      # Add timezone configuration
+      TZ: "America/Cuiaba"
+    volumes:
+      # Mount the download and backup locations on the server
+      - /home/hick/homelab/containers/pinepods/data/downloads:/opt/pinepods/downloads
+      - /home/hick/homelab/containers/pinepods/data/backups:/opt/pinepods/backups
+      # Timezone volumes, HIGHLY optional. Read the timezone notes below
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+    depends_on:
+      - pinepods-db
+      - pinepods-valkey
+  
   portainer:
     image: portainer/portainer-ce:latest
     container_name: portainer

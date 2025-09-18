@@ -313,7 +313,7 @@
               id: docmost
               name: Docmost
               url: http://server.local:8016
-              icon: di:notion-light
+              icon: sh:docmost
             docmost-db:
               parent: docmost
               name: Database
@@ -328,14 +328,25 @@
               name: File Browser
               url: http://server.local:8015
               icon: di:filebrowser
+            pinepods:
+              name: Pinepods
+              url: http://server.local:8017/home
+              icon: sh:pinepods
+              id: pinepods
+            pinepods-db:
+              parent: pinepods
+              name: Database
+            pinepods-valkey:
+              parent: pinepods
+              name: Valkey
             portainer:
               name: Portainer
               url: http://server.local:8009/#!/3/docker/containers
               icon: di:portainer-dark
             speedtest-tracker:
-              name: Speedtest
+              name: Speedtest Tracker
               url: http://server.local:8008/admin
-              icon: si:speedtest
+              icon: sh:speedtest-tracker
             pihole:
               name: Pi-hole
               url: http://server.local:8001/admin/
