@@ -51,23 +51,68 @@
               shortcut: "!yt"
               url: https://www.youtube.com/results?search_query={QUERY}
 
-        - type: rss
-          limit: 10
-          collapse-after: 5
-          cache: 12h
-          feeds:
-            - url: https://www.almaobservatory.org/en/feed/
-              title: ALMA Observatory
-            - url: https://www.eso.org/public/portugal/news/feed/
-              title: ESO
-            - url: https://blogs.nasa.gov/webb/feed/
-              title: James Webb Space Telescope
-            - url: https://blog.dunossauro.com/feed.xml
-              title: Blog do Dunossauro
-            - url: https://www.memedecarbono.com.br/feed/
-              title: Meme de Carbono
-            - url: https://indieweb.org/this-week/feed.xml
-              title: This Week in the IndieWeb
+        - type: group
+          widgets:
+            - type: rss
+              limit: 10
+              collapse-after: 5
+              cache: 12h
+              feeds:
+                # Astronomia
+                - url: https://www.almaobservatory.org/en/feed/
+                  title: ALMA Observatory
+                - url: https://www.eso.org/public/portugal/news/feed/
+                  title: ESO
+                - url: https://blogs.nasa.gov/webb/feed/
+                  title: James Webb Space Telescope
+                - url: https://www.nasa.gov/blogs/watch-the-skies/feed/
+                  title: Watch the Skies - NASA
+
+                # Blogs
+                - url: https://blog.dunossauro.com/feed.xml
+                  title: Blog do Dunossauro
+                - url: https://luizyassuda.com/feed/
+                  title: Luiz Yassuda
+                - url: https://www.memedecarbono.com.br/feed/
+                  title: Meme de Carbono
+                - url: https://indieweb.org/this-week/feed.xml
+                  title: This Week in the IndieWeb
+                
+                # Desenvolvimento
+                - url: https://peps.python.org/peps.rss/
+                  title: Newest Python PEPs
+                - url: https://pypy.org/rss.xml
+                  title: PyPy
+                - url: https://blog.python.org/feeds/posts/default?alt=rss
+                  title: Python Insider
+                - url: https://pyfound.blogspot.com/feeds/posts/default
+                  title: PSF News
+                - url: https://blog.pypi.org/feed_rss_created.xml
+                  title: PyPi Blog
+                
+                # Podcasts
+                - url: https://feeds.libsyn.com/556337/rss
+                  title: Não me entenda mal
+                - url: https://www.b9.com.br/shows/naruhodo/feed/
+                  title: Naruhodo
+                - url: https://www.spreaker.com/show/5920998/episodes/feed
+                  title: O Alvissareiro
+                - url: https://feeds.feedburner.com/XadrezVerbal
+                  title: Xadrez Verbal
+                
+                # Releases
+                - url: https://download.mikrotik.com/routeros/latest-stable-and-long-term.rss
+                  title: MikroTik Releases
+            
+            - type: rss
+              title: News
+              limit: 10
+              collapse-after: 5
+              cache: 12h
+              feeds:
+                # Notícias
+                - url: https://www.intercept.com.br/feed/
+                  title: Intercept Brasil
 
         - type: videos
           channels:
@@ -83,6 +128,7 @@
             - UCR9sFzaG9Ia_kXJhfxtFMBA # melodysheep
             - UClQfWNWk9UsUj317ce5FtXg # Sobrevivencialismo
             - UC7Xog4-zhRQKbahvs27I7Ow # Pinho
+            - UC9a8Z6Sp6eb2s3O79pX5Zvg # Tech Minds 
 
         - type: group
           widgets:
@@ -113,3 +159,9 @@
             - fastapi/fastapi
             - pydantic/pydantic
             - amir20/dozzle
+            - AntennaPod/AntennaPod
+            - pyca/cryptography
+            - cotes2020/jekyll-theme-chirpy
+            - python-poetry/poetry
+            - pytest-dev/pytest
+            - fastapi/typer
