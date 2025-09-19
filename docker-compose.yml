@@ -250,6 +250,19 @@ services:
       - portainer_data:/data
     ports:
       - 8009:9000
+  
+  wallos:
+    container_name: wallos
+    image: bellamy/wallos:latest
+    ports:
+      - 8021:80
+    environment:
+      TZ: America/Cuiaba
+    # Volumes store your data between container upgrades
+    volumes:
+      - /home/hick/homelab/containers/wallos/db:/var/www/html/db
+      - /home/hick/homelab/containers/wallos/logos:/var/www/html/images/uploads/logos
+    restart: unless-stopped
 
 volumes:
   docmost:

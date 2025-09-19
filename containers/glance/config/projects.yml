@@ -160,6 +160,8 @@
               hide: true
             ocular-nginx:
               hide: true
+            wallos:
+              hide: true
     - size: small
       widgets:
         - type: releases

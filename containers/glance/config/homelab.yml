@@ -412,6 +412,10 @@
             ocular-nginx:
               parent: ocular
               name: Nginx
+            wallos:
+              name: Wallos
+              url: http://server.local:8021
+              icon: sh:wallos
 
     - size: small
       widgets:
