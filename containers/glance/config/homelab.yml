@@ -428,3 +428,25 @@
           url: http://172.16.0.2:8001
           password: 35218785
           hour-format: 24h
+        - type: releases
+          cache: 1d
+          show-source-icon: true
+          repositories:
+            - dockerhub:cloudflare/cloudflared
+            - dockerhub:docmost/docmost
+            - dockerhub:duplicati/duplicati
+            - dockerhub:amir20/dozzle
+            - dockerhub:filebrowser/filebrowser
+            - dockerhub:grafana/grafana
+            - gramps-project/gramps-web
+            - dockerhub:corentinth/it-tools
+            - dockerhub:jellyfin/jellyfin
+            - dockerhub:nextcloud
+            - simonwep/ocular
+            - dockerhub:pihole/pihole
+            - dockerhub:madeofpendletonwool/pinepods
+            - dockerhub:portainer/portainer-ce
+            - umami-software/umami
+            - dockerhub:louislam/uptime-kuma
+            - dockerhub:bellamy/wallos
+            - dockerhub:lissy93/web-check
