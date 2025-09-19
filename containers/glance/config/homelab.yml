@@ -313,17 +313,6 @@
               name: Stirling PDF
               url: http://server.local:8011/?lang=pt_BR
               icon: di:stirling-pdf
-            docmost:
-              id: docmost
-              name: Docmost
-              url: http://server.local:8016
-              icon: sh:docmost
-            docmost-db:
-              parent: docmost
-              name: Database
-            docmost-redis:
-              parent: docmost
-              name: Redis
             excalidraw:
               name: Excalidraw
               url: http://server.local:8010
@@ -420,6 +409,10 @@
               name: Wallos
               url: http://server.local:8021
               icon: sh:wallos
+            beaverhabits:
+              name: Habit Tracker
+              icon: di:beaver-habit-tracker-light
+              url: http://server.local:8023
 
     - size: small
       widgets:
@@ -455,3 +448,4 @@
             - dockerhub:bellamy/wallos
             - dockerhub:lissy93/web-check
             - sysadminsmedia/homebox
+            - dockerhub:daya0576/beaverhabits
