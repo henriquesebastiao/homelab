@@ -162,6 +162,8 @@
               hide: true
             wallos:
               hide: true
+            homebox:
+              hide: true
     - size: small
       widgets:
         - type: releases

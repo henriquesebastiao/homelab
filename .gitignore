@@ -1,6 +1,7 @@
 .env
 containers/pinepods/data/
 containers/homeassistant/data/
+containers/homebox/data/
 containers/duplicati/data/
 containers/ocular/data/
 containers/wallos/db/

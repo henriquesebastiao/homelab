@@ -133,6 +133,20 @@ services:
     privileged: true
     network_mode: host  # Port 8123
 
+  homebox:
+    image: ghcr.io/sysadminsmedia/homebox:latest
+    container_name: homebox
+    restart: always
+    environment:
+    - HBOX_LOG_LEVEL=info
+    - HBOX_LOG_FORMAT=text
+    - HBOX_WEB_MAX_FILE_UPLOAD=10
+    - HBOX_OPTIONS_ALLOW_ANALYTICS=false
+    volumes:
+      - /home/hick/homelab/containers/homebox/data:/data/
+    ports:
+      - 8022:7745
+
   it-tools:
     image: corentinth/it-tools:latest
     container_name: it-tools

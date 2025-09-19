@@ -401,6 +401,10 @@
             grampsweb-celery:
               parent: grampsweb
               name: Celery
+            homebox:
+              name: Homebox
+              icon: di:homebox
+              url: http://server.local:8022/home
             ocular-backend:
               id: ocular
               name: Ocular
@@ -450,3 +454,4 @@
             - dockerhub:louislam/uptime-kuma
             - dockerhub:bellamy/wallos
             - dockerhub:lissy93/web-check
+            - sysadminsmedia/homebox
