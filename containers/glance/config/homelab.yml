@@ -440,3 +440,4 @@
             - dockerhub:lissy93/web-check
             - sysadminsmedia/homebox
             - dockerhub:daya0576/beaverhabits
+            - dockerhub:vaultwarden/server
