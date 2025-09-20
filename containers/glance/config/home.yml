@@ -27,19 +27,18 @@
                   url: https://bolha.us/home
                 - title: WhatsApp
                   url: https://web.whatsapp.com
+            - title: Technology
+              color: 203 83 65
+              links:
+                - title: Cheat Sheets
+                  url: https://cheatsheets.zip
+                - title: Pwned
+                  url: https://haveibeenpwned.com
             - title: Others
               color: 237 51 59
               links:
                 - title: Flightradar24
                   url: https://www.flightradar24.com/-10.21,-59.46/9
-
-        - type: twitch-channels
-          channels:
-            - dunossauro
-            - julialabs
-            - blauaraujo
-            - universidade_livre
-            - codeshow
 
     - size: full
       widgets:
@@ -71,6 +70,8 @@
                 # Blogs
                 - url: https://blog.dunossauro.com/feed.xml
                   title: Blog do Dunossauro
+                - url: https://dionatansimioni.com.br/feed
+                  title: Dionatan Simioni
                 - url: https://luizyassuda.com/feed/
                   title: Luiz Yassuda
                 - url: https://www.memedecarbono.com.br/feed/
@@ -113,6 +114,9 @@
                 # Notícias
                 - url: https://www.intercept.com.br/feed/
                   title: Intercept Brasil
+                
+                - url: https://techcrunch.com/feed/
+                  title: TechCrunch
             
             - type: hacker-news
               limit: 10
@@ -164,6 +168,9 @@
             - type: reddit
               subreddit: brdev
               show-thumbnails: true
+            - type: reddit
+              subreddit: technology
+              show-thumbnails: true
 
     - size: small
       widgets:
@@ -188,3 +195,11 @@
             - python-poetry/poetry
             - pytest-dev/pytest
             - fastapi/typer
+        
+        - type: twitch-channels
+          channels:
+            - dunossauro
+            - julialabs
+            - blauaraujo
+            - universidade_livre
+            - codeshow
