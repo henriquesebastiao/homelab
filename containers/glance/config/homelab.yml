@@ -335,7 +335,7 @@
             portainer:
               name: Portainer
               url: http://server.local:8009/#!/3/docker/containers
-              icon: di:portainer-dark
+              icon: sh:portainer-pink
             speedtest-tracker:
               name: Speedtest Tracker
               url: http://server.local:8008/admin
@@ -373,7 +373,7 @@
             umami:
               name: Umami
               url: http://server.local:8006/dashboard
-              icon: di:umami-light
+              icon: auto-invert sh:umami
               id: umami
             jellyfin:
               name: Jellyfin
@@ -411,7 +411,7 @@
               icon: sh:wallos
             beaverhabits:
               name: Habit Tracker
-              icon: di:beaver-habit-tracker-light
+              icon: auto-invert di:beaver-habit-tracker
               url: http://server.local:8023
 
     - size: small
