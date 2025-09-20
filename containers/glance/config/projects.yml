@@ -142,12 +142,6 @@
               hide: true
             jellyfin:
               hide: true
-            grampsweb:
-              hide: true
-            grampsweb-redis:
-              hide: true
-            grampsweb-celery:
-              hide: true
             ocular-backend:
               hide: true
             ocular-frontend:

@@ -379,17 +379,6 @@
               name: Jellyfin
               url: http://server.local:8096/web/#/home.html
               icon: di:jellyfin
-            grampsweb:
-              name: Gramps Web
-              url: http://server.local:8019
-              icon: di:gramps-web
-              id: grampsweb
-            grampsweb-redis:
-              parent: grampsweb
-              name: Redis
-            grampsweb-celery:
-              parent: grampsweb
-              name: Celery
             homebox:
               name: Homebox
               icon: di:homebox
