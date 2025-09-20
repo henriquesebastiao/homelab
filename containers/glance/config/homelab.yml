@@ -402,6 +402,9 @@
               name: Habit Tracker
               icon: auto-invert di:beaver-habit-tracker
               url: http://server.local:8023
+            vaultwarden:
+              name: Vaultwarden
+              icon: auto-invert di:vaultwarden
 
     - size: small
       widgets:

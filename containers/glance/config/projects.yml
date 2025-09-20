@@ -154,6 +154,8 @@
               hide: true
             beaverhabits:
               hide: true
+            vaultwarden:
+              hide: true
     - size: small
       widgets:
         - type: releases

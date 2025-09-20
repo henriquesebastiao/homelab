@@ -216,6 +216,17 @@ services:
     ports:
       - 8009:9000
   
+  vaultwarden:
+    image: vaultwarden/server:latest
+    container_name: vaultwarden
+    restart: unless-stopped
+    environment:
+      DOMAIN: "https://vault.henriquesebastiao.com"
+    volumes:
+      - /home/hick/homelab/containers/vaultwarden/data/:/data/
+    ports:
+      - 8019:80
+  
   wallos:
     container_name: wallos
     image: bellamy/wallos:latest
