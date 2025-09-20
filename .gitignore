@@ -2,7 +2,7 @@
 containers/pinepods/data/
 containers/homeassistant/data/
 containers/homebox/data/
-containers/duplicati/data/
+containers/duplicati/config/
 containers/ocular/data/
 containers/wallos/db/
 containers/wallos/logos/

@@ -26,16 +26,21 @@ services:
       - 8005:8080
   
   duplicati:
-    image: duplicati/duplicati:latest
+    image: lscr.io/linuxserver/duplicati:latest
     container_name: duplicati
     restart: unless-stopped
     ports:
       - 8018:8200
     volumes:
-      - /home/hick/homelab/containers/duplicati/data:/data
+      - /home/hick/homelab/containers/duplicati/config:/config
+      - /home/hick/backups:/backups
+      - /:/source:ro
     environment:
       DUPLICATI__WEBSERVICE_ALLOWED_HOSTNAMES: server.local
       DUPLICATI__WEBSERVICE_PASSWORD: duplicati-pass
+      PUID: 1000
+      PGID: 1000
+      SETTINGS_ENCRYPTION_KEY: duplicati-encryption-key
       TZ: "America/Cuiaba"
 
   filebrowser:

@@ -431,7 +431,6 @@
           repositories:
             - dockerhub:cloudflare/cloudflared
             - dockerhub:docmost/docmost
-            - dockerhub:duplicati/duplicati
             - dockerhub:amir20/dozzle
             - dockerhub:filebrowser/filebrowser
             - dockerhub:grafana/grafana
