@@ -405,6 +405,38 @@
             vaultwarden:
               name: Vaultwarden
               icon: auto-invert di:vaultwarden
+        - type: group
+          widgets:
+            - type: reddit
+              subreddit: Duplicati
+              show-thumbnails: true
+            - type: reddit
+              subreddit: Excalidraw
+              show-thumbnails: true
+            - type: reddit
+              subreddit: grafana
+              show-thumbnails: true
+            - type: reddit
+              subreddit: homeassistant
+              show-thumbnails: true
+            - type: reddit
+              subreddit: jellyfin
+              show-thumbnails: true
+            - type: reddit
+              subreddit: NextCloud
+              show-thumbnails: true
+            - type: reddit
+              subreddit: pihole
+              show-thumbnails: true
+            - type: reddit
+              subreddit: portainer
+              show-thumbnails: true
+            - type: reddit
+              subreddit: vaultwarden
+              show-thumbnails: true
+            - type: reddit
+              subreddit: zabbix
+              show-thumbnails: true
 
     - size: small
       widgets:
@@ -425,7 +457,7 @@
             - dockerhub:docmost/docmost
             - dockerhub:amir20/dozzle
             - dockerhub:filebrowser/filebrowser
-            - dockerhub:grafana/grafana
+            - dockerhub:grafana/grafana:latest
             - gramps-project/gramps-web
             - dockerhub:corentinth/it-tools
             - dockerhub:jellyfin/jellyfin
