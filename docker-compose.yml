@@ -73,6 +73,15 @@ services:
       - 8007:8080
     env_file: /home/hick/homelab/containers/glance/.env
   
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    restart: unless-stopped
+    ports:
+      - 8004:3000
+    volumes:
+      - grafana-storage:/var/lib/grafana
+  
   homeassistant:
     container_name: homeassistant
     image: ghcr.io/home-assistant/home-assistant:stable
@@ -244,4 +253,5 @@ volumes:
   filebrowser_data:
   filebrowser_database:
   filebrowser_config:
+  grafana-storage:
   portainer_data:
