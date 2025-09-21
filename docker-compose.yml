@@ -234,6 +234,24 @@ services:
     ports:
       - 8009:9000
   
+  speedtest-tracker:
+    image: lscr.io/linuxserver/speedtest-tracker:latest
+    restart: unless-stopped
+    container_name: speedtest-tracker
+    ports:
+        - 8008:80
+    environment:
+        - PUID=1000
+        - PGID=1000
+        - APP_KEY=base64:h/7HdA9fMLDluj0fJ4NcG13CquLdgJTs9062lfXnmAs=
+        - DB_CONNECTION=sqlite
+        - APP_TIMEZONE=America/Cuiaba
+        - APP_DEBUG=true
+        - SPEEDTEST_SCHEDULE=*/30 * * * *
+    volumes:
+        - /home/hick/homelab/containers/speedtest-tracker/config:/config
+        - /home/hick/homelab/containers/speedtest-tracker/config/keys:/config/keys
+
   stirling-pdf:
     image: docker.stirlingpdf.com/stirlingtools/stirling-pdf:latest
     container_name: stirling-pdf
