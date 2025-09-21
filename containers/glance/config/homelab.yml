@@ -354,7 +354,7 @@
               icon: di:pi-hole
             uptime-kuma:
               name: Uptime Kuma
-              url: http://server.local:3001/dashboard
+              url: http://server.local:8026/dashboard
               icon: di:uptime-kuma
             zabbix-frontend:
               parent: zabbix

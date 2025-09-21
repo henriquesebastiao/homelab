@@ -446,6 +446,15 @@ services:
       timeout: 5s
       retries: 5
   
+  uptime-kuma:
+    image: louislam/uptime-kuma:1
+    container_name: uptime-kuma
+    volumes:
+      - /home/hick/homelab/containers/uptime-kuma/data:/app/data
+    ports:
+      - 8026:3001
+    restart: always
+  
   vaultwarden:
     image: vaultwarden/server:latest
     container_name: vaultwarden

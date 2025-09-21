@@ -18,3 +18,4 @@ containers/nextcloud-redis/
 containers/immich/data/
 containers/immich-db/
 containers/pihole/etc/
+containers/uptime-kuma/data/
