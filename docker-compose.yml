@@ -96,6 +96,17 @@ services:
       - 8007:8080
     env_file: /home/hick/homelab/containers/glance/.env
   
+  go2rtc: # HTTP Port: 1984, RSTP Port: 8554, WebRTC Port: 8554
+    image: alexxit/go2rtc
+    container_name: go2rtc
+    network_mode: host       # important for WebRTC, HomeKit, UDP cameras
+    privileged: true         # only for FFmpeg hardware transcoding
+    restart: unless-stopped  # autorestart on fail or config change from WebUI
+    environment:
+      - TZ=America/Cuiaba  # timezone in logs
+    volumes:
+      - "/home/hick/homelab/containers/go2rtc/config:/config"   # folder for go2rtc.yaml file (edit from WebUI)
+
   grafana:
     image: grafana/grafana:latest
     container_name: grafana

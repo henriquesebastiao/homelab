@@ -286,6 +286,10 @@
               name: Duplicati
               url: http://server.local:8018
               icon: di:duplicati
+            go2rtc:
+              name: go2rtc
+              url: http://server.local:1984
+              icon: sh:go2rtc
             prometheus-manejo:
               hide: true
             umami-db:
