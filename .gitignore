@@ -8,3 +8,5 @@ containers/wallos/db/
 containers/wallos/logos/
 containers/beaverhabits/data/
 containers/vaultwarden/data/
+containers/calibre-web/config/
+containers/calibre-web/books/

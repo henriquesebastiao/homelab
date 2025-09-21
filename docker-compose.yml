@@ -16,6 +16,22 @@ services:
     restart: unless-stopped
     image: daya0576/beaverhabits:latest
   
+  calibre-web:
+    image: lscr.io/linuxserver/calibre-web:latest
+    container_name: calibre-web
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - DOCKER_MODS=linuxserver/mods:universal-calibre #optional
+      - OAUTHLIB_RELAX_TOKEN_SCOPE=1 #optional
+    volumes:
+      - /home/hick/homelab/containers/calibre-web/config:/config
+      - /home/hick/homelab/containers/calibre-web/books:/books
+    ports:
+      - 8024:8083
+    restart: unless-stopped
+  
   dozzle:
     container_name: dozzle
     image: amir20/dozzle:latest

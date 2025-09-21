@@ -262,6 +262,10 @@
               hide: true
             app-manejo:
               hide: true
+            calibre-web:
+              name: Calibre Web
+              url: http://server.local:8024
+              icon: di:calibre-web
             compose-zabbix-agent-1:
               parent: zabbix
               name: Agent

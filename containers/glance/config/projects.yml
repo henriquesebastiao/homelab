@@ -33,6 +33,8 @@
             adminer-manejo:
               parent: manejo
               name: Adminer
+            calibre-web:
+              hide: true
             client-dotum:
               parent: dotum
               name: Streamlit
