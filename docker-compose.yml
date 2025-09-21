@@ -250,6 +250,13 @@ services:
       - /home/hick/homelab/containers/wallos/db:/var/www/html/db
       - /home/hick/homelab/containers/wallos/logos:/var/www/html/images/uploads/logos
     restart: unless-stopped
+  
+  web-check:
+    image: lissy93/web-check:latest
+    container_name: web-check
+    restart: unless-stopped
+    ports:
+      - 8012:3000
 
 volumes:
   filebrowser_data:
