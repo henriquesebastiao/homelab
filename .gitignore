@@ -15,3 +15,5 @@ containers/go2rtc/config/
 containers/nextcloud/
 containers/nextcloud-db/
 containers/nextcloud-redis/
+containers/immich/data/
+containers/immich-db/

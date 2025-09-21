@@ -160,6 +160,16 @@
               hide: true
             vaultwarden:
               hide: true
+            immich:
+              hide: true
+            immich-machine-learning:
+              hide: true
+            immich-redis:
+              hide: true
+            immich-postgres:
+              hide: true
+            go2rtc:
+              hide: true
     - size: small
       widgets:
         - type: releases

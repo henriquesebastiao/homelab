@@ -416,6 +416,20 @@
             vaultwarden:
               name: Vaultwarden
               icon: auto-invert di:vaultwarden
+            immich:
+              name: Immich
+              url: http://172.16.0.2:8025
+              icon: di:immich
+              id: immich
+            immich-machine-learning:
+              parent: immich
+              name: Machine Learning
+            immich-redis:
+              parent: immich
+              name: Redis
+            immich-postgres:
+              parent: immich
+              name: Database
         - type: group
           widgets:
             - type: reddit
