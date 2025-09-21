@@ -12,3 +12,6 @@ containers/calibre-web/config/
 containers/calibre-web/books/
 containers/speedtest-tracker/config/
 containers/go2rtc/config/
+containers/nextcloud/
+containers/nextcloud-db/
+containers/nextcloud-redis/

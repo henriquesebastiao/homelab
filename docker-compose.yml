@@ -134,6 +134,51 @@ services:
     ports:
       - 8013:80
   
+  nextcloud:
+    image: nextcloud:stable-apache
+    container_name: nextcloud
+    # Currently needs to be run as root, if we run as uid 1000 this fails
+    # https://github.com/nextcloud/docker/blob/05026b029d37fc5cd488d4a4a2a79480e39841ba/21.0/apache/entrypoint.sh#L53-L77
+    # user: "1000:1000"
+    restart: on-failure
+    ports:
+      - 8002:80
+    volumes:
+      - /home/hick/homelab/containers/nextcloud/data:/var/www/html
+      - /home/hick/homelab/containers/nextcloud/db:/var/lib/mysql
+    environment:
+      - MYSQL_HOST=nextcloud-db
+      - REDIS_HOST=nextcloud-redis
+      - MYSQL_PASSWORD=moneyprintergobrrr
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+      - NEXTCLOUD_TRUSTED_DOMAINS=server.local:8002 172.16.0.2:8002
+    depends_on:
+      - nextcloud-db
+      - nextcloud-redis
+  
+  nextcloud-db:
+    image: mariadb:10.5.8
+    container_name: nextcloud-db
+    user: 1000:1000
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    restart: on-failure
+    volumes:
+      - /home/hick/homelab/containers/nextcloud-db/db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=moneyprintergobrrr
+      - MYSQL_PASSWORD=moneyprintergobrrr
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+  
+  nextcloud-redis:
+    image: redis:6.2.2-buster
+    container_name: nextcloud-redis
+    user: 1000:1000
+    restart: on-failure
+    volumes:
+      - /home/hick/homelab/containers/nextcloud-redis/data:/data
+  
   ocular-backend:
     image: ghcr.io/simonwep/genesis:v1.4.1
     container_name: ocular-backend

@@ -363,6 +363,13 @@
               name: Nextcloud
               url: http://server.local:8002/apps/dashboard/
               icon: di:nextcloud
+              id: nextcloud
+            nextcloud-db:
+              parent: nextcloud
+              name: Database
+            nextcloud-redis:
+              parent: nextcloud
+              name: Redis
             grafana:
               name: Grafana
               url: http://server.local:8004/
