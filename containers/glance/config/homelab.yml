@@ -444,6 +444,12 @@
           servers:
             - type: local
               name: Servidor
+              hide-mountpoints-by-default: true
+              hide-swap: true
+              mountpoints:
+                "/":
+                  name: Root
+                  hide: false
         - type: dns-stats
           service: pihole-v6
           url: http://172.16.0.2:8001
