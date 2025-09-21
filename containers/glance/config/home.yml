@@ -39,6 +39,37 @@
               links:
                 - title: Flightradar24
                   url: https://www.flightradar24.com/-10.21,-59.46/9
+        - type: custom-api
+          title: Next Race
+          cache: 2h
+          url: https://f1api.dev/api/current/next?timezone=America/Cuiaba
+          template: |
+            <div class="flex flex-column gap-10">
+              {{ $session := index (.JSON.Array "race") 0 }}
+              <p class="size-h5">
+                Round {{ .JSON.String "round" }}
+              </p>
+
+              <div class="margin-block-4">
+                <p class="color-highlight">{{ $session.String "raceName" }}</p>
+                <p class="color-primary">
+                  <span>Race</span>
+                  {{ $datetime := concat ($session.String "schedule.race.date") "T" ($session.String "schedule.race.time") }}
+                  <span
+                    class="color-highlight"
+                    title="{{ $session.String "schedule.race.date" }}"
+                    {{ parseRelativeTime "rfc3339" $datetime }}
+                  ></span>
+                </p>
+                <p class="size-h5">{{ $session.String "schedule.race.date" }} at {{ $session.String "schedule.race.time" }}</p>
+              </div>
+
+              <ul class="size-h5 attachments">
+                <li>{{ $session.String "circuit.country" }}</li>
+                <li>{{ $session.String "circuit.city" }}</li>
+                <li>{{ $session.String "circuit.circuitName" }}</li>
+              </ul>
+            </div>
 
     - size: full
       widgets:
