@@ -38,7 +38,7 @@
             client-dotum:
               parent: dotum
               name: Streamlit
-            compose-zabbix-database-1:
+            zabbix-database:
               hide: true
             confy-redis:
               parent: confy
@@ -56,7 +56,7 @@
               name: Manejo
               url: http://server.local:9000
               icon: si:fastapi
-            compose-zabbix-agent-1:
+            zabbix-agent:
               hide: true
             downtify:
               name: Downtify
@@ -67,7 +67,7 @@
               name: Poupy
               url: https://poupy.henriquesebastiao.com
               icon: si:django
-            compose-zabbix-server-1:
+            zabbix-server:
               hide: true
             db-poupy:
               parent: poupy
@@ -130,7 +130,7 @@
               hide: true
             uptime-kuma:
               hide: true
-            compose-zabbix-frontend-1:
+            zabbix-frontend:
               hide: true
             nextcloud:
               hide: true

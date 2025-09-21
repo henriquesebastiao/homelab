@@ -251,7 +251,7 @@
               hide: true
             client-dotum:
               hide: true
-            compose-zabbix-database-1:
+            zabbix-database:
               parent: zabbix
               name: Database
             confy-redis:
@@ -266,14 +266,14 @@
               name: Calibre Web
               url: http://server.local:8024
               icon: di:calibre-web
-            compose-zabbix-agent-1:
+            zabbix-agent:
               parent: zabbix
               name: Agent
             downtify:
               hide: true
             app-poupy:
               hide: true
-            compose-zabbix-server-1:
+            zabbix-server:
               id: zabbix
               name: Zabbix
               url: http://server.local:8003/
@@ -352,7 +352,7 @@
               name: Uptime Kuma
               url: http://server.local:3001/dashboard
               icon: di:uptime-kuma
-            compose-zabbix-frontend-1:
+            zabbix-frontend:
               parent: zabbix
               name: Front End
             nextcloud:
