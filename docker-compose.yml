@@ -202,6 +202,21 @@ services:
     environment:
       - JELLYFIN_PublishedServerUrl=http://server.local:8096
   
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: n8n
+    restart: unless-stopped
+    ports:
+      - 8027:5678
+    environment:
+      - GENERIC_TIMEZONE=America/Cuiaba
+      - TZ=America/Cuiaba
+      - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
+      - N8N_RUNNERS_ENABLED=true
+      - N8N_SECURE_COOKIE=false
+    volumes:
+      - /home/hick/homelab/containers/n8n/data:/home/node/.n8n
+  
   nextcloud:
     image: nextcloud:stable-apache
     container_name: nextcloud

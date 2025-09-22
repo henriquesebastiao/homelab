@@ -15,8 +15,9 @@ containers/go2rtc/config/
 containers/nextcloud/
 containers/nextcloud-db/
 containers/nextcloud-redis/
-containers/immich/data/
+containers/immich/
 containers/immich-db/
 containers/pihole/etc/
 containers/uptime-kuma/data/
 containers/jellyfin/
+containers/n8n/

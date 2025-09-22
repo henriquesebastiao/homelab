@@ -170,6 +170,8 @@
               hide: true
             go2rtc:
               hide: true
+            n8n:
+              hide: true
     - size: small
       widgets:
         - type: releases
