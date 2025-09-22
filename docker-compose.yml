@@ -303,6 +303,64 @@ services:
       - ocular-backend
       - ocular-frontend
   
+  paperless-broker:
+    image: docker.io/library/redis:8
+    container_name: paperless-broker
+    restart: unless-stopped
+    volumes:
+      - /home/hick/homelab/containers/paperless-broker/data:/data
+
+  paperless-db:
+    image: docker.io/library/postgres:17
+    container_name: paperless-db
+    restart: unless-stopped
+    volumes:
+      - /home/hick/homelab/containers/paperless-db/data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: paperless
+      POSTGRES_USER: paperless
+      POSTGRES_PASSWORD: paperless
+
+  paperless-webserver:
+    image: ghcr.io/paperless-ngx/paperless-ngx:latest
+    container_name: paperless-webserver
+    restart: unless-stopped
+    depends_on:
+      - paperless-db
+      - paperless-broker
+      - paperless-gotenberg
+      - paperless-tika
+    ports:
+      - 8028:8000
+    volumes:
+      - /home/hick/homelab/containers/paperless/data:/usr/src/paperless/data
+      - /home/hick/homelab/containers/paperless/media:/usr/src/paperless/media
+      - /home/hick/homelab/containers/paperless/export:/usr/src/paperless/export
+      - /home/hick/homelab/containers/paperless/consume:/usr/src/paperless/consume
+    env_file: paperless.env
+    environment:
+      PAPERLESS_REDIS: redis://paperless-broker:6379
+      PAPERLESS_DBHOST: paperless-db
+      PAPERLESS_TIKA_ENABLED: 1
+      PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://paperless-gotenberg:3000
+      PAPERLESS_TIKA_ENDPOINT: http://paperless-tika:9998
+
+  paperless-gotenberg:
+    image: docker.io/gotenberg/gotenberg:8.22
+    container_name: paperless-gotenberg
+    restart: unless-stopped
+    # The gotenberg chromium route is used to convert .eml files. We do not
+    # want to allow external content like tracking pixels or even javascript.
+    command:
+      - "gotenberg"
+      - "--chromium-disable-javascript=true"
+      - "--chromium-allow-list=file:///tmp/.*"
+
+  paperless-tika:
+    image: docker.io/apache/tika:latest
+    container_name: paperless-tika
+    restart: unless-stopped
+  
   pihole:
     container_name: pihole
     image: pihole/pihole:latest

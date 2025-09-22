@@ -172,6 +172,16 @@
               hide: true
             n8n:
               hide: true
+            paperless-webserver:
+              hide: true
+            paperless-db:
+              hide: true
+            paperless-broker:
+              hide: true
+            paperless-tika:
+              hide: true
+            paperless-gotenberg:
+              hide: true
     - size: small
       widgets:
         - type: releases

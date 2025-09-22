@@ -409,6 +409,23 @@
             ocular-nginx:
               parent: ocular
               name: Nginx
+            paperless-webserver:
+              name: Paperless
+              url: http://server.local:8028
+              icon: di:paperless
+              id: paperless
+            paperless-db:
+              parent: paperless
+              name: Database
+            paperless-broker:
+              parent: paperless
+              name: Broker
+            paperless-tika:
+              parent: paperless
+              name: Tika
+            paperless-gotenberg:
+              parent: paperless
+              name: Gotenberg
             wallos:
               name: Wallos
               url: http://server.local:8021
