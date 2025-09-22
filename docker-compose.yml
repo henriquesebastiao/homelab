@@ -187,6 +187,21 @@ services:
     ports:
       - 8013:80
   
+  jellyfin:
+    image: jellyfin/jellyfin
+    container_name: jellyfin
+    network_mode: 'host'
+    volumes:
+      - /home/hick/homelab/containers/jellyfin/config:/config
+      - /home/hick/homelab/containers/jellyfin/cache:/cache
+      - type: bind
+        source: /home/hick/homelab/containers/jellyfin/media
+        target: /media
+    restart: 'unless-stopped'
+    # Optional - alternative address used for autodiscovery
+    environment:
+      - JELLYFIN_PublishedServerUrl=http://server.local:8096
+  
   nextcloud:
     image: nextcloud:stable-apache
     container_name: nextcloud

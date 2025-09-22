@@ -19,3 +19,4 @@ containers/immich/data/
 containers/immich-db/
 containers/pihole/etc/
 containers/uptime-kuma/data/
+containers/jellyfin/
