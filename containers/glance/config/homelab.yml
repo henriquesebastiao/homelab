@@ -344,6 +344,35 @@
               name: Portainer
               url: http://server.local:8009/#!/3/docker/containers
               icon: sh:portainer-pink
+            shellhub-ui-1:
+              name: ShellHub
+              url: http://server.local:8029
+              icon: di:shellhub
+              id: shellhub
+            shellhub-mongo-1:
+              parent: shellhub
+              name: Mongo
+            shellhub-redis-1:
+              parent: shellhub
+              name: Redis
+            shellhub-cli-1:
+              parent: shellhub
+              name: CLI
+            shellhub-gateway-1:
+              parent: shellhub
+              name: Gateway
+            shellhub-api-1:
+              parent: shellhub
+              name: API
+            shellhub-ssh-1:
+              parent: shellhub
+              name: SSH
+            shellhub:
+              parent: shellhub
+              name: Agent
+            shellhub-connector:
+              parent: shellhub
+              name: Connector
             speedtest-tracker:
               name: Speedtest Tracker
               url: http://server.local:8008/admin

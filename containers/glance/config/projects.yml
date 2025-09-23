@@ -182,6 +182,24 @@
               hide: true
             paperless-gotenberg:
               hide: true
+            shellhub-ui-1:
+              hide: true
+            shellhub-mongo-1:
+              hide: true
+            shellhub-redis-1:
+              hide: true
+            shellhub-cli-1:
+              hide: true
+            shellhub-gateway-1:
+              hide: true
+            shellhub-api-1:
+              hide: true
+            shellhub-ssh-1:
+              hide: true
+            shellhub:
+              hide: true
+            shellhub-connector:
+              hide: true
     - size: small
       widgets:
         - type: releases
