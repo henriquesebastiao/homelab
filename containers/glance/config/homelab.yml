@@ -468,7 +468,7 @@
               icon: auto-invert di:vaultwarden
             immich:
               name: Immich
-              url: http://172.16.0.2:8025
+              url: http://server.local:8025
               icon: di:immich
               id: immich
             immich-machine-learning:
