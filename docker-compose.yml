@@ -202,6 +202,25 @@ services:
     environment:
       - JELLYFIN_PublishedServerUrl=http://server.local:8096
   
+  librespeed:
+    container_name: librespeed
+    image: ghcr.io/librespeed/speedtest:latest
+    restart: always
+    environment:
+      MODE: standalone
+      #TITLE: "LibreSpeed"
+      #TELEMETRY: "false"
+      #ENABLE_ID_OBFUSCATION: "false"
+      #REDACT_IP_ADDRESSES: "false"
+      #PASSWORD:
+      #EMAIL:
+      #DISABLE_IPINFO: "false"
+      #IPINFO_APIKEY: "your api key"
+      #DISTANCE: "km"
+      #WEBPORT: 8080
+    ports:
+      - 8030:8080 # webport mapping (host:container)
+  
   n8n:
     image: n8nio/n8n:latest
     container_name: n8n

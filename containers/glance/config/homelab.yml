@@ -480,6 +480,10 @@
             immich-postgres:
               parent: immich
               name: Database
+            librespeed:
+              name: LibreSpeed
+              url: http://server.local:8030
+              icon: di:librespeed
         - type: group
           widgets:
             - type: reddit

@@ -182,6 +182,8 @@
               hide: true
             paperless-gotenberg:
               hide: true
+            librespeed:
+              hide: true
             shellhub-ui-1:
               hide: true
             shellhub-mongo-1:
