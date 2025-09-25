@@ -484,6 +484,14 @@
               name: LibreSpeed
               url: http://server.local:8030
               icon: di:librespeed
+            traccar:
+              name: Traccar
+              url: http://server.local:8031
+              icon: di:traccar
+            syncthing:
+              name: Syncthing
+              url: http://server.local:8032
+              icon: di:syncthing
         - type: group
           widgets:
             - type: reddit

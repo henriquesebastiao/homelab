@@ -69,6 +69,10 @@
               icon: si:django
             zabbix-server:
               hide: true
+            traccar:
+              hide: true
+            syncthing:
+              hide: true
             db-poupy:
               parent: poupy
               name: Database

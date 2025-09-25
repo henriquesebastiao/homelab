@@ -506,6 +506,26 @@ services:
     volumes:
         - /home/hick/homelab/containers/speedtest-tracker/config:/config
         - /home/hick/homelab/containers/speedtest-tracker/config/keys:/config/keys
+    
+  syncthing:
+    image: syncthing/syncthing
+    container_name: syncthing
+    environment:
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - /home/hick/homelab/containers/syncthing:/var/syncthing
+    ports:
+      - 8032:8384 # Web UI
+      - 22000:22000/tcp # TCP file transfers
+      - 22000:22000/udp # QUIC file transfers
+      - 21027:21027/udp # Receive local discovery broadcasts
+    restart: unless-stopped
+    healthcheck:
+      test: curl -fkLsS -m 2 127.0.0.1:8384/rest/noauth/health | grep -o --color=never OK || exit 1
+      interval: 1m
+      timeout: 10s
+      retries: 3
 
   stirling-pdf:
     image: docker.stirlingpdf.com/stirlingtools/stirling-pdf:latest
@@ -516,6 +536,18 @@ services:
     environment:
       - LANGS=pt_BR
       - DISABLE_ADDITIONAL_FEATURES=true
+    
+  traccar:
+    image: traccar/traccar:latest
+    container_name: traccar
+    restart: unless-stopped
+    ports:
+      - 8031:8082
+      - 5000-5300:5000-5300
+      - 5000-5300:5000-5300/udp
+    volumes:
+      - /home/hick/homelab/containers/traccar/data:/opt/traccar/data:rw
+      - /home/hick/homelab/containers/traccar/logs:/opt/traccar/logs:rw
   
   umami:
     image: ghcr.io/umami-software/umami:postgresql-latest
