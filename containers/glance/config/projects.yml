@@ -126,11 +126,9 @@
               hide: true
             pihole:
               hide: true
-            pinepods:
+            gitea:
               hide: true
-            pinepods-valkey:
-              hide: true
-            pinepods-db:
+            qbittorrent:
               hide: true
             uptime-kuma:
               hide: true

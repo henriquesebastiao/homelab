@@ -329,21 +329,18 @@
               name: File Browser
               url: http://server.local:8015
               icon: di:filebrowser
-            pinepods:
-              name: Pinepods
-              url: http://server.local:8017/home
-              icon: sh:pinepods
-              id: pinepods
-            pinepods-db:
-              parent: pinepods
-              name: Database
-            pinepods-valkey:
-              parent: pinepods
-              name: Valkey
+            gitea:
+              name: Gitea
+              url: http://server.local:3000
+              icon: di:gitea
             portainer:
               name: Portainer
               url: http://server.local:8009/#!/3/docker/containers
               icon: sh:portainer-pink
+            qbittorrent:
+              name: qBittorrent
+              url: http://server.local:8033
+              icon: di:qbittorrent
             shellhub-ui-1:
               name: ShellHub
               url: http://server.local:8029
@@ -557,7 +554,6 @@
             - dockerhub:nextcloud
             - simonwep/ocular
             - dockerhub:pihole/pihole
-            - dockerhub:madeofpendletonwool/pinepods
             - dockerhub:portainer/portainer-ce
             - umami-software/umami
             - dockerhub:louislam/uptime-kuma

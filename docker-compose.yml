@@ -54,8 +54,9 @@ services:
     environment:
       DUPLICATI__WEBSERVICE_ALLOWED_HOSTNAMES: server.local
       DUPLICATI__WEBSERVICE_PASSWORD: duplicati-pass
-      PUID: 1000
-      PGID: 1000
+      # Executing as root to be able to read all files.
+      PUID: 0
+      PGID: 0
       SETTINGS_ENCRYPTION_KEY: duplicati-encryption-key
       TZ: "America/Cuiaba"
   
@@ -81,6 +82,19 @@ services:
     environment:
       - FB_ROOT=/data
       - FB_NOAUTH=true
+  
+  gitea:
+    image: docker.gitea.com/gitea:1.24.6-rootless
+    container_name: gitea
+    restart: always
+    volumes:
+      - /home/hick/homelab/containers/gitea/data:/var/lib/gitea
+      - /home/hick/homelab/containers/gitea/config:/etc/gitea
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - 8017:3000
+      - 8202:2222
   
   glance:
     container_name: glance
@@ -419,66 +433,6 @@ services:
       - SYS_NICE
     restart: unless-stopped
   
-  pinepods-db:
-    container_name: pinepods-db
-    image: postgres:latest
-    environment:
-      POSTGRES_DB: pinepods_database
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: myS3curepass
-      PGDATA: /var/lib/postgresql/data/pgdata
-    volumes:
-      - /home/hick/homelab/containers/pinepods/data/pgdata:/var/lib/postgresql/data
-    restart: always
-
-  pinepods-valkey:
-    image: valkey/valkey:8-alpine
-    restart: unless-stopped
-    container_name: pinepods-valkey
-
-  pinepods:
-    image: madeofpendletonwool/pinepods:latest
-    container_name: pinepods
-    restart: unless-stopped
-    ports:
-      - "8017:8040"
-    environment:
-      # Basic Server Info
-      SEARCH_API_URL: 'https://search.pinepods.online/api/search'
-      PEOPLE_API_URL: 'https://people.pinepods.online'
-      HOSTNAME: 'http://localhost:8040'
-      # Default Admin User Information
-      USERNAME: hick
-      PASSWORD: pinepods-pass
-      FULLNAME: Henrique Sebastião
-      EMAIL: contato@henriquesebastiao.com
-      # Database Vars
-      DB_TYPE: postgresql
-      DB_HOST: pinepods-db
-      DB_PORT: 5432
-      DB_USER: postgres
-      DB_PASSWORD: myS3curepass
-      DB_NAME: pinepods_database
-      # Valkey Settings
-      VALKEY_HOST: pinepods-valkey
-      VALKEY_PORT: 6379
-      # Enable or Disable Debug Mode for additional Printing
-      DEBUG_MODE: false
-      PUID: 1000
-      PGID: 1000
-      # Add timezone configuration
-      TZ: "America/Cuiaba"
-    volumes:
-      # Mount the download and backup locations on the server
-      - /home/hick/homelab/containers/pinepods/data/downloads:/opt/pinepods/downloads
-      - /home/hick/homelab/containers/pinepods/data/backups:/opt/pinepods/backups
-      # Timezone volumes, HIGHLY optional. Read the timezone notes below
-      - /etc/localtime:/etc/localtime:ro
-      - /etc/timezone:/etc/timezone:ro
-    depends_on:
-      - pinepods-db
-      - pinepods-valkey
-  
   portainer:
     image: portainer/portainer-ce:latest
     container_name: portainer
@@ -488,6 +442,24 @@ services:
       - portainer_data:/data
     ports:
       - 8009:9000
+  
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Cuiaba
+      - WEBUI_PORT=8033
+      - TORRENTING_PORT=6881
+    volumes:
+      - /home/hick/homelab/containers/qbittorrent/config:/config
+      - /home/hick/homelab/containers/qbittorrent/downloads:/downloads #optional
+    ports:
+      - 8033:8033
+      - 6881:6881
+      - 6881:6881/udp
+    restart: unless-stopped
   
   speedtest-tracker:
     image: lscr.io/linuxserver/speedtest-tracker:latest

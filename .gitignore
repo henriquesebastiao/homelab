@@ -27,4 +27,5 @@ containers/paperless-db/
 containers/paperless-broker/
 containers/syncthing/
 containers/traccar/
-obsidian/
+containers/gitea/
+containers/qbittorrent/
