@@ -3,7 +3,6 @@
 containers/pinepods/data/
 containers/homeassistant/data/
 containers/duplicati/config/
-containers/ocular/data/
 containers/wallos/db/
 containers/wallos/logos/
 containers/beaverhabits/data/

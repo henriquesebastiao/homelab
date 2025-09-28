@@ -150,12 +150,6 @@
               hide: true
             jellyfin:
               hide: true
-            ocular-backend:
-              hide: true
-            ocular-frontend:
-              hide: true
-            ocular-nginx:
-              hide: true
             wallos:
               hide: true
             beaverhabits:

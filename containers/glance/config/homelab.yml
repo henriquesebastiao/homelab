@@ -424,17 +424,6 @@
               name: Jellyfin
               url: http://server.local:8096/web/#/home.html
               icon: di:jellyfin
-            ocular-backend:
-              id: ocular
-              name: Ocular
-              url: http://server.local:8020
-              icon: di:ocular
-            ocular-frontend:
-              parent: ocular
-              name: Front-end
-            ocular-nginx:
-              parent: ocular
-              name: Nginx
             paperless-webserver:
               name: Paperless
               url: http://server.local:8028
