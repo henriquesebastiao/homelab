@@ -321,10 +321,6 @@
               name: Stirling PDF
               url: http://server.local:8011/?lang=pt_BR
               icon: di:stirling-pdf
-            excalidraw:
-              name: Excalidraw
-              url: http://server.local:8010
-              icon: di:excalidraw
             filebrowser:
               name: File Browser
               url: http://server.local:8015
@@ -493,9 +489,6 @@
           widgets:
             - type: reddit
               subreddit: Duplicati
-              show-thumbnails: true
-            - type: reddit
-              subreddit: Excalidraw
               show-thumbnails: true
             - type: reddit
               subreddit: grafana

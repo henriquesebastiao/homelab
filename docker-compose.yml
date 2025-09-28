@@ -60,13 +60,6 @@ services:
       SETTINGS_ENCRYPTION_KEY: duplicati-encryption-key
       TZ: "America/Cuiaba"
   
-  excalidraw:
-    image: ghcr.io/ozencb/excalidraw-persist:latest
-    container_name: excalidraw
-    restart: unless-stopped
-    ports:
-      - 8010:80
-
   filebrowser:
     image: filebrowser/filebrowser
     container_name: filebrowser

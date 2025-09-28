@@ -118,7 +118,7 @@
               hide: true
             stirling-pdf:
               hide: true
-            excalidraw:
+            onlyoffice:
               hide: true
             portainer:
               hide: true
