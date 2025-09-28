@@ -59,7 +59,7 @@ services:
       PGID: 0
       SETTINGS_ENCRYPTION_KEY: duplicati-encryption-key
       TZ: "America/Cuiaba"
-  
+
   filebrowser:
     image: filebrowser/filebrowser
     container_name: filebrowser

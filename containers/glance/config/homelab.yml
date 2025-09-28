@@ -327,7 +327,7 @@
               icon: di:filebrowser
             gitea:
               name: Gitea
-              url: http://server.local:3000
+              url: http://server.local:8017
               icon: di:gitea
             portainer:
               name: Portainer
@@ -383,7 +383,7 @@
               name: Front End
             nextcloud:
               name: Nextcloud
-              url: http://server.local:8002/apps/dashboard/
+              url: http://172.16.0.2:8002/apps/dashboard/
               icon: di:nextcloud
               id: nextcloud
             nextcloud-db:
