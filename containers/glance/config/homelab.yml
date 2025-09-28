@@ -396,6 +396,10 @@
               name: n8n
               url: http://server.local:8027
               icon: di:n8n
+            onlyoffice:
+              name: OnlyOffice
+              url: http://server.local:8034
+              icon: di:onlyoffice
             grafana:
               name: Grafana
               url: http://server.local:8004/

@@ -329,6 +329,18 @@ services:
       - ocular-backend
       - ocular-frontend
   
+  onlyoffice:
+    image: onlyoffice/documentserver:latest
+    container_name: onlyoffice
+    restart: unless-stopped
+    ports:
+      - 8034:80
+    volumes:
+      - /home/hick/homelab/containers/onlyoffice/data:/var/www/onlyoffice/Data
+      - /home/hick/homelab/containers/onlyoffice/logs:/var/log/onlyoffice
+      - /home/hick/homelab/containers/onlyoffice/lib:/var/lib/onlyoffice
+      - /home/hick/homelab/containers/onlyoffice/db:/var/lib/postgresql/data
+  
   paperless-broker:
     image: docker.io/library/redis:8
     container_name: paperless-broker
