@@ -529,6 +529,7 @@ services:
     container_name: uptime-kuma
     volumes:
       - /home/hick/homelab/containers/uptime-kuma/data:/app/data
+      - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - 8026:3001
     restart: always
