@@ -107,6 +107,12 @@
           </div>
           </div>
       
+      - type: bookmarks
+        groups:
+          - links:
+              - title: Code Server
+                url: http://server.local:8080
+      
       - type: custom-api
         title: Tailscale Devices
         title-url: https://login.tailscale.com/admin/machines
