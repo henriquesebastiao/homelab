@@ -299,6 +299,9 @@ services:
       - /home/hick/homelab/containers/onlyoffice/logs:/var/log/onlyoffice
       - /home/hick/homelab/containers/onlyoffice/lib:/var/lib/onlyoffice
       - /home/hick/homelab/containers/onlyoffice/db:/var/lib/postgresql/data
+    environment:
+      - JWT_SECRET=my_jwt_secret
+      - JWT_ENABLED=true
   
   paperless-broker:
     image: docker.io/library/redis:8
