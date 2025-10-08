@@ -32,6 +32,14 @@ services:
       - 8024:8083
     restart: unless-stopped
   
+  downtify:
+    container_name: downtify
+    image: henriquesebastiao/downtify:latest@sha256:31b9a22462b21cb79e23047075b0ab293adf4a452878c066cfd05af520786a3d
+    ports:
+      - '8035:8000'
+    volumes:
+      - /home/hick/homelab/containers/downtify/downloads:/downloads
+  
   dozzle:
     container_name: dozzle
     image: amir20/dozzle:latest

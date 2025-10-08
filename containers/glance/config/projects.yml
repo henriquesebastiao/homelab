@@ -21,10 +21,6 @@
             url: https://netmikro.henriquesebastiao.com/en/latest
           - title: Skyport
             url: https://skyport.henriquesebastiao.com/en/latest
-          - title: Downtify
-            url: https://downtify.henriquesebastiao.com
-          - title: Status
-            url: https://status.henriquesebastiao.com/status/projetos-pessoais
     
     - size: full
       widgets:
@@ -58,10 +54,6 @@
               icon: si:fastapi
             zabbix-agent:
               hide: true
-            downtify:
-              name: Downtify
-              url: http://server.local:9002
-              icon: si:fastapi
             app-poupy:
               id: poupy
               name: Poupy
@@ -197,6 +189,8 @@
             shellhub:
               hide: true
             shellhub-connector:
+              hide: true
+            downtify:
               hide: true
     - size: small
       widgets:
