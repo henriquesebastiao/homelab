@@ -1,0 +1,39 @@
+53 -> pihole
+1984 -> go2rtc
+6881 -> qbittorrent
+8001 -> pihole
+8002 -> nextcloud
+8003 -> zabbix
+8004 -> grafana
+8005 -> dozzle
+8006 -> umami
+8007 -> glance
+8008 -> speedtest-tracker
+8009 -> portainer
+8011 -> stirling-pdf
+8012 -> web-check
+8013 -> it-tools
+8015 -> filebrowser
+8017 -> gitea -> HTTP
+8018 -> duplicati
+8019 -> vaultwarden
+8021 -> wallos
+8023 -> beaverhabits
+8024 -> calibre-web
+8025 -> immich
+8026 -> uptime-kuma
+8027 -> n8n
+8030 -> librespeed
+8031 -> traccar
+8033 -> qbittorrent
+8034 -> onlyoffice
+8035 -> downtify
+8096 -> jellyfin
+8123 -> homeassistant
+8202 -> gitea -> SSH
+8028 -> paperless-webserver
+8032 -> syncthing
+10050 -> zabbix server
+22000 -> syncthing # TCP file transfers
+21027 -> syncthing # Receive local discovery broadcasts
+5000-5300 -> traccar
