@@ -290,7 +290,7 @@ services:
       - MYSQL_USER=nextcloud
   
   nextcloud-redis:
-    image: redis:6.2.2-buster
+    image: redis:6.2.6-buster
     container_name: nextcloud-redis
     user: 1000:1000
     restart: on-failure
