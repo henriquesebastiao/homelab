@@ -592,7 +592,7 @@ services:
       - zabbix-database
 
   zabbix-server:
-    image: zabbix/zabbix-server-pgsql:7.2.7-alpine@sha256:6512317f2569b98e9cc51e6306549f6b82cc19d03facf5accb90dec53f92ebf5
+    image: zabbix/zabbix-server-pgsql:7.4.3-alpine@sha256:8cd5a5aa244269b58f9e732fde3c919a85e94745bff5760f9426da94646329f6
     container_name: zabbix-server
     hostname: zabbix-server
     restart: on-failure
