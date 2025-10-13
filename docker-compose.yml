@@ -575,7 +575,7 @@ services:
       - 8012:3000
   
   zabbix-frontend:
-    image: zabbix/zabbix-web-nginx-pgsql:7.2.7-alpine@sha256:782f2997890cda38c971f35f4626f1d6121125b1ae178bd9f797ceb8f3db8675
+    image: zabbix/zabbix-web-nginx-pgsql:7.4.3-alpine@sha256:ff8fee0c2c7e0391865208fe107e605ee8cb62d1890a94fddb898c8ec9162a90
     hostname: zabbix-frontend
     container_name: zabbix-frontend
     restart: on-failure
