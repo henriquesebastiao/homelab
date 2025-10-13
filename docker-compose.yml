@@ -518,7 +518,7 @@ services:
       retries: 5
 
   umami-db:
-    image: postgres:18-alpine
+    image: postgres:15-alpine
     container_name: umami-db
     environment:
       POSTGRES_DB: umami
@@ -617,7 +617,7 @@ services:
       ZBX_SERVER_HOST: zabbix-server
 
   zabbix-database:
-    image: postgres:17.5-alpine3.20@sha256:ccd14e0306cef4c2943a4bda5a2c6a77201a426eb2576d888e5cdc28ccddca75
+    image: postgres:13.18-alpine3.20@sha256:77815c1f18ae761b0e503503a494475a03149d7ce544934ccecdbafdb3956c94
     container_name: zabbix-database
     hostname: zabbix-database
     restart: on-failure
