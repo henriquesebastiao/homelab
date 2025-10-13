@@ -7,6 +7,4 @@ updates:
     assignees:
       - "henriquesebastiao"
     ignore:
-      - dependency-name: "docker.io/library/postgres:*"
-        # Ignore versions of Postgres that are equal to or greater than 18
-        versions: [ ">=18" ]
+      - dependency-name: "postgres:*"
