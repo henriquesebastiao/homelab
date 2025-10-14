@@ -1,21 +1,4 @@
 services:
-  beaverhabits:
-    container_name: beaverhabits
-    user: 1000:1000 # User permissions of your docker or default user.
-    environment:
-      # See the link below to find all the environment variables
-      # https://github.com/daya0576/beaverhabits/wiki/Development#options
-      - HABITS_STORAGE=USER_DISK # DATABASE stores in a single SQLite database named habits.db. USER_DISK option saves in a local json file.
-      - TRUSTED_LOCAL_EMAIL=your@email.com # Skip authentication
-      - INDEX_HABIT_DATE_COLUMNS=5 # Customize the date columns for the index page.
-      - ENABLE_IOS_STANDALONE=true
-    volumes:
-      - /home/hick/homelab/containers/beaverhabits/data/:/app/.user/ # Change directory to match your docker file scheme.
-    ports:
-      - 8023:8080
-    restart: unless-stopped
-    image: daya0576/beaverhabits:latest
-  
   calibre-web:
     image: lscr.io/linuxserver/calibre-web:latest
     container_name: calibre-web
