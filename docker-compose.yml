@@ -320,7 +320,7 @@ services:
       - /home/hick/homelab/containers/paperless-broker/data:/data
 
   paperless-db:
-    image: docker.io/library/postgres:17
+    image: docker.io/library/postgres:18
     container_name: paperless-db
     restart: unless-stopped
     volumes:
