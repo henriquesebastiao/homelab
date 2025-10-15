@@ -23,6 +23,9 @@ services:
       - '8035:8000'
     volumes:
       - /home/hick/homelab/containers/downtify/downloads:/downloads
+    cpus: 1.5
+    mem_limit: 512m          # limite máximo de memória
+    mem_reservation: 256m    # memória "reservada" (soft limit)
   
   dozzle:
     container_name: dozzle
