@@ -396,7 +396,7 @@ services:
     restart: unless-stopped
   
   portainer:
-    image: portainer/portainer-ce:latest
+    image: portainer/portainer-ce:2.35.0@sha256:508cfeddff07c5a188fe0117d968249fb8242a8bfe8046ad2ad14fe78ac7edb5
     container_name: portainer
     restart: unless-stopped
     volumes:
