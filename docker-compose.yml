@@ -484,7 +484,7 @@ services:
       - /home/hick/homelab/containers/traccar/logs:/opt/traccar/logs:rw
   
   umami:
-    image: ghcr.io/umami-software/umami:postgresql-latest
+    image: ghcr.io/umami-software/umami:postgresql-v2.19.0@sha256:77264ce6951c6b131a91d99f1cfd720d9efac1eaaa12e104f21cf49408dd77e0
     container_name: umami
     ports:
       - 8006:3000
