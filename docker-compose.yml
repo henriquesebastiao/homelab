@@ -110,7 +110,7 @@ services:
       - "/home/hick/homelab/containers/go2rtc/config:/config"   # folder for go2rtc.yaml file (edit from WebUI)
 
   grafana:
-    image: grafana/grafana:latest
+    image: grafana/grafana:12.2.0@sha256:74144189b38447facf737dfd0f3906e42e0776212bf575dc3334c3609183adf7
     container_name: grafana
     restart: unless-stopped
     ports:
