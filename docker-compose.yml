@@ -472,7 +472,7 @@ services:
       - DISABLE_ADDITIONAL_FEATURES=true
     
   traccar:
-    image: traccar/traccar:latest
+    image: traccar/traccar:6.10.0@sha256:bff38968f98f4c1739fa2da7b586f9eb03de7968cb8e86c55f31b69d5fbc9a0c
     container_name: traccar
     restart: unless-stopped
     ports:
