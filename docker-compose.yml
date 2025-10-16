@@ -131,7 +131,7 @@ services:
   
   immich:
     container_name: immich
-    image: ghcr.io/immich-app/immich-server:${IMMICH_VERSION:-release}
+    image: ghcr.io/immich-app/immich-server:v2.1.0@sha256:72a9b9de6c6abfa7a9c9cdc244ae4d2bd9fea2ae00997f194cbd10aca72ea210
     volumes:
       - /home/hick/homelab/containers/immich/data:/data # Directory where photos and videos are stored
       - /etc/localtime:/etc/localtime:ro
@@ -148,7 +148,7 @@ services:
 
   immich-machine-learning:
     container_name: immich-machine-learning
-    image: ghcr.io/immich-app/immich-machine-learning:${IMMICH_VERSION:-release}
+    image: ghcr.io/immich-app/immich-machine-learning:v2.1.0@sha256:24bfef29bc5c0923c64c98810931eda1449a4b237e6704a715605761bc107ae4
     volumes:
       - model-cache:/cache
     env_file:
