@@ -442,7 +442,7 @@ services:
         - /home/hick/homelab/containers/speedtest-tracker/config/keys:/config/keys
     
   syncthing:
-    image: syncthing/syncthing
+    image: syncthing/syncthing:2.0.10@sha256:3faeb52baa7de3fbe7007cecc6829a4bc71cc6ac62d3967459a8228979c38943
     container_name: syncthing
     environment:
       - PUID=1000
