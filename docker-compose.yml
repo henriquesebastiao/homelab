@@ -56,7 +56,7 @@ services:
       TZ: "America/Cuiaba"
 
   filebrowser:
-    image: filebrowser/filebrowser
+    image: filebrowser/filebrowser:v2.44.0@sha256:f63369420687482dfdf252f80ef675f44ca1d1cd3a631261fb424136214fe629
     container_name: filebrowser
     restart: unless-stopped
     user: "0:0" # Run as root to avoid permission issues
