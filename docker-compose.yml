@@ -239,7 +239,7 @@ services:
       - /home/hick/homelab/containers/n8n/data:/home/node/.n8n
   
   nextcloud:
-    image: nextcloud:stable-apache
+    image: nextcloud:31.0.9-apache@sha256:c05096c9f9c9141438be9270b4ee2ec80c927673e83a088c3a76d27b783d5aed
     container_name: nextcloud
     # Currently needs to be run as root, if we run as uid 1000 this fails
     # https://github.com/nextcloud/docker/blob/05026b029d37fc5cd488d4a4a2a79480e39841ba/21.0/apache/entrypoint.sh#L53-L77
