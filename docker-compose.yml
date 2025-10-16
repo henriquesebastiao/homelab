@@ -37,7 +37,7 @@ services:
       - 8005:8080
   
   duplicati:
-    image: lscr.io/linuxserver/duplicati:2.1.0@sha256:6f9d58c8183dcfee25f0a36077b14ef278f06e51c47aa4d44c51f1d5360f44a9
+    image: linuxserver/duplicati:2.1.0@sha256:6f9d58c8183dcfee25f0a36077b14ef278f06e51c47aa4d44c51f1d5360f44a9
     container_name: duplicati
     restart: unless-stopped
     ports:
@@ -406,7 +406,7 @@ services:
       - 8009:9000
   
   qbittorrent:
-    image: lscr.io/linuxserver/qbittorrent:5.1.2@sha256:884b9b6e9c6467d9c1fb16551e03cb1f66ad32c412ce4bb492e206e0bd0f55b5
+    image: linuxserver/qbittorrent:5.1.2@sha256:884b9b6e9c6467d9c1fb16551e03cb1f66ad32c412ce4bb492e206e0bd0f55b5
     container_name: qbittorrent
     environment:
       - PUID=1000
