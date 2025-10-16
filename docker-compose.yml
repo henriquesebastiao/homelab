@@ -540,19 +540,6 @@ services:
     ports:
       - 8019:80
   
-  wallos:
-    container_name: wallos
-    image: bellamy/wallos:latest
-    ports:
-      - 8021:80
-    environment:
-      TZ: America/Cuiaba
-    # Volumes store your data between container upgrades
-    volumes:
-      - /home/hick/homelab/containers/wallos/db:/var/www/html/db
-      - /home/hick/homelab/containers/wallos/logos:/var/www/html/images/uploads/logos
-    restart: unless-stopped
-  
   web-check:
     image: lissy93/web-check:latest
     container_name: web-check

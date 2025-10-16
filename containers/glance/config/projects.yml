@@ -142,10 +142,6 @@
               hide: true
             jellyfin:
               hide: true
-            wallos:
-              hide: true
-            beaverhabits:
-              hide: true
             vaultwarden:
               hide: true
             immich:

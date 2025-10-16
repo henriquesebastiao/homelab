@@ -448,14 +448,6 @@
             paperless-gotenberg:
               parent: paperless
               name: Gotenberg
-            wallos:
-              name: Wallos
-              url: http://server.local:8021
-              icon: sh:wallos
-            beaverhabits:
-              name: Habit Tracker
-              icon: auto-invert di:beaver-habit-tracker
-              url: http://server.local:8023
             vaultwarden:
               name: Vaultwarden
               icon: auto-invert di:vaultwarden
@@ -552,5 +544,4 @@
             - dockerhub:louislam/uptime-kuma
             - dockerhub:bellamy/wallos
             - dockerhub:lissy93/web-check
-            - dockerhub:daya0576/beaverhabits
             - dockerhub:vaultwarden/server
