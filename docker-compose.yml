@@ -284,7 +284,7 @@ services:
       - /home/hick/homelab/containers/nextcloud-redis/data:/data
   
   onlyoffice:
-    image: onlyoffice/documentserver:latest
+    image: onlyoffice/documentserver:9.1.0.1@sha256:34b92f4a67bfd939bd6b75893e8217556e3b977f81e49472f7e28737b741ba1d
     container_name: onlyoffice
     restart: unless-stopped
     ports:
