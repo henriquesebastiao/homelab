@@ -29,7 +29,7 @@ services:
   
   dozzle:
     container_name: dozzle
-    image: amir20/dozzle:latest
+    image: amir20/dozzle:8.14.4@sha256:e944224b30d0ac8771d7e54c5ae0dfb30859d6b7e590b65e90bafe39c15c46ce
     restart: unless-stopped
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
