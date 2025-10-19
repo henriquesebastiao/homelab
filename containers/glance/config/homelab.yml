@@ -411,10 +411,6 @@
               name: Grafana
               url: http://server.local:8004/
               icon: di:grafana
-            homeassistant:
-              name: Home Assistant
-              url: http://server.local:8123/lovelace/0
-              icon: di:home-assistant
             cloudflared:
               name: Cloudflared
               icon: di:cloudflare
@@ -484,9 +480,6 @@
               show-thumbnails: true
             - type: reddit
               subreddit: grafana
-              show-thumbnails: true
-            - type: reddit
-              subreddit: homeassistant
               show-thumbnails: true
             - type: reddit
               subreddit: jellyfin
