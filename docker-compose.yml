@@ -72,7 +72,7 @@ services:
       - FB_NOAUTH=true
   
   gitea:
-    image: docker.gitea.com/gitea:1.24.6-rootless
+    image: docker.gitea.com/gitea:1.24.7-rootless
     container_name: gitea
     restart: always
     volumes:
