@@ -347,7 +347,7 @@ services:
   
   pihole:
     container_name: pihole
-    image: pihole/pihole:2025.08.0@sha256:90a1412b3d3037d1c22131402bde19180d898255b584d685c84d943cf9c14821
+    image: pihole/pihole:2025.10.2@sha256:db6cdcd9f5d24401f4724001cb82c73c8a843c273d9a74d34c4e46119e507516
     ports:
       # DNS Ports
       - "53:53/tcp"
