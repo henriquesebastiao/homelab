@@ -213,7 +213,7 @@ services:
       - 8030:8080 # webport mapping (host:container)
   
   n8n:
-    image: n8nio/n8n:1.117.2@sha256:c7dae935e8657559bf5b6d9c9e8b074d67a55e90fd7a227bae3e668beec3bb62
+    image: n8nio/n8n:1.117.3@sha256:90bf64ec238b88908389694b5ace00e5c17ea5d4a0af812dd266d7cfcd40984f
     container_name: n8n
     restart: unless-stopped
     ports:
