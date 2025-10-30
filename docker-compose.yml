@@ -569,7 +569,7 @@ services:
       - zabbix-database
 
   zabbix-agent:
-    image: zabbix/zabbix-agent2:7.4.3-alpine@sha256:167a7b515f3d583315896c7409036afb2afa505bb17c4a32b8f08b1800cf3851
+    image: zabbix/zabbix-agent2:7.4.4-alpine@sha256:5d7907e401c70d3a4fc5b6f8123d0c92b901c72e65f0b3d60e507ebd9661b90c
     container_name: zabbix-agent
     hostname: zabbix-agent
     restart: on-failure
