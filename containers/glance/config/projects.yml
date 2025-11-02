@@ -61,8 +61,6 @@
               icon: si:django
             zabbix-server:
               hide: true
-            traccar:
-              hide: true
             syncthing:
               hide: true
             db-poupy:
@@ -102,21 +100,13 @@
             web-confy-server:
               parent: confy
               name: Nginx
-            web-check:
-              hide: true
-            it-tools:
-              hide: true
             stirling-pdf:
               hide: true
             onlyoffice:
               hide: true
-            portainer:
-              hide: true
             speedtest-tracker:
               hide: true
             pihole:
-              hide: true
-            gitea:
               hide: true
             qbittorrent:
               hide: true
@@ -165,24 +155,6 @@
             paperless-gotenberg:
               hide: true
             librespeed:
-              hide: true
-            shellhub-ui-1:
-              hide: true
-            shellhub-mongo-1:
-              hide: true
-            shellhub-redis-1:
-              hide: true
-            shellhub-cli-1:
-              hide: true
-            shellhub-gateway-1:
-              hide: true
-            shellhub-api-1:
-              hide: true
-            shellhub-ssh-1:
-              hide: true
-            shellhub:
-              hide: true
-            shellhub-connector:
               hide: true
             downtify:
               hide: true

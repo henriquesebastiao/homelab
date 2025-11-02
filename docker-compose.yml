@@ -71,19 +71,6 @@ services:
       - FB_ROOT=/data
       - FB_NOAUTH=true
   
-  gitea:
-    image: docker.gitea.com/gitea:1.25.0-rootless
-    container_name: gitea
-    restart: always
-    volumes:
-      - /home/hick/homelab/containers/gitea/data:/var/lib/gitea
-      - /home/hick/homelab/containers/gitea/config:/etc/gitea
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
-    ports:
-      - 8017:3000
-      - 8202:2222
-  
   glance:
     container_name: glance
     image: glanceapp/glance:v0.8.4@sha256:6df86a7e8868d1eda21f35205134b1962c422957e42a0c44d4717c8e8f741b1a
@@ -170,13 +157,6 @@ services:
       - /home/hick/homelab/containers/immich-db/db:/var/lib/postgresql/data
     shm_size: 128mb
     restart: always
-
-  it-tools:
-    image: corentinth/it-tools:2024.10.22-7ca5933@sha256:8b8128748339583ca951af03dfe02a9a4d7363f61a216226fc28030731a5a61f
-    container_name: it-tools
-    restart: unless-stopped
-    ports:
-      - 8013:80
   
   jellyfin:
     image: jellyfin/jellyfin:10.11.1@sha256:c7dd335d455c95ad3fe7550824d93ceb911914bf4210e7899e11f9611ae53a92
@@ -384,16 +364,6 @@ services:
       - SYS_NICE
     restart: unless-stopped
   
-  portainer:
-    image: portainer/portainer-ce:2.35.0@sha256:508cfeddff07c5a188fe0117d968249fb8242a8bfe8046ad2ad14fe78ac7edb5
-    container_name: portainer
-    restart: unless-stopped
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - portainer_data:/data
-    ports:
-      - 8009:9000
-  
   qbittorrent:
     image: linuxserver/qbittorrent:5.1.2@sha256:098d4340c0709a9ddbc7010ca21900238388454e20182d52b9723b40a2a44293
     container_name: qbittorrent
@@ -459,18 +429,6 @@ services:
     environment:
       - LANGS=pt_BR
       - DISABLE_ADDITIONAL_FEATURES=true
-    
-  traccar:
-    image: traccar/traccar:6.10.0@sha256:bff38968f98f4c1739fa2da7b586f9eb03de7968cb8e86c55f31b69d5fbc9a0c
-    container_name: traccar
-    restart: unless-stopped
-    ports:
-      - 8031:8082
-      - 5000-5300:5000-5300
-      - 5000-5300:5000-5300/udp
-    volumes:
-      - /home/hick/homelab/containers/traccar/data:/opt/traccar/data:rw
-      - /home/hick/homelab/containers/traccar/logs:/opt/traccar/logs:rw
   
   umami:
     image: ghcr.io/umami-software/umami:postgresql-v2.19.0@sha256:77264ce6951c6b131a91d99f1cfd720d9efac1eaaa12e104f21cf49408dd77e0
@@ -528,13 +486,6 @@ services:
       - /home/hick/homelab/containers/vaultwarden/data/:/data/
     ports:
       - 8019:80
-  
-  web-check:
-    image: lissy93/web-check:latest
-    container_name: web-check
-    restart: unless-stopped
-    ports:
-      - 8012:3000
   
   zabbix-frontend:
     image: zabbix/zabbix-web-nginx-pgsql:7.4.4-alpine@sha256:ff54eba500e21d9d00116c6d285b687653f8a1e19b17c85ab75039ee02bdea3f
@@ -596,5 +547,4 @@ volumes:
   filebrowser_config:
   grafana-storage:
   model-cache:
-  portainer_data:
   umami-db-data:

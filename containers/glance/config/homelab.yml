@@ -316,14 +316,6 @@
               hide: true
             web-confy-server:
               hide: true
-            web-check:
-              name: Web Check
-              url: http://server.local:8012
-              icon: di:web-check-dark
-            it-tools:
-              name: IT Tools
-              url: http://server.local:8013
-              icon: di:it-tools-light
             stirling-pdf:
               name: Stirling PDF
               url: http://server.local:8011/?lang=pt_BR
@@ -332,47 +324,10 @@
               name: File Browser
               url: http://server.local:8015
               icon: di:filebrowser
-            gitea:
-              name: Gitea
-              url: http://server.local:8017
-              icon: di:gitea
-            portainer:
-              name: Portainer
-              url: http://server.local:8009/#!/3/docker/containers
-              icon: sh:portainer-pink
             qbittorrent:
               name: qBittorrent
               url: http://server.local:8033
               icon: di:qbittorrent
-            shellhub-ui-1:
-              name: ShellHub
-              url: http://server.local:8029
-              icon: di:shellhub
-              id: shellhub
-            shellhub-mongo-1:
-              parent: shellhub
-              name: Mongo
-            shellhub-redis-1:
-              parent: shellhub
-              name: Redis
-            shellhub-cli-1:
-              parent: shellhub
-              name: CLI
-            shellhub-gateway-1:
-              parent: shellhub
-              name: Gateway
-            shellhub-api-1:
-              parent: shellhub
-              name: API
-            shellhub-ssh-1:
-              parent: shellhub
-              name: SSH
-            shellhub:
-              parent: shellhub
-              name: Agent
-            shellhub-connector:
-              parent: shellhub
-              name: Connector
             speedtest-tracker:
               name: Speedtest Tracker
               url: http://server.local:8008/admin
@@ -465,10 +420,6 @@
               name: LibreSpeed
               url: http://server.local:8030
               icon: di:librespeed
-            traccar:
-              name: Traccar
-              url: http://server.local:8031
-              icon: di:traccar
             syncthing:
               name: Syncthing
               url: http://server.local:8032
@@ -489,9 +440,6 @@
               show-thumbnails: true
             - type: reddit
               subreddit: pihole
-              show-thumbnails: true
-            - type: reddit
-              subreddit: portainer
               show-thumbnails: true
             - type: reddit
               subreddit: vaultwarden
@@ -527,14 +475,11 @@
             - dockerhub:filebrowser/filebrowser
             - dockerhub:grafana/grafana:latest
             - gramps-project/gramps-web
-            - dockerhub:corentinth/it-tools
             - dockerhub:jellyfin/jellyfin
             - dockerhub:nextcloud
             - simonwep/ocular
             - dockerhub:pihole/pihole
-            - dockerhub:portainer/portainer-ce
             - umami-software/umami
             - dockerhub:louislam/uptime-kuma
             - dockerhub:bellamy/wallos
-            - dockerhub:lissy93/web-check
             - dockerhub:vaultwarden/server
