@@ -383,7 +383,7 @@ services:
     restart: unless-stopped
   
   speedtest-tracker:
-    image: linuxserver/speedtest-tracker:1.6.9@sha256:bb3f9fcc4cc571c70b6a13fdbec353d005eb67c1797b7c73937dba2086dd2a02
+    image: linuxserver/speedtest-tracker:1.6.11@sha256:81257a18cf15522e4e372d9857c6c51e54f7e60b2a5d243250cbf778a1ac6ae3
     restart: unless-stopped
     container_name: speedtest-tracker
     ports:
