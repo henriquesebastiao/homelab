@@ -21,9 +21,6 @@ containers/pihole/etc/
 containers/uptime-kuma/data/
 containers/jellyfin/
 containers/n8n/
-containers/paperless/
-containers/paperless-db/
-containers/paperless-broker/
 containers/syncthing/
 containers/qbittorrent/
 containers/onlyoffice/

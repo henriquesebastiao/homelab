@@ -22,7 +22,6 @@
 8034 -> onlyoffice
 8035 -> downtify
 8096 -> jellyfin
-8028 -> paperless-webserver
 8032 -> syncthing
 10050 -> zabbix server
 22000 -> syncthing # TCP file transfers
