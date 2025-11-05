@@ -1,0 +1,41 @@
+- name: Estudos
+  columns:
+    - size: small
+      widgets:
+        - type: bookmarks
+          groups:
+            - links:
+                - title: Udemy
+                  url: https://www.udemy.com
+                - title: CS50x
+                  url: https://cs50.harvard.edu/x/
+                - title: AWS Skill Builder
+                  url: https://explore.skillbuilder.aws/learn/mycourses
+                - title: Khan Academy
+                  url: https://pt.khanacademy.org
+                - title: edX
+                  url: https://www.edx.org
+            - title: Documentação
+              color: 203 83 65
+              links:
+                - title: Python
+                  url: https://docs.python.org/pt-br/
+                - title: FastAPI
+                  url: https://fastapi.tiangolo.com/pt/
+                - title: Android
+                  url: https://developer.android.com/develop?hl=pt-br
+                - title: MDN Web Docs
+                  url: https://developer.mozilla.org
+                - title: W3Schools
+                  url: https://www.w3schools.com
+                - title: Stack Overflow
+                  url: https://stackoverflow.com
+
+    - size: full
+      widgets:
+        - type: videos
+          # style: grid-cards
+          channels:
+            - UC8EGrwe_DXSzrCQclf_pv9g # debxp
+            - UCAaKeg-BocRqphErdtIUFFw # Eduardo Mendes
+            - UCJnKVGmXRXrH49Tvrx5X0Sw # LINUXtips

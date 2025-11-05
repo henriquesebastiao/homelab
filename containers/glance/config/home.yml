@@ -14,6 +14,8 @@
                   url: https://calendar.google.com
                 - title: Email
                   url: https://mail.google.com/mail/u/0/#inbox
+                - title: Nextcloud
+                  url: http://172.16.0.2:8002/apps/files/files
                 - title: Drive
                   url: https://drive.google.com/drive/u/0/my-drive
                 - title: GitHub
@@ -25,8 +27,6 @@
                   url: https://www.reddit.com
                 - title: Mastodon
                   url: https://bolha.us/home
-                - title: WhatsApp
-                  url: https://web.whatsapp.com
             - title: Technology
               color: 203 83 65
               links:
@@ -46,37 +46,6 @@
               links:
                 - title: Flightradar24
                   url: https://www.flightradar24.com/-10.21,-59.46/9
-        - type: custom-api
-          title: Next Race
-          cache: 2h
-          url: https://f1api.dev/api/current/next?timezone=America/Cuiaba
-          template: |
-            <div class="flex flex-column gap-10">
-              {{ $session := index (.JSON.Array "race") 0 }}
-              <p class="size-h5">
-                Round {{ .JSON.String "round" }}
-              </p>
-
-              <div class="margin-block-4">
-                <p class="color-highlight">{{ $session.String "raceName" }}</p>
-                <p class="color-primary">
-                  <span>Race</span>
-                  {{ $datetime := concat ($session.String "schedule.race.date") "T" ($session.String "schedule.race.time") }}
-                  <span
-                    class="color-highlight"
-                    title="{{ $session.String "schedule.race.date" }}"
-                    {{ parseRelativeTime "rfc3339" $datetime }}
-                  ></span>
-                </p>
-                <p class="size-h5">{{ $session.String "schedule.race.date" }} at {{ $session.String "schedule.race.time" }}</p>
-              </div>
-
-              <ul class="size-h5 attachments">
-                <li>{{ $session.String "circuit.country" }}</li>
-                <li>{{ $session.String "circuit.city" }}</li>
-                <li>{{ $session.String "circuit.circuitName" }}</li>
-              </ul>
-            </div>
 
     - size: full
       widgets:
@@ -172,21 +141,26 @@
 
         - type: videos
           channels:
+            # Tecnologia e Programação
             - UCEf5U1dB5a2e2S-XUlnhxSA # Diolinux
-            - UCcGk83PAQ5aGR7IVlD_cBaw # Brincando com Ideias
             - UCQQNn842GN-Jh4GaK0WcGuA # Daniel Romero
-            - UC8EGrwe_DXSzrCQclf_pv9g # debxp
-            - UCAaKeg-BocRqphErdtIUFFw # Eduardo Mendes
             - UCib793mnUOhWymCh2VJKplQ # Fabio Akita
-            - UCqNBcXkVNrotGBQZmE3Hyaw # infinitamente
-            - UCcw2dzrBBmt4HriBCg_iLng # Julio Lobo
-            - UCJnKVGmXRXrH49Tvrx5X0Sw # LINUXtips
-            - UCR9sFzaG9Ia_kXJhfxtFMBA # melodysheep
             - UClz3DneoYlccluy4hBlx86Q # Slackjeff
-            - UClQfWNWk9UsUj317ce5FtXg # Sobrevivencialismo
-            - UC7Xog4-zhRQKbahvs27I7Ow # Pinho
+            - UCcGk83PAQ5aGR7IVlD_cBaw # Brincando com Ideias
+
+            # Curiosidades
+            - UCqNBcXkVNrotGBQZmE3Hyaw # infinitamente
             - UC9a8Z6Sp6eb2s3O79pX5Zvg # Tech Minds
-            - UCWTFSxxRBNI94-UlD6IY99g # Fabiano - Carpintaria Rústica
+
+            # Sobrevivencialismo e Vida ao Ar Livre
+            - UClQfWNWk9UsUj317ce5FtXg # Sobrevivencialismo
+
+            # Psicologia e Desenvolvimento Pessoal
+            - UCcw2dzrBBmt4HriBCg_iLng # Julio Lobo
+            - UC7Xog4-zhRQKbahvs27I7Ow # Pinho
+
+            # Ciência e Espaço
+            - UCR9sFzaG9Ia_kXJhfxtFMBA # melodysheep
 
         - type: group
           widgets:

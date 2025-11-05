@@ -453,16 +453,12 @@
           show-source-icon: true
           repositories:
             - dockerhub:cloudflare/cloudflared
-            - dockerhub:docmost/docmost
             - dockerhub:amir20/dozzle
             - dockerhub:filebrowser/filebrowser
             - dockerhub:grafana/grafana:latest
-            - gramps-project/gramps-web
             - dockerhub:jellyfin/jellyfin
             - dockerhub:nextcloud
-            - simonwep/ocular
             - dockerhub:pihole/pihole
             - umami-software/umami
             - dockerhub:louislam/uptime-kuma
-            - dockerhub:bellamy/wallos
             - dockerhub:vaultwarden/server
