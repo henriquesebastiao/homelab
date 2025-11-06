@@ -148,6 +148,8 @@
               hide: true
             downtify:
               hide: true
+            metube:
+              hide: true
     - size: small
       widgets:
         - type: releases

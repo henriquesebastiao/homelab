@@ -192,6 +192,18 @@ services:
     ports:
       - 8030:8080 # webport mapping (host:container)
   
+  metube:
+    container_name: metube
+    image: ghcr.io/alexta69/metube:2025.10.23@sha256:46be73330a37503772249bee27d03dd2c831ab3d135c932abbc448fcbe7e57a6
+    restart: unless-stopped
+    ports:
+      - 8009:8081
+    volumes:
+      - /home/hick/homelab/containers/metube/downloads:/downloads
+    environment:
+      - DOWNLOAD_MODE=sequential
+      - DEFAULT_THEME=dark
+  
   n8n:
     image: n8nio/n8n:1.118.2@sha256:a17dbca282c95d2aa5021f0860ca136c1bda529daaa37dbece117c029d65ca39
     container_name: n8n

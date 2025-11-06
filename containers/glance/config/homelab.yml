@@ -407,6 +407,10 @@
               name: Syncthing
               url: http://server.local:8032
               icon: di:syncthing
+            metube:
+              name: MeTube
+              url: http://server.local:8009
+              icon: sh:metube
         - type: group
           widgets:
             - type: reddit
@@ -457,6 +461,7 @@
             - dockerhub:filebrowser/filebrowser
             - dockerhub:grafana/grafana:latest
             - dockerhub:jellyfin/jellyfin
+            - alexta69/metube
             - dockerhub:nextcloud
             - dockerhub:pihole/pihole
             - umami-software/umami
