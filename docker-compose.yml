@@ -442,7 +442,7 @@ services:
       - 8019:80
   
   zabbix-frontend:
-    image: zabbix/zabbix-web-nginx-pgsql:7.4.4-alpine@sha256:ff54eba500e21d9d00116c6d285b687653f8a1e19b17c85ab75039ee02bdea3f
+    image: zabbix/zabbix-web-nginx-pgsql:7.4.5-alpine@sha256:b91e9fb6067ffca15a867f7b416cc1a1599d72c1047ddda3056e23cd9b45dafd
     hostname: zabbix-frontend
     container_name: zabbix-frontend
     restart: on-failure
