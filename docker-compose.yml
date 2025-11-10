@@ -37,7 +37,7 @@ services:
       - 8005:8080
   
   duplicati:
-    image: linuxserver/duplicati:2.2.0@sha256:8c9bf31dac0b40a30c0c9fae5496654e43a42ac34b9fe751432a5267f38e301f
+    image: linuxserver/duplicati:2.2.0@sha256:ed6cee6ea5d9ebe28f7eae68adb8a8760869d316d42c2a56eec489dbf2f95232
     container_name: duplicati
     restart: unless-stopped
     ports:
