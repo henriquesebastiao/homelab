@@ -209,13 +209,16 @@ services:
     container_name: n8n
     restart: unless-stopped
     ports:
-      - 8027:5678
+      - 8027:443
     environment:
       - GENERIC_TIMEZONE=America/Cuiaba
       - TZ=America/Cuiaba
       - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
       - N8N_RUNNERS_ENABLED=true
       - N8N_SECURE_COOKIE=false
+      - N8N_HOST=n8n.henriquesebastiao.com
+      - N8N_PORT=443
+      - N8N_PROTOCOL=https
     volumes:
       - /home/hick/homelab/containers/n8n/data:/home/node/.n8n
   
