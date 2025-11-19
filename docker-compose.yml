@@ -205,7 +205,7 @@ services:
       - DEFAULT_THEME=dark
   
   n8n:
-    image: n8nio/n8n:1.119.2@sha256:f4fa73d4c9672803f989d59bf02ae9cf5333045ea02c9058e3a5653bfe56654b
+    image: n8nio/n8n:1.120.3@sha256:e047444709aa5ce8e2be7c952b51d95c35989ea8a36ed7b4ed478c2193df5825
     container_name: n8n
     restart: unless-stopped
     ports:
