@@ -86,7 +86,7 @@ services:
     env_file: /home/hick/homelab/containers/glance/.env
   
   go2rtc: # HTTP Port: 1984, RSTP Port: 8554, WebRTC Port: 8554
-    image: alexxit/go2rtc:1.9.11@sha256:64ab39fdcf7571075f4ef1a818a1019aa359e2e730600771d265b50a94449532
+    image: alexxit/go2rtc:1.9.12@sha256:baef0aa19d759fcfd31607b34ce8eaf039d496282bba57731e6ae326896d7640
     container_name: go2rtc
     network_mode: host       # important for WebRTC, HomeKit, UDP cameras
     privileged: true         # only for FFmpeg hardware transcoding
