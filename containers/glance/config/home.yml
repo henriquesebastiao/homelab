@@ -99,12 +99,8 @@
                   title: PyPi Blog
                 
                 # Podcasts
-                - url: https://feeds.libsyn.com/556337/rss
-                  title: Não me entenda mal
                 - url: https://www.b9.com.br/shows/naruhodo/feed/
                   title: Naruhodo
-                - url: https://www.spreaker.com/show/5920998/episodes/feed
-                  title: O Alvissareiro
                 - url: https://feeds.feedburner.com/XadrezVerbal
                   title: Xadrez Verbal
                 

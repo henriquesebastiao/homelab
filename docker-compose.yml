@@ -222,6 +222,19 @@ services:
     volumes:
       - /home/hick/homelab/containers/n8n/data:/home/node/.n8n
   
+  n8n-postgres-chat-memory:
+    image: postgres:18-alpine@sha256:5213b241b52da823d1ade71905c91ba101e593971d62020cccf01493ea69dc35
+    container_name: n8n-postgres-chat-memory
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: n8npassword
+      POSTGRES_USER: n8nuser
+      POSTGRES_DB: n8nchatmemory
+    ports:
+      - 8401:5432
+    volumes:
+      - n8n-postgres-chat-memory-data:/var/lib/postgresql/data
+
   nextcloud:
     image: nextcloud:32.0.1-apache@sha256:cc2d07bce3de2dda4d67ad3fbcaa205dd93eb8d599a8a3055993303234d9a76f
     container_name: nextcloud
@@ -338,6 +351,19 @@ services:
       - 6881:6881
       - 6881:6881/udp
     restart: unless-stopped
+  
+  short-videos-scraper-db:
+    image: postgres:18-alpine@sha256:5213b241b52da823d1ade71905c91ba101e593971d62020cccf01493ea69dc35
+    container_name: short-videos-scraper-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: shortvideospassword
+      POSTGRES_USER: shortvideosuser
+      POSTGRES_DB: db
+    ports:
+      - 8402:5432
+    volumes:
+      - short-videos-scraper-data:/var/lib/postgresql/data
   
   speedtest-tracker:
     image: linuxserver/speedtest-tracker:1.8.0@sha256:2e655913575f15fb73a3974eceefd110bae59e30492c4c3b14b9705ca75ada5e
@@ -505,3 +531,5 @@ volumes:
   grafana-storage:
   model-cache:
   umami-db-data:
+  n8n-postgres-chat-memory-data:
+  short-videos-scraper-data:
