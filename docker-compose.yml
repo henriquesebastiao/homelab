@@ -194,7 +194,7 @@ services:
   
   metube:
     container_name: metube
-    image: ghcr.io/alexta69/metube:2025.11.16@sha256:017341a17b5837120b00e0f3cc0be084a572a9886828d018e8d45e8c22d550cf
+    image: ghcr.io/alexta69/metube:2025.11.29@sha256:8e183a933152bccd735aac6fbe94dd6b379e21c35db991314c69fdb0e1951e7c
     restart: unless-stopped
     ports:
       - 8009:8081
