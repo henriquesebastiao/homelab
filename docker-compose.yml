@@ -71,6 +71,29 @@ services:
       - FB_ROOT=/data
       - FB_NOAUTH=true
   
+  freshrss:
+    image: freshrss/freshrss:1.27.1@sha256:9a56be99f3927cc8fab4c6bbd5723ae098824792d4d98a84007a95eb64e8f905
+    container_name: freshrss
+    restart: unless-stopped
+    ports:
+      - 8036:80
+    volumes:
+      - freshrss_data:/var/www/FreshRSS/data
+      - freshrss_extensions:/var/www/FreshRSS/extensions
+    environment:
+      TZ: America/Cuiaba
+      CRON_MIN: '2,32'
+      FRESHRSS_INSTALL: |-
+        --api-enabled
+        --default-user hick
+        --language pt-BR
+      FRESHRSS_USER: |-
+        --api-password 35218785
+        --email contato@henriquesebastiao.com
+        --language pt-BR
+        --password 35218785
+        --user hick
+  
   glance:
     container_name: glance
     image: glanceapp/glance:v0.8.4@sha256:6df86a7e8868d1eda21f35205134b1962c422957e42a0c44d4717c8e8f741b1a
@@ -528,6 +551,8 @@ volumes:
   filebrowser_data:
   filebrowser_database:
   filebrowser_config:
+  freshrss_data:
+  freshrss_extensions:
   grafana-storage:
   model-cache:
   umami-db-data:

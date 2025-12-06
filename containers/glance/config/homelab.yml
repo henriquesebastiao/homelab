@@ -411,6 +411,10 @@
               name: MeTube
               url: http://server.local:8009
               icon: sh:metube
+            freshrss:
+              name: FreshRSS
+              url: http://server.local:8036
+              icon: sh:freshrss
         - type: group
           widgets:
             - type: reddit

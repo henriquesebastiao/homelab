@@ -150,6 +150,8 @@
               hide: true
             metube:
               hide: true
+            freshrss:
+              hide: true
     - size: small
       widgets:
         - type: releases
