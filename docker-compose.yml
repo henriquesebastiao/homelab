@@ -375,19 +375,6 @@ services:
       - 6881:6881/udp
     restart: unless-stopped
   
-  short-videos-scraper-db:
-    image: postgres:18-alpine@sha256:5213b241b52da823d1ade71905c91ba101e593971d62020cccf01493ea69dc35
-    container_name: short-videos-scraper-db
-    restart: unless-stopped
-    environment:
-      POSTGRES_PASSWORD: shortvideospassword
-      POSTGRES_USER: shortvideosuser
-      POSTGRES_DB: db
-    ports:
-      - 8402:5432
-    volumes:
-      - short-videos-scraper-data:/var/lib/postgresql/data
-  
   speedtest-tracker:
     image: linuxserver/speedtest-tracker:1.10.1@sha256:79d7d058cbc12a6311c4c284f0c2fb781a02e96079215ce500ac5eba6a5d676d
     restart: unless-stopped
@@ -557,4 +544,3 @@ volumes:
   model-cache:
   umami-db-data:
   n8n-postgres-chat-memory-data:
-  short-videos-scraper-data:
