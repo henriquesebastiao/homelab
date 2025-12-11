@@ -259,7 +259,7 @@ services:
       - n8n-postgres-chat-memory-data:/var/lib/postgresql/data
 
   nextcloud:
-    image: nextcloud:32.0.1-apache@sha256:cc2d07bce3de2dda4d67ad3fbcaa205dd93eb8d599a8a3055993303234d9a76f
+    image: nextcloud:32.0.2-apache@sha256:04cc19547e586ac75e08dd056c11330d4ce4c5c561c89405b326180a37c19afb
     container_name: nextcloud
     # Currently needs to be run as root, if we run as uid 1000 this fails
     # https://github.com/nextcloud/docker/blob/05026b029d37fc5cd488d4a4a2a79480e39841ba/21.0/apache/entrypoint.sh#L53-L77
