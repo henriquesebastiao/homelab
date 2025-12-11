@@ -358,7 +358,7 @@ services:
     restart: unless-stopped
   
   qbittorrent:
-    image: linuxserver/qbittorrent:5.1.2@sha256:029c00d12f493a15530f7ac6bb0dede12e490a8cf4357d2616f78e68dcab2fdd
+    image: linuxserver/qbittorrent:5.1.4@sha256:043498de39c3dd63eec94360c5ad966a51271d1581070f42cb73ab0cf4776f29
     container_name: qbittorrent
     environment:
       - PUID=1000
