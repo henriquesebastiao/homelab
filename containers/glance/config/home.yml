@@ -359,9 +359,6 @@
               hide: true
             app-manejo:
               hide: true
-            downtify:
-              name: Downtify
-              url: http://server.local:8035
             calibre-web:
               name: Calibre Web
               url: http://server.local:8024

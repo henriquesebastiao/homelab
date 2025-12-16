@@ -21,7 +21,6 @@
 8030 -> librespeed
 8033 -> qbittorrent
 8034 -> onlyoffice
-8035 -> downtify
 8096 -> jellyfin
 8032 -> syncthing
 10050 -> zabbix server

@@ -15,18 +15,6 @@ services:
       - 8024:8083
     restart: unless-stopped
   
-  downtify:
-    container_name: downtify
-    image: ghcr.io/henriquesebastiao/downtify:1.1.1@sha256:6799338c2369d18941d2e4b9cbc99c762a694e3bce5b769678a3f4edd0ba8b6c 
-    restart: unless-stopped
-    ports:
-      - '8035:8000'
-    volumes:
-      - /home/hick/homelab/containers/downtify/downloads:/downloads
-    cpus: 1.5
-    mem_limit: 512m          # limite máximo de memória
-    mem_reservation: 256m    # memória "reservada" (soft limit)
-  
   dozzle:
     container_name: dozzle
     image: amir20/dozzle:v8.14.12@sha256:0df89c904da71e94a0c9ed3c89a890f01488321b5f10ac1e0c0bedcead9af6e4
