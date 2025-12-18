@@ -114,12 +114,6 @@
               hide: true
             zabbix-frontend:
               hide: true
-            nextcloud:
-              hide: true
-            nextcloud-db:
-              hide: true
-            nextcloud-redis:
-              hide: true
             grafana:
               hide: true
             cloudflared:

@@ -2,7 +2,6 @@
 1984 -> go2rtc
 6881 -> qbittorrent
 8001 -> pihole
-8002 -> nextcloud
 8003 -> zabbix
 8004 -> grafana
 8005 -> dozzle

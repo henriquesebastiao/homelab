@@ -431,17 +431,6 @@
             zabbix-frontend:
               parent: zabbix
               name: Front End
-            nextcloud:
-              name: Nextcloud
-              url: http://172.16.0.2:8002/apps/dashboard/
-              icon: di:nextcloud
-              id: nextcloud
-            nextcloud-db:
-              parent: nextcloud
-              name: Database
-            nextcloud-redis:
-              parent: nextcloud
-              name: Redis
             n8n:
               name: n8n
               url: http://server.local:8027
@@ -517,9 +506,6 @@
               subreddit: jellyfin
               show-thumbnails: true
             - type: reddit
-              subreddit: NextCloud
-              show-thumbnails: true
-            - type: reddit
               subreddit: pihole
               show-thumbnails: true
             - type: reddit
@@ -536,8 +522,6 @@
                   url: https://calendar.google.com
                 - title: Email
                   url: https://mail.google.com/mail/u/0/#inbox
-                - title: Nextcloud
-                  url: http://172.16.0.2:8002/apps/files/files
                 - title: Drive
                   url: https://drive.google.com/drive/u/0/my-drive
                 - title: GitHub
