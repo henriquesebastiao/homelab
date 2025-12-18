@@ -247,7 +247,7 @@ services:
       - n8n-postgres-chat-memory-data:/var/lib/postgresql/data
   
   onlyoffice:
-    image: onlyoffice/documentserver:9.1.0.1@sha256:34b92f4a67bfd939bd6b75893e8217556e3b977f81e49472f7e28737b741ba1d
+    image: onlyoffice/documentserver:9.2.1.1@sha256:fd00acbbbde3d8b1ead9b933aafa7c2df77e62c48b1b171886e6bef343c13882
     container_name: onlyoffice
     restart: unless-stopped
     ports:
