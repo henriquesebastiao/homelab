@@ -19,7 +19,6 @@
 8027 -> n8n
 8030 -> librespeed
 8033 -> qbittorrent
-8034 -> onlyoffice
 8096 -> jellyfin
 8032 -> syncthing
 10050 -> zabbix server

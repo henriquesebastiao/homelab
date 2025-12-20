@@ -246,21 +246,6 @@ services:
     volumes:
       - n8n-postgres-chat-memory-data:/var/lib/postgresql/data
   
-  onlyoffice:
-    image: onlyoffice/documentserver:9.1.0.1@sha256:34b92f4a67bfd939bd6b75893e8217556e3b977f81e49472f7e28737b741ba1d
-    container_name: onlyoffice
-    restart: unless-stopped
-    ports:
-      - 8034:80
-    volumes:
-      - /home/hick/homelab/containers/onlyoffice/data:/var/www/onlyoffice/Data
-      - /home/hick/homelab/containers/onlyoffice/logs:/var/log/onlyoffice
-      - /home/hick/homelab/containers/onlyoffice/lib:/var/lib/onlyoffice
-      - /home/hick/homelab/containers/onlyoffice/db:/var/lib/postgresql/data
-    environment:
-      - JWT_SECRET=my_jwt_secret
-      - JWT_ENABLED=true
-  
   pihole:
     container_name: pihole
     image: pihole/pihole:2025.11.1@sha256:91dc91ddd413bf461c283204558f8f21839851e9824799075a7ceff7c77eea40
