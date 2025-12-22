@@ -441,7 +441,7 @@ services:
       - zabbix-database
 
   zabbix-agent:
-    image: zabbix/zabbix-agent2:7.4.5-alpine@sha256:54dc9a3f648c51ec745ee60e193cf21bacd7dc09c35188c33110c147e48add3d
+    image: zabbix/zabbix-agent2:7.4.6-alpine@sha256:6588ecd15e2521d7b50a5fdd9aadc3a8a30b1c0fef252de06992ac59f6e7dd7e
     container_name: zabbix-agent
     hostname: zabbix-agent
     restart: on-failure
