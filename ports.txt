@@ -1,3 +1,5 @@
+21 -> ftp
+22 -> ssh
 53 -> pihole
 1984 -> go2rtc
 6881 -> qbittorrent
@@ -21,6 +23,7 @@
 8033 -> qbittorrent
 8096 -> jellyfin
 8032 -> syncthing
+8123 -> home-assistant
 10050 -> zabbix server
 22000 -> syncthing # TCP file transfers
 21027 -> syncthing # Receive local discovery broadcasts

@@ -439,6 +439,10 @@
               name: Grafana
               url: http://server.local:8004/
               icon: di:grafana
+            homeassistant:
+              name: Home Assistant
+              url: http://server.local:8123/dashboard-casa/0
+              icon: di:home-assistant
             cloudflared:
               name: Cloudflared
               icon: di:cloudflare

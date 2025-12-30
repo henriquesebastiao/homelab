@@ -108,6 +108,8 @@
               hide: true
             qbittorrent:
               hide: true
+            homeassistant:
+              hide: true
             uptime-kuma:
               hide: true
             zabbix-frontend:
