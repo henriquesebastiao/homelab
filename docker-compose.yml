@@ -326,8 +326,10 @@ services:
         - APP_KEY=base64:h/7HdA9fMLDluj0fJ4NcG13CquLdgJTs9062lfXnmAs=
         - DB_CONNECTION=sqlite
         - APP_TIMEZONE=America/Cuiaba
+        - DISPLAY_TIMEZONE=America/Cuiaba
         - APP_DEBUG=true
         - SPEEDTEST_SCHEDULE=*/30 * * * *
+        # - SPEEDTEST_SERVERS=
     volumes:
         - /home/hick/homelab/containers/speedtest-tracker/config:/config
         - /home/hick/homelab/containers/speedtest-tracker/config/keys:/config/keys
