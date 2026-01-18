@@ -600,6 +600,7 @@
           service: pihole-v6
           url: http://172.16.0.2:8001
           password: 35218785
+          allow-insecure: true
           hour-format: 24h
         
         - type: twitch-channels
