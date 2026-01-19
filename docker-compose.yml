@@ -369,7 +369,7 @@ services:
       - DISABLE_ADDITIONAL_FEATURES=true
   
   umami:
-    image: ghcr.io/umami-software/umami:postgresql-3.0.0@sha256:818105b05d6b460d5526b2d426017fa1664025e87b1a4f03770b613df5fca6e1
+    image: ghcr.io/umami-software/umami:postgresql-latest@sha256:28f263fe06f79ebffa5a6a6e9bd33b7a278e9342a88e0bdac812416c9f9e4361
     container_name: umami
     ports:
       - 8006:3000
