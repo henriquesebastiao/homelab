@@ -55,6 +55,7 @@ services:
       - filebrowser_database:/database
       - filebrowser_config:/config
       - /home/hick:/data
+      - /mnt/hd_externo:/data/hd
     environment:
       - FB_ROOT=/data
       - FB_NOAUTH=true
@@ -190,6 +191,9 @@ services:
       - type: bind
         source: /home/hick/homelab/containers/jellyfin/media
         target: /media
+      - type: bind
+        source: /mnt/hd_externo/Videos
+        target: /media/hd/Videos
     restart: 'unless-stopped'
     # Optional - alternative address used for autodiscovery
     environment:
