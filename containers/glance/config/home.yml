@@ -494,27 +494,6 @@
               icon: sh:freshrss
             n8n-postgres-chat-memory:
               hide: true
-        - type: group
-          widgets:
-            - type: reddit
-              subreddit: Duplicati
-              show-thumbnails: true
-            - type: reddit
-              subreddit: grafana
-              show-thumbnails: true
-            - type: reddit
-              subreddit: jellyfin
-              show-thumbnails: true
-            - type: reddit
-              subreddit: pihole
-              show-thumbnails: true
-            - type: reddit
-              subreddit: vaultwarden
-              show-thumbnails: true
-            - type: reddit
-              subreddit: zabbix
-              show-thumbnails: true
-        
         - type: bookmarks
           groups:
             - links:
@@ -542,6 +521,23 @@
                   url: https://cheatsheets.zip
                 - title: Pwned
                   url: https://haveibeenpwned.com
+                - title: Cloudflare
+                  url: https://dash.cloudflare.com/
+            - title: Development
+              color: 35 100 50
+              links:
+                - title: PyPi
+                  url: https://pypi.org/
+                - title: PyPy
+                  url: https://pypy.org/
+                - title: Micropython
+                  url: https://micropython.org/
+                - title: Django
+                  url: https://www.djangoproject.com/
+                - title: FastAPI
+                  url: https://fastapi.tiangolo.com/
+                - title: Docker Hub
+                  url: https://hub.docker.com/
             - title: Equipamentos
               color: 146 63 51
               links:
@@ -554,30 +550,10 @@
               links:
                 - title: Flightradar24
                   url: https://www.flightradar24.com/-10.21,-59.46/9
-
-        - type: group
-          widgets:
-            - type: reddit
-              subreddit: amateursatellites
-              show-thumbnails: true
-            - type: reddit
-              subreddit: selfhosted
-              show-thumbnails: true
-            - type: reddit
-              subreddit: Quansheng
-              show-thumbnails: true
-            - type: reddit
-              subreddit: ObsidianMD
-              show-thumbnails: true
-            - type: reddit
-              subreddit: linuxbrasil
-              show-thumbnails: true
-            - type: reddit
-              subreddit: brdev
-              show-thumbnails: true
-            - type: reddit
-              subreddit: technology
-              show-thumbnails: true
+                - title: Aripuanã
+                  url: https://www.aripuana.mt.gov.br/#/transparencia/finder/MTI5
+                - title: ALE-RO 2025
+                  url: https://conhecimento.fgv.br/concursos/alero25
 
     - size: small
       widgets:
