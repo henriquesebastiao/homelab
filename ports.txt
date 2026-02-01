@@ -1,6 +1,8 @@
 21 -> ftp
 22 -> ssh
 53 -> pihole
+80 -> nginx-proxy-manager
+443 -> nginx-proxy-manager
 1984 -> go2rtc
 6881 -> qbittorrent
 8001 -> pihole
@@ -21,6 +23,8 @@
 8027 -> n8n
 8030 -> librespeed
 8033 -> qbittorrent
+8080 -> vscode server
+8081 -> nginx-proxy-manager
 8096 -> jellyfin
 8032 -> syncthing
 10050 -> zabbix server

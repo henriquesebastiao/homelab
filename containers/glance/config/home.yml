@@ -361,7 +361,7 @@
               hide: true
             calibre-web:
               name: Calibre Web
-              url: http://server.local:8024
+              url: http://calibre.local
               icon: di:calibre-web
             zabbix-agent:
               parent: zabbix
@@ -379,7 +379,7 @@
               hide: true
             duplicati:
               name: Duplicati
-              url: http://server.local:8018
+              url: http://duplicati.local
               icon: di:duplicati
             go2rtc:
               name: go2rtc
@@ -410,7 +410,7 @@
               icon: di:stirling-pdf
             filebrowser:
               name: File Browser
-              url: http://server.local:8015
+              url: http://filebrowser.local
               icon: di:filebrowser
             qbittorrent:
               name: qBittorrent
@@ -422,7 +422,7 @@
               icon: sh:speedtest-tracker
             pihole:
               name: Pi-hole
-              url: http://server.local:8001/admin/
+              url: http://pihole.local/admin/
               icon: di:pi-hole
             uptime-kuma:
               name: Uptime Kuma
@@ -448,7 +448,7 @@
               icon: di:cloudflare
             dozzle:
               name: Dozzle
-              url: http://server.local:8005/
+              url: http://dozzle.local
               icon: di:dozzle
             umami:
               name: Umami
@@ -461,6 +461,7 @@
               icon: di:jellyfin
             vaultwarden:
               name: Vaultwarden
+              url: https://vault.local
               icon: auto-invert di:vaultwarden
             immich:
               name: Immich
@@ -490,10 +491,14 @@
               icon: sh:metube
             freshrss:
               name: FreshRSS
-              url: http://server.local:8036
+              url: http://freshrss.local
               icon: sh:freshrss
             n8n-postgres-chat-memory:
               hide: true
+            nginx-proxy-manager:
+              name: Nginx Proxy Manager
+              url: http://proxy.local
+              icon: sh:nginx-proxy-manager
         - type: bookmarks
           groups:
             - links:

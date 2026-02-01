@@ -21,4 +21,4 @@ containers/n8n/
 containers/syncthing/
 containers/qbittorrent/
 containers/metube/
-containers/homeassistant
+containers/nginx-proxy-manager

@@ -250,6 +250,24 @@ services:
     volumes:
       - n8n-postgres-chat-memory-data:/var/lib/postgresql/data
   
+  nginx-proxy-manager:
+    image: jc21/nginx-proxy-manager:2.13.6@sha256:08e0997ce1cc8738637b0e271a727815ea89ed564ce392e0f9035f1a03c089c5
+    container_name: nginx-proxy-manager
+    restart: unless-stopped
+    ports:
+      - '80:80' # Public HTTP Port
+      - '443:443' # Public HTTPS Port
+      - '8081:81' # Admin Web Port
+    volumes:
+      - /home/hick/homelab/containers/nginx-proxy-manager/data:/data
+      - /home/hick/homelab/containers/nginx-proxy-manager/letsencrypt:/etc/letsencrypt
+    environment:
+      TZ: "America/Cuiaba"
+    healthcheck:
+      test: ["CMD", "/usr/bin/check-health"]
+      interval: 10s
+      timeout: 3s
+  
   pihole:
     container_name: pihole
     image: pihole/pihole:2025.11.1@sha256:91dc91ddd413bf461c283204558f8f21839851e9824799075a7ceff7c77eea40
@@ -408,7 +426,7 @@ services:
     container_name: vaultwarden
     restart: unless-stopped
     environment:
-      DOMAIN: "https://vault.henriquesebastiao.com"
+      DOMAIN: "https://vault.local"
     volumes:
       - /home/hick/homelab/containers/vaultwarden/data/:/data/
     ports:
