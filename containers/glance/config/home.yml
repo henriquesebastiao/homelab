@@ -371,7 +371,7 @@
             zabbix-server:
               id: zabbix
               name: Zabbix
-              url: http://server.local:8003/
+              url: http://zabbix.local
               icon: di:zabbix
             db-poupy:
               hide: true
@@ -383,7 +383,7 @@
               icon: di:duplicati
             go2rtc:
               name: go2rtc
-              url: http://server.local:1984
+              url: http://go2rtc.local
               icon: sh:go2rtc
             prometheus-manejo:
               hide: true
@@ -406,7 +406,7 @@
               hide: true
             stirling-pdf:
               name: Stirling PDF
-              url: http://server.local:8011/?lang=pt_BR
+              url: http://stirling.local/?lang=pt_BR
               icon: di:stirling-pdf
             filebrowser:
               name: File Browser
@@ -414,11 +414,11 @@
               icon: di:filebrowser
             qbittorrent:
               name: qBittorrent
-              url: http://server.local:8033
+              url: http://torrent.local
               icon: di:qbittorrent
             speedtest-tracker:
               name: Speedtest Tracker
-              url: http://server.local:8008/admin
+              url: http://speedtest-tracker.local/admin
               icon: sh:speedtest-tracker
             pihole:
               name: Pi-hole
@@ -426,23 +426,19 @@
               icon: di:pi-hole
             uptime-kuma:
               name: Uptime Kuma
-              url: http://server.local:8026/dashboard
+              url: http://uptime.local/dashboard
               icon: di:uptime-kuma
             zabbix-frontend:
               parent: zabbix
               name: Front End
             n8n:
               name: n8n
-              url: http://server.local:8027
+              url: http://n8n.local
               icon: di:n8n
             grafana:
               name: Grafana
-              url: http://server.local:8004/
+              url: http://grafana.local
               icon: di:grafana
-            homeassistant:
-              name: Home Assistant
-              url: http://server.local:8123/dashboard-casa/0
-              icon: di:home-assistant
             cloudflared:
               name: Cloudflared
               icon: di:cloudflare
@@ -452,12 +448,12 @@
               icon: di:dozzle
             umami:
               name: Umami
-              url: http://server.local:8006/dashboard
+              url: http://umami.local/dashboard
               icon: auto-invert sh:umami
               id: umami
             jellyfin:
               name: Jellyfin
-              url: http://server.local:8096/web/#/home.html
+              url: http://jellyfin.local/web/#/home.html
               icon: di:jellyfin
             vaultwarden:
               name: Vaultwarden
@@ -465,7 +461,7 @@
               icon: auto-invert di:vaultwarden
             immich:
               name: Immich
-              url: http://server.local:8025
+              url: http://immich.local
               icon: di:immich
               id: immich
             immich-machine-learning:
@@ -479,15 +475,15 @@
               name: Database
             librespeed:
               name: LibreSpeed
-              url: http://server.local:8030
+              url: http://librespeed.local
               icon: di:librespeed
             syncthing:
               name: Syncthing
-              url: http://server.local:8032
+              url: http://syncthing.local
               icon: di:syncthing
             metube:
               name: MeTube
-              url: http://server.local:8009
+              url: http://metube.local
               icon: sh:metube
             freshrss:
               name: FreshRSS
@@ -511,7 +507,7 @@
                 - title: GitHub
                   url: https://github.com/henriquesebastiao
                 - title: Code Server
-                  url: http://server.local:8080
+                  url: http://code.local
             - title: Social
               color: 200 50 50
               links:
