@@ -22,3 +22,4 @@ containers/syncthing/
 containers/qbittorrent/
 containers/metube/
 containers/nginx-proxy-manager
+containers/komodo

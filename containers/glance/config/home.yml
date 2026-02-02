@@ -361,7 +361,7 @@
               hide: true
             calibre-web:
               name: Calibre Web
-              url: http://calibre.local
+              url: https://calibre.local
               icon: di:calibre-web
             zabbix-agent:
               parent: zabbix
@@ -371,19 +371,30 @@
             zabbix-server:
               id: zabbix
               name: Zabbix
-              url: http://zabbix.local
+              url: https://zabbix.local
               icon: di:zabbix
+            komodo-core:
+              id: komodo
+              name: Komodo
+              url: https://komodo.local
+              icon: di:komodo
+            komodo-mongo:
+              parent: komodo
+              name: MongoDB
+            komodo-periphery:
+              parent: komodo
+              name: Komodo Periphery
             db-poupy:
               hide: true
             db-dotum:
               hide: true
             duplicati:
               name: Duplicati
-              url: http://duplicati.local
+              url: https://duplicati.local
               icon: di:duplicati
             go2rtc:
               name: go2rtc
-              url: http://go2rtc.local
+              url: https://go2rtc.local
               icon: sh:go2rtc
             prometheus-manejo:
               hide: true
@@ -406,54 +417,54 @@
               hide: true
             stirling-pdf:
               name: Stirling PDF
-              url: http://stirling.local/?lang=pt_BR
+              url: https://stirling.local/?lang=pt_BR
               icon: di:stirling-pdf
             filebrowser:
               name: File Browser
-              url: http://filebrowser.local
+              url: https://filebrowser.local
               icon: di:filebrowser
             qbittorrent:
               name: qBittorrent
-              url: http://torrent.local
+              url: https://torrent.local
               icon: di:qbittorrent
             speedtest-tracker:
               name: Speedtest Tracker
-              url: http://speedtest-tracker.local/admin
+              url: https://speedtest-tracker.local/admin
               icon: sh:speedtest-tracker
             pihole:
               name: Pi-hole
-              url: http://pihole.local/admin/
+              url: https://pihole.local/admin/
               icon: di:pi-hole
             uptime-kuma:
               name: Uptime Kuma
-              url: http://uptime.local/dashboard
+              url: https://uptime.local/dashboard
               icon: di:uptime-kuma
             zabbix-frontend:
               parent: zabbix
               name: Front End
             n8n:
               name: n8n
-              url: http://n8n.local
+              url: https://n8n.local
               icon: di:n8n
             grafana:
               name: Grafana
-              url: http://grafana.local
+              url: https://grafana.local
               icon: di:grafana
             cloudflared:
               name: Cloudflared
               icon: di:cloudflare
             dozzle:
               name: Dozzle
-              url: http://dozzle.local
+              url: https://dozzle.local
               icon: di:dozzle
             umami:
               name: Umami
-              url: http://umami.local/dashboard
+              url: https://umami.local/dashboard
               icon: auto-invert sh:umami
               id: umami
             jellyfin:
               name: Jellyfin
-              url: http://jellyfin.local/web/#/home.html
+              url: https://jellyfin.local/web/#/home.html
               icon: di:jellyfin
             vaultwarden:
               name: Vaultwarden
@@ -461,7 +472,7 @@
               icon: auto-invert di:vaultwarden
             immich:
               name: Immich
-              url: http://immich.local
+              url: https://immich.local
               icon: di:immich
               id: immich
             immich-machine-learning:
@@ -475,25 +486,25 @@
               name: Database
             librespeed:
               name: LibreSpeed
-              url: http://librespeed.local
+              url: https://librespeed.local
               icon: di:librespeed
             syncthing:
               name: Syncthing
-              url: http://syncthing.local
+              url: https://syncthing.local
               icon: di:syncthing
             metube:
               name: MeTube
-              url: http://metube.local
+              url: https://metube.local
               icon: sh:metube
             freshrss:
               name: FreshRSS
-              url: http://freshrss.local
+              url: https://freshrss.local
               icon: sh:freshrss
             n8n-postgres-chat-memory:
               hide: true
             nginx-proxy-manager:
               name: Nginx Proxy Manager
-              url: http://proxy.local
+              url: https://proxy.local
               icon: sh:nginx-proxy-manager
         - type: bookmarks
           groups:
@@ -507,7 +518,7 @@
                 - title: GitHub
                   url: https://github.com/henriquesebastiao
                 - title: Code Server
-                  url: http://code.local
+                  url: https://code.local
             - title: Social
               color: 200 50 50
               links:

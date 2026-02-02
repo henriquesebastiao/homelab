@@ -27,6 +27,7 @@
 8081 -> nginx-proxy-manager
 8096 -> jellyfin
 8032 -> syncthing
+9120 -> komodo
 10050 -> zabbix server
 22000 -> syncthing # TCP file transfers
 21027 -> syncthing # Receive local discovery broadcasts
