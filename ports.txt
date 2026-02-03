@@ -15,6 +15,7 @@
 8009 -> metube
 8010 -> gitea
 8011 -> stirling-pdf
+8013 -> nextcloud
 8015 -> filebrowser
 8018 -> duplicati
 8019 -> vaultwarden
@@ -31,5 +32,7 @@
 8200 -> gitea
 9120 -> komodo
 10050 -> zabbix server
+11000 -> nextcloud
+13378 -> audiobookshelf
 22000 -> syncthing # TCP file transfers
 21027 -> syncthing # Receive local discovery broadcasts

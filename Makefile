@@ -5,4 +5,7 @@ docker-prune:
 	docker system prune -a
 	docker system prune -a --volumes
 
-.PHONY: update docker-prune
+nextcloud-sync:
+	docker exec nextcloud-aio-nextcloud sudo -E -u www-data php occ files:scan --all
+
+.PHONY: update docker-prune nextcloud-sync

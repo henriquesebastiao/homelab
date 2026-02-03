@@ -21,6 +21,6 @@ containers/n8n/
 containers/syncthing/
 containers/qbittorrent/
 containers/metube/
-containers/nginx-proxy-manager
-containers/komodo
-containers/gitea
+containers/nginx-proxy-manager/
+containers/komodo/
+containers/gitea/

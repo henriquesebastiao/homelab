@@ -1,4 +1,17 @@
 services:
+  audiobookshelf:
+    image: ghcr.io/advplyr/audiobookshelf:2.32.1@sha256:a52dc5db694a5bf041ce38f285dd6c6a660a4b1b21e37ad6b6746433263b2ae5
+    container_name: audiobookshelf
+    ports:
+      - 13378:80
+    volumes:
+      - /mnt/hd_externo/containers/audiobookshelf/audiobooks:/audiobooks
+      - /mnt/hd_externo/containers/audiobookshelf/podcasts:/podcasts
+      - /mnt/hd_externo/containers/audiobookshelf/config:/config
+      - /mnt/hd_externo/containers/audiobookshelf/metadata:/metadata
+    environment:
+      - TZ=America/Cuiaba
+
   calibre-web:
     image: linuxserver/calibre-web:0.6.25@sha256:3d4f72d68d6151842967d202199e0e666d333085e08ffc616afb0a5051e21744
     container_name: calibre-web
@@ -14,6 +27,12 @@ services:
     ports:
       - 8024:8083
     restart: unless-stopped
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflared
+    restart: always
+    command: tunnel --no-autoupdate run --token ${CLOUDFLARED_TOKEN}
   
   dozzle:
     container_name: dozzle
@@ -254,7 +273,7 @@ services:
       KOMODO_DATABASE_PASSWORD: admin
     volumes:
       ## Store dated backups of the database - https://komo.do/docs/setup/backup
-      - /home/hick/homelab/containers/kodomo/core/backups:/backups
+      - /home/hick/homelab/containers/komodo/core/backups:/backups
       ## Store sync files on server
       # - /path/to/syncs:/syncs
       ## Optionally mount a custom core.config.toml
@@ -331,18 +350,21 @@ services:
     volumes:
       - /home/hick/homelab/containers/n8n/data:/home/node/.n8n
   
-  n8n-postgres-chat-memory:
-    image: postgres:18-alpine@sha256:5213b241b52da823d1ade71905c91ba101e593971d62020cccf01493ea69dc35
-    container_name: n8n-postgres-chat-memory
-    restart: unless-stopped
-    environment:
-      POSTGRES_PASSWORD: n8npassword
-      POSTGRES_USER: n8nuser
-      POSTGRES_DB: n8nchatmemory
+  nextcloud-aio-mastercontainer:
+    image: nextcloud/all-in-one:latest
+    init: true
+    network_mode: bridge
+    container_name: nextcloud-aio-mastercontainer
+    restart: always
     ports:
-      - 8401:5432
+      - 8013:8080
+    environment:
+      - NEXTCLOUD_DATADIR=/mnt/hd_externo/nextcloud
+      - APACHE_PORT=11000 # Is needed when running behind a web server or reverse proxy (like Apache, Nginx, Caddy, Cloudflare Tunnel and else). See https://github.com/nextcloud/all-in-one/blob/main/reverse-proxy.md
+      - APACHE_IP_BINDING=0.0.0.0
     volumes:
-      - n8n-postgres-chat-memory-data:/var/lib/postgresql/data
+      - nextcloud_aio_mastercontainer:/mnt/docker-aio-config
+      - /var/run/docker.sock:/var/run/docker.sock:ro
   
   nginx-proxy-manager:
     image: jc21/nginx-proxy-manager:2.13.6@sha256:08e0997ce1cc8738637b0e271a727815ea89ed564ce392e0f9035f1a03c089c5
@@ -591,4 +613,5 @@ volumes:
   komodo-mongo-config:
   model-cache:
   umami-db-data:
-  n8n-postgres-chat-memory-data:
+  nextcloud_aio_mastercontainer:
+    name: nextcloud_aio_mastercontainer
