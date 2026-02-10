@@ -566,15 +566,13 @@
                   url: https://github.com/henriquesebastiao
                 - title: Code Server
                   url: https://code.local
-            - title: Social
-              color: 200 50 50
-              links:
-                - title: Reddit
-                  url: https://www.reddit.com
-                - title: Mastodon
-                  url: https://bolha.us/home
                 - title: LinkedIn
                   url: https://www.linkedin.com
+            - title: Estudos
+              color: 200 50 50
+              links:
+                - title: Roadmap.sh
+                  url: https://roadmap.sh/dashboard
             - title: Technology
               color: 203 83 65
               links:
