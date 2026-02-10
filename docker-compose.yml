@@ -11,6 +11,7 @@ services:
       - /mnt/hd_externo/containers/audiobookshelf/metadata:/metadata
     environment:
       - TZ=America/Cuiaba
+    restart: always
 
   calibre-web:
     image: linuxserver/calibre-web:0.6.26@sha256:95fa0d0d07bf1be2404236222a882a467431f34ee35ad29b6e7b3b4bca3b0376
@@ -552,7 +553,7 @@ services:
     image: zabbix/zabbix-web-nginx-pgsql:7.4.6-alpine@sha256:aa282653e9e145cc7ad121198548db25dad55f07e7a4eae173a536c184352a58
     hostname: zabbix-frontend
     container_name: zabbix-frontend
-    restart: on-failure
+    restart: unless-stopped
     environment:
       DB_SERVER_HOST: zabbix-database
       POSTGRES_USER: zabbix
@@ -569,7 +570,7 @@ services:
     image: zabbix/zabbix-server-pgsql:7.4.6-alpine@sha256:449456a40352dbfdcb030388fab3ab526b157ec67cd306debc4ab2e3a9d3c707
     container_name: zabbix-server
     hostname: zabbix-server
-    restart: on-failure
+    restart: unless-stopped
     init: true
     environment:
       DB_SERVER_HOST: zabbix-database
@@ -584,7 +585,7 @@ services:
     image: zabbix/zabbix-agent2:7.4.6-alpine@sha256:6588ecd15e2521d7b50a5fdd9aadc3a8a30b1c0fef252de06992ac59f6e7dd7e
     container_name: zabbix-agent
     hostname: zabbix-agent
-    restart: on-failure
+    restart: unless-stopped
     init: true
     environment:
       ZBX_HOSTNAME: zabbix-agent
@@ -594,7 +595,7 @@ services:
     image: postgres:13.18-alpine3.20@sha256:77815c1f18ae761b0e503503a494475a03149d7ce544934ccecdbafdb3956c94
     container_name: zabbix-database
     hostname: zabbix-database
-    restart: on-failure
+    restart: unless-stopped
     environment:
       POSTGRES_PASSWORD: zabbix
       POSTGRES_USER: zabbix
