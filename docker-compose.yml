@@ -183,6 +183,7 @@ services:
     depends_on:
       - immich-redis
       - immich-db
+      - immich-machine-learning
     restart: always
     healthcheck:
       disable: false
@@ -236,7 +237,7 @@ services:
       - type: bind
         source: /mnt/hd_externo/Videos
         target: /media/hd/Videos
-    restart: 'unless-stopped'
+    restart: unless-stopped
     # Optional - alternative address used for autodiscovery
     environment:
       - JELLYFIN_PublishedServerUrl=http://server.local:8096
