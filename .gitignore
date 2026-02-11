@@ -24,3 +24,4 @@ containers/metube/
 containers/nginx-proxy-manager/
 containers/komodo/
 containers/gitea/
+containers/freshrss/

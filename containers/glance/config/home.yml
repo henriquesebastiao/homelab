@@ -427,7 +427,7 @@
               icon: di:filebrowser
             qbittorrent:
               name: qBittorrent
-              url: https://torrent.local
+              url: http://172.16.0.2:8033
               icon: di:qbittorrent
             speedtest-tracker:
               name: Speedtest Tracker
@@ -575,6 +575,11 @@
               links:
                 - title: Roadmap.sh
                   url: https://roadmap.sh/dashboard
+            - title: Seletivos
+              color: 22 77 41
+              links:
+                - title: IFMT
+                  url: https://seletivo.ifmt.edu.br
             - title: Technology
               color: 203 83 65
               links:
