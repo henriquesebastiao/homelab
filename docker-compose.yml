@@ -45,9 +45,11 @@ services:
       - 8005:8080
   
   duplicati:
-    image: linuxserver/duplicati:2.2.0@sha256:09930a771219a7dfbf35685f38fd820ac8287b1f7fef744e8ab23984a31588ea
+    image: duplicati/duplicati:2.2.0.104@sha256:7bcf458a4b3804ef54b2ec983e2aa6823de08a04dfdc95f48a5c02b4d2d9d1dd
     container_name: duplicati
     restart: unless-stopped
+    user: "0:0"
+    privileged: true
     ports:
       - 8018:8200
     volumes:
@@ -55,13 +57,14 @@ services:
       - /home/hick/backups:/backups
       - /:/source:ro
     environment:
-      DUPLICATI__WEBSERVICE_ALLOWED_HOSTNAMES: server.local
+      DUPLICATI__WEBSERVICE_ALLOWED_HOSTNAMES: server.local;duplicati.local
       DUPLICATI__WEBSERVICE_PASSWORD: duplicati-pass
       # Executing as root to be able to read all files.
       PUID: 0
       PGID: 0
       SETTINGS_ENCRYPTION_KEY: duplicati-encryption-key
       TZ: "America/Cuiaba"
+    command: ["duplicati-server", "--allow-missing-source=false"]
 
   filebrowser:
     image: filebrowser/filebrowser:v2.57.1@sha256:6ef368f5a0730ee1638886e4b77a94503fcc302569f7d2ae980b23d59072a700
