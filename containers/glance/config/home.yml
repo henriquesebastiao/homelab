@@ -7,6 +7,22 @@
         - type: calendar
           first-day-of-week: sunday
         
+        - type: monitor
+          cache: 1m
+          title: Sites
+          style: compact
+          sites:
+            - title: Blog
+              url: https://henriquesebastiao.com
+            - title: Vida
+              url: https://life.henriquesebastiao.com
+            - title: Wiki
+              url: https://wiki.henriquesebastiao.com
+            - title: TCC
+              url: https://tcc.henriquesebastiao.com
+            - title: CHR
+              url: http://chr.henriquesebastiao.com:3520
+        
         - type: custom-api
           cache: 1h
           title: Speedtest
@@ -317,20 +333,6 @@
               </li>
               {{ end }}
             </ul>
-        
-        - type: monitor
-          cache: 1m
-          title: Sites
-          style: compact
-          sites:
-            - title: Henrique Sebastião
-              url: https://henriquesebastiao.com
-            - title: Vida
-              url: https://life.henriquesebastiao.com
-            - title: TCC
-              url: https://tcc.henriquesebastiao.com
-            - title: CHR
-              url: http://chr.henriquesebastiao.com:3520
 
     - size: full
       widgets:
@@ -641,11 +643,3 @@
           password: 35218785
           allow-insecure: true
           hour-format: 24h
-        
-        - type: twitch-channels
-          channels:
-            - dunossauro
-            - julialabs
-            - blauaraujo
-            - universidade_livre
-            - codeshow
