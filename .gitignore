@@ -25,3 +25,4 @@ containers/nginx-proxy-manager/
 containers/komodo/
 containers/gitea/
 containers/freshrss/
+containers/glance-mila/.env

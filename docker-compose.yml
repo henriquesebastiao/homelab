@@ -153,6 +153,18 @@ services:
       - 8007:8080
     env_file: /home/hick/homelab/containers/glance/.env
   
+  glance-mila:
+    container_name: glance-mila
+    image: glanceapp/glance:v0.8.4@sha256:6df86a7e8868d1eda21f35205134b1962c422957e42a0c44d4717c8e8f741b1a
+    restart: unless-stopped
+    volumes:
+      - /home/hick/homelab/containers/glance-mila/config:/app/config
+      - /home/hick/homelab/containers/glance-mila/assets:/app/assets
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - 8014:8080
+    env_file: /home/hick/homelab/containers/glance-mila/.env
+  
   go2rtc: # HTTP Port: 1984, RSTP Port: 8554, WebRTC Port: 8554
     image: alexxit/go2rtc:1.9.14@sha256:675c318b23c06fd862a61d262240c9a63436b4050d177ffc68a32710d9e05bae
     container_name: go2rtc

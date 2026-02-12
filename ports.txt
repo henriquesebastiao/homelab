@@ -16,6 +16,7 @@
 8010 -> gitea
 8011 -> stirling-pdf
 8013 -> nextcloud
+8014 -> glance-mila
 8015 -> filebrowser
 8018 -> duplicati
 8019 -> vaultwarden
