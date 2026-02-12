@@ -575,11 +575,19 @@
               links:
                 - title: Roadmap.sh
                   url: https://roadmap.sh/dashboard
-            - title: Seletivos
+            - title: Seletivos e Concursos
               color: 22 77 41
               links:
                 - title: IFMT
                   url: https://seletivo.ifmt.edu.br
+                - title: Aripuanã
+                  url: https://www.aripuana.mt.gov.br/#/transparencia/finder/MTI5
+                - title: ALE-RO 2025
+                  url: https://conhecimento.fgv.br/concursos/alero25
+                - title: Correios
+                  url: https://prosel.correios.com.br/concursos/detalharconcurso/1213
+                - title: Gupy
+                  url: https://portal.gupy.io/my/applications
             - title: Technology
               color: 203 83 65
               links:
@@ -618,12 +626,8 @@
               links:
                 - title: Flightradar24
                   url: https://www.flightradar24.com/-10.21,-59.46/9
-                - title: Aripuanã
-                  url: https://www.aripuana.mt.gov.br/#/transparencia/finder/MTI5
-                - title: ALE-RO 2025
-                  url: https://conhecimento.fgv.br/concursos/alero25
-                - title: Gupy
-                  url: https://portal.gupy.io/my/applications
+                - title: Carvalima
+                  url: https://cliente.carvalima.com.br/dashboard
 
     - size: small
       widgets:
