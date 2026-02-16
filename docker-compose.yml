@@ -566,7 +566,7 @@ services:
       - 8019:80
   
   zabbix-frontend:
-    image: zabbix/zabbix-web-nginx-pgsql:7.4.6-alpine@sha256:aa282653e9e145cc7ad121198548db25dad55f07e7a4eae173a536c184352a58
+    image: zabbix/zabbix-web-nginx-pgsql:7.4.7-alpine@sha256:ceeeb7555d1747bec0c392a32d6d78ae805397750a4b078f8b525e1fe72effbc
     hostname: zabbix-frontend
     container_name: zabbix-frontend
     restart: unless-stopped
