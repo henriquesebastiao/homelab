@@ -583,7 +583,7 @@ services:
       - zabbix-database
 
   zabbix-server:
-    image: zabbix/zabbix-server-pgsql:7.4.6-alpine@sha256:449456a40352dbfdcb030388fab3ab526b157ec67cd306debc4ab2e3a9d3c707
+    image: zabbix/zabbix-server-pgsql:7.4.7-alpine@sha256:3c3c9b1a5c93442644346bfdd8cf854a491cc5a92fcfaa905a2d749b0cecbcc0
     container_name: zabbix-server
     hostname: zabbix-server
     restart: unless-stopped
