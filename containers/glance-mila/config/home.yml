@@ -45,6 +45,8 @@
                   url: https://moocs.ggte.unicamp.br/courses
                 - title: Santander
                   url: https://www.santanderopenacademy.com/pt_br/index.html
+                - title: Escola Virtual
+                  url: https://www.escolavirtual.gov.br/
             - title: Seletivos e Concursos
               color: 22 77 41
               links:
