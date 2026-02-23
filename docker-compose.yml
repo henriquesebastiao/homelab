@@ -45,7 +45,7 @@ services:
       - 8005:8080
   
   duplicati:
-    image: duplicati/duplicati:2.2.0.104@sha256:7bcf458a4b3804ef54b2ec983e2aa6823de08a04dfdc95f48a5c02b4d2d9d1dd
+    image: duplicati/duplicati:2.2.0.105@sha256:580e57109d604b67fbefe1ff56d376c81435ed332e32a996229e2a2da47ab543
     container_name: duplicati
     restart: unless-stopped
     user: "0:0"
