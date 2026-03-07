@@ -554,6 +554,45 @@ services:
       - 8026:3001
     restart: always
   
+  vagas-dev-api:
+    image: ghcr.io/henriquesebastiao/vagas-dev/api:0.1.1@sha256:a238671113a075642ee46f99557867baa8c3cb16cd59fbd9c270b11595df2305
+    container_name: vagas-dev-api
+    restart: always
+    env_file:
+      - /home/hick/homelab/containers/vagas-dev/.env
+    depends_on:
+      vagas-dev-db:
+        condition: service_healthy
+  
+  vagas-dev-db:
+    container_name: vagas-dev-db
+    image: postgres:18.3-alpine@sha256:4da1a4828be12604092fa55311276f08f9224a74a62dcb4708bd7439e2a03911
+    ports:
+      - 8016:5432
+    volumes:
+      - pgdata-vagas-dev:/var/lib/postgresql/data
+    env_file:
+      - /home/hick/homelab/containers/vagas-dev/.env
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
+  vagas-dev-web:
+    container_name: vagas-dev-web
+    image: nginx:1.29.5-alpine@sha256:1d13701a5f9f3fb01aaa88cef2344d65b6b5bf6b7d9fa4cf0dca557a8d7702ba
+    restart: always
+    volumes:
+      - /home/hick/homelab/containers/vagas-dev/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - 8017:80
+    environment:
+      - NGINX_PORT=80
+    depends_on:
+      - vagas-dev-api
+  
   vaultwarden:
     image: vaultwarden/server:1.35.4@sha256:43498a94b22f9563f2a94b53760ab3e710eefc0d0cac2efda4b12b9eb8690664
     container_name: vaultwarden
@@ -628,5 +667,6 @@ volumes:
   komodo-mongo-config:
   model-cache:
   umami-db-data:
+  pgdata-vagas-dev:
   nextcloud_aio_mastercontainer:
     name: nextcloud_aio_mastercontainer

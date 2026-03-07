@@ -18,6 +18,8 @@
 8013 -> nextcloud
 8014 -> glance-mila
 8015 -> filebrowser
+8016 -> vagas-dev-db
+8017 -> vagas-dev-web
 8018 -> duplicati
 8019 -> vaultwarden
 8024 -> calibre-web

@@ -559,6 +559,16 @@
               name: Glance Mila
               icon: di:glance
               url: https://mila.henriquesebastiao.com
+            vagas-dev-api:
+              id: vagas-dev
+              name: Vagas Dev
+              icon: si:fastapi
+            vagas-dev-db:
+              parent: vagas-dev
+              name: Database
+            vagas-dev-web:
+              parent: vagas-dev
+              name: Nginx
         - type: bookmarks
           groups:
             - links:
