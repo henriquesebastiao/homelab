@@ -555,7 +555,7 @@ services:
     restart: always
   
   vagas-dev-api:
-    image: ghcr.io/henriquesebastiao/vagas-dev/api:0.2.1@sha256:342dc1340d84f78e1267f503e0b1e23c96607bfe1017fac02a874f5958862564
+    image: ghcr.io/henriquesebastiao/vagas-dev/api:0.2.2@sha256:e702f14a99ca37b1fc16646ddc18cf6ef21e5b22c417101776a45c92829f8e92
     container_name: vagas-dev-api
     restart: always
     env_file:
