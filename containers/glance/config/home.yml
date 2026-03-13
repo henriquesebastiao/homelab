@@ -587,21 +587,27 @@
             - title: Estudos
               color: 200 50 50
               links:
+                - title: IFMT
+                  url: https://seletivo.ifmt.edu.br
                 - title: Roadmap.sh
                   url: https://roadmap.sh/dashboard
             - title: Seletivos e Concursos
               color: 22 77 41
               links:
-                - title: IFMT
-                  url: https://seletivo.ifmt.edu.br
+                - title: Gupy
+                  url: https://portal.gupy.io/my/applications
+                - title: LinkedIn
+                  url: https://www.linkedin.com
+                - title: Glassdoor
+                  url: https://www.glassdoor.com.br
+                - title: Sólides
+                  url: https://perfil.vagas.solides.com.br
                 - title: Aripuanã
                   url: https://www.aripuana.mt.gov.br/#/transparencia/finder/MTI5
                 - title: ALE-RO 2025
                   url: https://conhecimento.fgv.br/concursos/alero25
                 - title: Correios
                   url: https://prosel.correios.com.br/concursos/detalharconcurso/1213
-                - title: Gupy
-                  url: https://portal.gupy.io/my/applications
             - title: Technology
               color: 203 83 65
               links:
