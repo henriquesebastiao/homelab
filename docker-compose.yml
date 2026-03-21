@@ -367,22 +367,6 @@ services:
     volumes:
       - /home/hick/homelab/containers/n8n/data:/home/node/.n8n
   
-  nextcloud-aio-mastercontainer:
-    image: nextcloud/all-in-one:latest
-    init: true
-    network_mode: bridge
-    container_name: nextcloud-aio-mastercontainer
-    restart: always
-    ports:
-      - 8013:8080
-    environment:
-      - NEXTCLOUD_DATADIR=/mnt/hd_externo/nextcloud
-      - APACHE_PORT=11000 # Is needed when running behind a web server or reverse proxy (like Apache, Nginx, Caddy, Cloudflare Tunnel and else). See https://github.com/nextcloud/all-in-one/blob/main/reverse-proxy.md
-      - APACHE_IP_BINDING=0.0.0.0
-    volumes:
-      - nextcloud_aio_mastercontainer:/mnt/docker-aio-config
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-  
   nginx-proxy-manager:
     image: jc21/nginx-proxy-manager:2.14.0@sha256:2aa69b382a384b676c0d4f1d6f2eac40ecd478fcf7af1cfb3f9f1d3cd0c81e12
     container_name: nginx-proxy-manager
@@ -668,5 +652,3 @@ volumes:
   model-cache:
   umami-db-data:
   pgdata-vagas-dev:
-  nextcloud_aio_mastercontainer:
-    name: nextcloud_aio_mastercontainer

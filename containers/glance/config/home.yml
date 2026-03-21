@@ -520,41 +520,6 @@
               name: Audiobookshelf
               url: https://audiobookshelf.local
               icon: di:audiobookshelf
-            nextcloud-aio-mastercontainer:
-              id: nextcloud
-              name: Nextcloud
-              icon: di:nextcloud
-              url: https://cloud.henriquesebastiao.com
-            nextcloud-aio-apache:
-              parent: nextcloud
-              name: Apache
-            nextcloud-aio-nextcloud:
-              parent: nextcloud
-              name: Nextcloud
-            nextcloud-aio-imaginary:
-              parent: nextcloud
-              name: Imaginary
-            nextcloud-aio-redis:
-              parent: nextcloud
-              name: Redis
-            nextcloud-aio-database:
-              parent: nextcloud
-              name: Database
-            nextcloud-aio-whiteboard:
-              parent: nextcloud
-              name: Whiteboard
-            nextcloud-aio-notify-push:
-              parent: nextcloud
-              name: Notify Push
-            nextcloud-aio-talk:
-              parent: nextcloud
-              name: Talk
-            nextcloud-aio-collabora:
-              parent: nextcloud
-              name: Collabora
-            nextcloud-aio-onlyoffice:
-              parent: nextcloud
-              name: Onlyoffice
             glance-mila:
               name: Glance Mila
               icon: di:glance
