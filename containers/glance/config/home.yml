@@ -614,6 +614,11 @@
                   url: https://rx-sitio.local
                 - title: Inversor
                   url: https://inversor.local
+            - title: Analytics
+              color: 296 85 35
+              links:
+                - title: GoatCounter
+                  url: https://henriquesebastiao.goatcounter.com
             - title: Others
               color: 237 51 59
               links:
