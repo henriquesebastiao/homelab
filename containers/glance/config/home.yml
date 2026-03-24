@@ -554,6 +554,8 @@
               links:
                 - title: CS50x
                   url: https://cs50.harvard.edu/x/
+                - title: CS50x Progress
+                  url: https://cs50.me/cs50x
                 - title: IFMT
                   url: https://seletivo.ifmt.edu.br
                 - title: Roadmap.sh
