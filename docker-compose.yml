@@ -83,6 +83,22 @@ services:
       - FB_ROOT=/data
       - FB_NOAUTH=true
   
+  forgejo:
+    image: codeberg.org/forgejo/forgejo:14
+    container_name: forgejo
+    environment:
+      - USER_UID=1000
+      - USER_GID=1000
+    restart: always
+    networks:
+      - forgejo
+    volumes:
+      - /home/hick/homelab/containers/forgejo/data:/data
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - '8012:3000'
+      - '222:22'
+  
   freshrss:
     image: freshrss/freshrss:1.28.1@sha256:9100f649f5c946f589f54cdb9be7a65996528f48f691ef90eb262a0e06e5a522
     container_name: freshrss
@@ -641,6 +657,10 @@ services:
       POSTGRES_DB: zabbix
     volumes:
       - /home/hick/homelab/containers/zabbix/data:/var/lib/postgresql/data
+
+networks:
+  forgejo:
+    external: false
 
 volumes:
   filebrowser_data:

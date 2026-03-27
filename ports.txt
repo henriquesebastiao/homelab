@@ -2,6 +2,7 @@
 22 -> ssh
 53 -> pihole
 80 -> nginx-proxy-manager
+222 -> forgejo (ssh)
 443 -> nginx-proxy-manager
 1984 -> go2rtc
 6881 -> qbittorrent
@@ -15,6 +16,7 @@
 8009 -> metube
 8010 -> gitea
 8011 -> stirling-pdf
+8012 -> forgejo
 8014 -> glance-mila
 8015 -> filebrowser
 8016 -> vagas-dev-db
