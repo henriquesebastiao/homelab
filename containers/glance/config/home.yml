@@ -512,14 +512,6 @@
               name: Nginx Proxy Manager
               url: https://proxy.local
               icon: sh:nginx-proxy-manager
-            gitea:
-              id: gitea
-              name: Gitea
-              url: https://git.local
-              icon: di:gitea
-            gitea-db:
-              parent: gitea
-              name: Gitea DB
             audiobookshelf:
               name: Audiobookshelf
               url: https://audiobookshelf.local

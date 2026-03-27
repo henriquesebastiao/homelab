@@ -121,40 +121,7 @@ services:
         --language pt-BR
         --password 35218785
         --user hick
-  
-  gitea:
-    image: gitea/gitea:1.25.5@sha256:f846d26a4fc389c5806a580a765e00bfdd1fd181e6f2060da98ea2669d914472
-    container_name: gitea
-    environment:
-      - USER_UID=1000
-      - USER_GID=1000
-      - GITEA__database__DB_TYPE=postgres
-      - GITEA__database__HOST=gitea-db:5432
-      - GITEA__database__NAME=gitea
-      - GITEA__database__USER=gitea
-      - GITEA__database__PASSWD=gitea
-    restart: always
-    volumes:
-      - /home/hick/homelab/containers/gitea/data:/data
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
-    ports:
-      - 8010:3000
-      - 8200:22
-    depends_on:
-      - gitea-db
-  
-  gitea-db:
-    image: postgres:14.20@sha256:d508bf6220b5c7b7cd9c735d6abd5ea2e6e4e45882a29ed704f625aba32bd935
-    container_name: gitea-db
-    restart: always
-    environment:
-      - POSTGRES_USER=gitea
-      - POSTGRES_PASSWORD=gitea
-      - POSTGRES_DB=gitea
-    volumes:
-      - /home/hick/homelab/containers/gitea/postgrs/data:/var/lib/postgresql/data
-  
+
   glance:
     container_name: glance
     image: glanceapp/glance:v0.8.4@sha256:6df86a7e8868d1eda21f35205134b1962c422957e42a0c44d4717c8e8f741b1a

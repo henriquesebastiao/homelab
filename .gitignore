@@ -23,7 +23,6 @@ containers/qbittorrent/
 containers/metube/
 containers/nginx-proxy-manager/
 containers/komodo/
-containers/gitea/
 containers/forgejo/
 containers/freshrss/
 containers/glance-mila/.env
