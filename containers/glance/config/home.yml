@@ -425,6 +425,10 @@
               name: File Browser
               url: https://filebrowser.local
               icon: di:filebrowser
+            forgejo:
+              name: Forgejo
+              url: https://forgejo.local
+              icon: di:forgejo
             qbittorrent:
               name: qBittorrent
               url: http://172.16.0.2:8033
