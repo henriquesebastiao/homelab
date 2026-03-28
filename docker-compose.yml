@@ -90,8 +90,6 @@ services:
       - USER_UID=1000
       - USER_GID=1000
     restart: always
-    networks:
-      - forgejo
     volumes:
       - /home/hick/homelab/containers/forgejo/data:/data
       - /etc/localtime:/etc/localtime:ro
@@ -390,7 +388,7 @@ services:
       FTLCONF_webserver_api_password: ${PIHOLE_PASSWORD:-pihole-pass}
       # If using Docker's default `bridge` network setting the dns listening mode should be set to 'all'
       FTLCONF_dns_listeningMode: 'all'
-      FTLCONF_dns_upstreams: 1.1.1.1;1.0.0.1
+      FTLCONF_dns_upstreams: unbound#53
     # Volumes store your data between container upgrades
     volumes:
       # For persisting Pi-hole's databases and common configuration file
@@ -401,10 +399,17 @@ services:
       # See https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
       # Required if you are using Pi-hole as your DHCP server, else not needed
       - NET_ADMIN
+      - NET_RAW
       # Required if you are using Pi-hole as your NTP client to be able to set the host's system time
       - SYS_TIME
       # Optional, if Pi-hole should get some more processing time
       - SYS_NICE
+    networks:
+      dns_network:
+    security_opt:
+      - seccomp:unconfined
+    depends_on:
+      - unbound
     restart: unless-stopped
   
   qbittorrent:
@@ -510,6 +515,15 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+  
+  unbound:
+    container_name: unbound
+    image: klutchell/unbound:latest
+    volumes:
+      - /home/hick/homelab/containers/unbound:/etc/unbound/custom.conf.d
+    restart: unless-stopped
+    networks:
+      dns_network:
   
   uptime-kuma:
     image: louislam/uptime-kuma:1.23.17@sha256:3d632903e6af34139a37f18055c4f1bfd9b7205ae1138f1e5e8940ddc1d176f9
@@ -626,8 +640,8 @@ services:
       - /home/hick/homelab/containers/zabbix/data:/var/lib/postgresql/data
 
 networks:
-  forgejo:
-    external: false
+  dns_network:
+    driver: bridge
 
 volumes:
   filebrowser_data:
