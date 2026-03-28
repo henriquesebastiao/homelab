@@ -530,6 +530,9 @@
             vagas-dev-web:
               parent: vagas-dev
               name: Nginx
+            unbound:
+              name: Unbound
+              icon: di:unbound
         - type: bookmarks
           groups:
             - links:
