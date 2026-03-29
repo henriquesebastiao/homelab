@@ -1,4 +1,14 @@
+# Este arquivo docker compose configura todos os serviços que utilizo em produção no meu servidor pessoal
+# 
+# Informações úteis para administração dos containers:
+# - Os containers estão dispostos em ordem alfabéticas neste arquivo
+# - No início de cada serviço há um ou mais links para a documentação ou tutoriais de como configurar cada serviço
+
 services:
+
+  # https://www.audiobookshelf.org/docs#docker-compose-install
+  # https://www.audiobookshelf.org/docs#docker-compose-upgrade
+  # https://www.audiobookshelf.org/docs#env-configuration
   audiobookshelf:
     image: ghcr.io/advplyr/audiobookshelf:2.33.1@sha256:a4a5841bba093d81e5f4ad1eaedb4da3fda6dbb2528c552349da50ad1f7ae708
     container_name: audiobookshelf
@@ -10,9 +20,11 @@ services:
       - /mnt/hd_externo/containers/audiobookshelf/config:/config
       - /mnt/hd_externo/containers/audiobookshelf/metadata:/metadata
     environment:
-      - TZ=America/Cuiaba
+      - TZ=${TIMEZONE}
     restart: always
 
+  # https://github.com/linuxserver/docker-calibre-web
+  # https://github.com/janeczku/calibre-web
   calibre-web:
     image: linuxserver/calibre-web:0.6.26@sha256:87920663935599355d902c3682525c1630a0fd206dd2945aa7ad5c1119245d23
     container_name: calibre-web
@@ -29,12 +41,15 @@ services:
       - 8024:8083
     restart: unless-stopped
 
+  # https://hub.docker.com/r/cloudflare/cloudflared
   cloudflared:
     image: cloudflare/cloudflared:latest
     container_name: cloudflared
     restart: always
     command: tunnel --no-autoupdate run --token ${CLOUDFLARED_TOKEN}
   
+  # https://dozzle.dev/guide/what-is-dozzle
+  # https://github.com/amir20/dozzle
   dozzle:
     container_name: dozzle
     image: amir20/dozzle:v10.2.1@sha256:6bdfca41441987648ea2af525f61cdde316df6c433aab6ffdfc64cdd72bfe279
@@ -44,33 +59,34 @@ services:
     ports:
       - 8005:8080
   
+  # https://github.com/linuxserver/docker-duplicati
+  # https://docs.duplicati.com/
   duplicati:
-    image: duplicati/duplicati:2.2.1.0@sha256:5851a41c58362bfc64f0dedb04586226d283d793cd396fa28b4d8561d4c526dd
+    image: linuxserver/duplicati:2.2.0@sha256:9272af8564040fca2959dba7df3f9e1d6f7b08f3a802840e904f309b0b246b16
     container_name: duplicati
     restart: unless-stopped
-    user: "0:0"
     privileged: true
     ports:
       - 8018:8200
     volumes:
       - /home/hick/homelab/containers/duplicati/config:/config
       - /home/hick/backups:/backups
-      - /:/source:ro
+      - /:/source:rw
+    user: '0'
     environment:
-      DUPLICATI__WEBSERVICE_ALLOWED_HOSTNAMES: server.local;duplicati.local
-      DUPLICATI__WEBSERVICE_PASSWORD: duplicati-pass
-      # Executing as root to be able to read all files.
+      DUPLICATI__WEBSERVICE_PASSWORD: ${DUPLICATI__WEBSERVICE_PASSWORD}
       PUID: 0
       PGID: 0
-      SETTINGS_ENCRYPTION_KEY: duplicati-encryption-key
-      TZ: "America/Cuiaba"
-    command: ["duplicati-server", "--allow-missing-source=false"]
+      SETTINGS_ENCRYPTION_KEY: ${SETTINGS_ENCRYPTION_KEY}
+      TZ: ${TIMEZONE}
 
+  # https://filebrowser.org/installation.html
+  # https://github.com/filebrowser/filebrowser
   filebrowser:
     image: filebrowser/filebrowser:v2.62.1@sha256:6a0b050d4a5aae763783137eb3049f4f960428b363d05182c774bf4cc633becc
     container_name: filebrowser
     restart: unless-stopped
-    user: "0:0" # Run as root to avoid permission issues
+    user: "0:0"
     ports:
       - 8015:80
     volumes:
@@ -83,6 +99,7 @@ services:
       - FB_ROOT=/data
       - FB_NOAUTH=true
   
+  # https://forgejo.org/docs/latest/
   forgejo:
     image: codeberg.org/forgejo/forgejo:14
     container_name: forgejo
@@ -97,6 +114,8 @@ services:
       - '8012:3000'
       - '222:22'
   
+  # https://github.com/FreshRSS/FreshRSS#installation
+  # https://freshrss.org/
   freshrss:
     image: freshrss/freshrss:1.28.1@sha256:9100f649f5c946f589f54cdb9be7a65996528f48f691ef90eb262a0e06e5a522
     container_name: freshrss
@@ -107,19 +126,20 @@ services:
       - /home/hick/homelab/containers/freshrss/data:/var/www/FreshRSS/data
       - /home/hick/homelab/containers/freshrss/extensions:/var/www/FreshRSS/extensions
     environment:
-      TZ: America/Cuiaba
+      TZ: ${TIMEZONE}
       CRON_MIN: '2,32'
       FRESHRSS_INSTALL: |-
         --api-enabled
         --default-user hick
         --language pt-BR
       FRESHRSS_USER: |-
-        --api-password 35218785
-        --email contato@henriquesebastiao.com
+        --api-password ${FRESHRSS_PASSWORD}
+        --email ${FRESHRSS_EMAIL}
         --language pt-BR
-        --password 35218785
-        --user hick
+        --password ${FRESHRSS_PASSWORD}
+        --user ${FRESHRSS_USER}
 
+  # https://github.com/glanceapp/glance
   glance:
     container_name: glance
     image: glanceapp/glance:v0.8.4@sha256:6df86a7e8868d1eda21f35205134b1962c422957e42a0c44d4717c8e8f741b1a
@@ -134,18 +154,8 @@ services:
       - 8007:8080
     env_file: /home/hick/homelab/containers/glance/.env
   
-  glance-mila:
-    container_name: glance-mila
-    image: glanceapp/glance:v0.8.4@sha256:6df86a7e8868d1eda21f35205134b1962c422957e42a0c44d4717c8e8f741b1a
-    restart: unless-stopped
-    volumes:
-      - /home/hick/homelab/containers/glance-mila/config:/app/config
-      - /home/hick/homelab/containers/glance-mila/assets:/app/assets
-      - /etc/localtime:/etc/localtime:ro
-    ports:
-      - 8014:8080
-    env_file: /home/hick/homelab/containers/glance-mila/.env
-  
+  # https://go2rtc.org/
+  # https://github.com/AlexxIT/go2rtc
   go2rtc: # HTTP Port: 1984, RSTP Port: 8554, WebRTC Port: 8554
     image: alexxit/go2rtc:1.9.14@sha256:675c318b23c06fd862a61d262240c9a63436b4050d177ffc68a32710d9e05bae
     container_name: go2rtc
@@ -153,19 +163,22 @@ services:
     privileged: true         # only for FFmpeg hardware transcoding
     restart: unless-stopped  # autorestart on fail or config change from WebUI
     environment:
-      - TZ=America/Cuiaba  # timezone in logs
+      - TZ=${TIMEZONE}  # timezone in logs
     volumes:
       - "/home/hick/homelab/containers/go2rtc/config:/config"   # folder for go2rtc.yaml file (edit from WebUI)
 
+  # https://grafana.com/docs/grafana/latest/setup-grafana/installation/docker/
   grafana:
     image: grafana/grafana:12.4.2@sha256:83749231c3835e390a3144e5e940203e42b9589761f20ef3169c716e734ad505
     container_name: grafana
     restart: unless-stopped
     ports:
       - 8004:3000
+    user: '0'
     volumes:
-      - grafana-storage:/var/lib/grafana
+      - /home/hick/homelab/containers/grafana:/var/lib/grafana
   
+  # https://docs.immich.app/install/docker-compose
   immich:
     container_name: immich
     image: ghcr.io/immich-app/immich-server:v2.6.3@sha256:0cc1f82953d9598eb9e9dd11cbde1f50fe54f9c46c4506b089e8ad7bfc9d1f0c
@@ -220,6 +233,7 @@ services:
     shm_size: 128mb
     restart: always
   
+  # https://jellyfin.org/docs/general/installation/container/
   jellyfin:
     image: jellyfin/jellyfin:10.11.6@sha256:333b647716631443a43c7fabac4b0c46b4e2f036bad19547e00958f10f721b85
     container_name: jellyfin
@@ -238,6 +252,7 @@ services:
     environment:
       - JELLYFIN_PublishedServerUrl=http://server.local:8096
   
+  # https://komo.do/docs/setup/mongo
   komodo-mongo:
     image: mongo:8.2.6@sha256:d343c378b5c6e2fe373174abcf4a877be0dfc721b5d0b9d582204dccb1c00b86
     container_name: komodo-mongo
@@ -299,6 +314,7 @@ services:
       ## Default: /etc/komodo.
       - ${PERIPHERY_ROOT_DIRECTORY:-/etc/komodo}:${PERIPHERY_ROOT_DIRECTORY:-/etc/komodo}
 
+  # https://github.com/librespeed/speedtest-go
   librespeed:
     container_name: librespeed
     image: ghcr.io/librespeed/speedtest:latest
@@ -318,6 +334,7 @@ services:
     ports:
       - 8030:8080 # webport mapping (host:container)
   
+  # https://github.com/alexta69/metube
   metube:
     container_name: metube
     image: ghcr.io/alexta69/metube:2026.03.21@sha256:afd3fa2b229e3e6d4c8750618fe148af33a1f70b32af4441ecbd2d08f29d8221
@@ -330,6 +347,7 @@ services:
       - DOWNLOAD_MODE=sequential
       - DEFAULT_THEME=dark
   
+  # https://docs.n8n.io/hosting/installation/docker/
   n8n:
     image: n8nio/n8n:2.13.4@sha256:ab216dc8d10d1940a07f41f04355011ab03d0dec1fc03d62d5db3fc1bad815f5
     container_name: n8n
@@ -337,17 +355,18 @@ services:
     ports:
       - 8027:443
     environment:
-      - GENERIC_TIMEZONE=America/Cuiaba
-      - TZ=America/Cuiaba
+      - GENERIC_TIMEZONE=${TIMEZONE}
+      - TZ=${TIMEZONE}
       - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
       - N8N_RUNNERS_ENABLED=true
-      - N8N_SECURE_COOKIE=false
-      - N8N_HOST=n8n.henriquesebastiao.com
-      - N8N_PORT=443
-      - N8N_PROTOCOL=https
+      - N8N_SECURE_COOKIE=${N8N_SECURE_COOKIE}
+      - N8N_HOST=${N8N_HOST}
+      - N8N_PORT=${N8N_PORT}
+      - N8N_PROTOCOL=${N8N_PROTOCOL}
     volumes:
       - /home/hick/homelab/containers/n8n/data:/home/node/.n8n
   
+  # https://nginxproxymanager.com/setup/
   nginx-proxy-manager:
     image: jc21/nginx-proxy-manager:2.14.0@sha256:2aa69b382a384b676c0d4f1d6f2eac40ecd478fcf7af1cfb3f9f1d3cd0c81e12
     container_name: nginx-proxy-manager
@@ -360,12 +379,14 @@ services:
       - /home/hick/homelab/containers/nginx-proxy-manager/data:/data
       - /home/hick/homelab/containers/nginx-proxy-manager/letsencrypt:/etc/letsencrypt
     environment:
-      TZ: "America/Cuiaba"
+      TZ: ${TIMEZONE}
     healthcheck:
       test: ["CMD", "/usr/bin/check-health"]
       interval: 10s
       timeout: 3s
   
+  # https://docs.pi-hole.net/docker/
+  # https://docs.pi-hole.net/guides/dns/unbound/
   pihole:
     container_name: pihole
     image: pihole/pihole:2026.02.0@sha256:ee348529cea9601df86ad94d62a39cad26117e1eac9e82d8876aa0ec7fe1ba27
@@ -383,7 +404,7 @@ services:
       #- "123:123/udp"
     environment:
       # Set the appropriate timezone for your location (https://en.wikipedia.org/wiki/List_of_tz_database_time_zones), e.g:
-      TZ: 'America/Cuiaba'
+      TZ: ${TIMEZONE}
       # Set a password to access the web interface. Not setting one will result in a random password being assigned
       FTLCONF_webserver_api_password: ${PIHOLE_PASSWORD:-pihole-pass}
       # If using Docker's default `bridge` network setting the dns listening mode should be set to 'all'
@@ -412,13 +433,14 @@ services:
       - unbound
     restart: unless-stopped
   
+  # https://github.com/linuxserver/docker-qbittorrent
   qbittorrent:
     image: linuxserver/qbittorrent:5.1.4@sha256:570aeb63bdedcb5f9dd2500bd8f0a75581ba07c518c05cabbef0cfeb15451b3f
     container_name: qbittorrent
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=America/Cuiaba
+      - TZ=${TIMEZONE}
       - WEBUI_PORT=8033
       - TORRENTING_PORT=6881
     volumes:
@@ -430,26 +452,28 @@ services:
       - 6881:6881/udp
     restart: unless-stopped
   
+  # https://docs.speedtest-tracker.dev/
   speedtest-tracker:
     image: linuxserver/speedtest-tracker:1.13.12@sha256:0c1f69a593703918c1a194ec71d8ac905361ca46ec38ba70582235c469a1b71f
     restart: unless-stopped
     container_name: speedtest-tracker
     ports:
-        - 8008:80
+      - 8008:80
     environment:
-        - PUID=1000
-        - PGID=1000
-        - APP_KEY=base64:h/7HdA9fMLDluj0fJ4NcG13CquLdgJTs9062lfXnmAs=
-        - DB_CONNECTION=sqlite
-        - APP_TIMEZONE=America/Cuiaba
-        - DISPLAY_TIMEZONE=America/Cuiaba
-        - APP_DEBUG=true
-        - SPEEDTEST_SCHEDULE=*/30 * * * *
-        # - SPEEDTEST_SERVERS=
+      - PUID=1000
+      - PGID=1000
+      - APP_KEY=base64:h/7HdA9fMLDluj0fJ4NcG13CquLdgJTs9062lfXnmAs=
+      - DB_CONNECTION=sqlite
+      - APP_TIMEZONE=${TIMEZONE}
+      - DISPLAY_TIMEZONE=${TIMEZONE}
+      - APP_DEBUG=true
+      - SPEEDTEST_SCHEDULE=*/30 * * * *
+      # - SPEEDTEST_SERVERS=
     volumes:
-        - /home/hick/homelab/containers/speedtest-tracker/config:/config
-        - /home/hick/homelab/containers/speedtest-tracker/config/keys:/config/keys
-    
+      - /home/hick/homelab/containers/speedtest-tracker/config:/config
+      - /home/hick/homelab/containers/speedtest-tracker/config/keys:/config/keys
+  
+  # https://github.com/syncthing/syncthing/blob/main/README-Docker.md
   syncthing:
     image: syncthing/syncthing:2.0.15@sha256:37c0e031d9f5559dfa416f0f9157509277d97a24abd0ad27590bd92a91616ecc
     container_name: syncthing
@@ -470,6 +494,7 @@ services:
       timeout: 10s
       retries: 3
 
+  # https://docs.stirlingpdf.com/Installation/Docker%20Install
   stirling-pdf:
     image: stirlingtools/stirling-pdf:1.6.0@sha256:1f73a8f898fe269cbbccea3be577064dd87fc4334de349fcc5b1afa1bcebf240
     container_name: stirling-pdf
@@ -480,6 +505,7 @@ services:
       - LANGS=pt_BR
       - DISABLE_ADDITIONAL_FEATURES=true
   
+  # https://docs.umami.is/docs/install
   umami:
     image: ghcr.io/umami-software/umami:postgresql-latest@sha256:28f263fe06f79ebffa5a6a6e9bd33b7a278e9342a88e0bdac812416c9f9e4361
     container_name: umami
@@ -516,6 +542,8 @@ services:
       timeout: 5s
       retries: 5
   
+  # https://github.com/NLnetLabs/unbound
+  # https://www.uncommonengineer.com/docs/engineer/LAB/pihole-docker-unbound/
   unbound:
     container_name: unbound
     image: klutchell/unbound:latest
@@ -525,6 +553,7 @@ services:
     networks:
       dns_network:
   
+  # https://github.com/louislam/uptime-kuma/wiki
   uptime-kuma:
     image: louislam/uptime-kuma:2.2.1@sha256:7337368a77873f159435de9ef09567f68c31285ed5f951dec36256c4b267ee44
     container_name: uptime-kuma
@@ -556,7 +585,7 @@ services:
       - /home/hick/homelab/containers/vagas-dev/.env
     restart: always
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      test: ["CMD-SHELL", "pg_isready -U ${VAGAS_DEV_POSTGRES_USER} -d ${VAGAS_DEV_POSTGRES_DB}"]
       interval: 10s
       retries: 5
       start_period: 30s
@@ -574,6 +603,7 @@ services:
     depends_on:
       - vagas-dev-api
   
+  # https://github.com/dani-garcia/vaultwarden
   vaultwarden:
     image: vaultwarden/server:1.35.4@sha256:43498a94b22f9563f2a94b53760ab3e710eefc0d0cac2efda4b12b9eb8690664
     container_name: vaultwarden
@@ -584,7 +614,8 @@ services:
       - /home/hick/homelab/containers/vaultwarden/data/:/data/
     ports:
       - 8019:80
-  
+
+  # https://www.zabbix.com/documentation/current/en/manual/installation/containers  
   zabbix-frontend:
     image: zabbix/zabbix-web-nginx-pgsql:7.4.8-alpine@sha256:4d23de6390cc1b176214598210df660d7f6904fe66e45d776948740c5a8e2abf
     hostname: zabbix-frontend
@@ -647,7 +678,6 @@ volumes:
   filebrowser_data:
   filebrowser_database:
   filebrowser_config:
-  grafana-storage:
   komodo-mongo-data:
   komodo-mongo-config:
   model-cache:

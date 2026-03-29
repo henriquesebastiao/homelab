@@ -20,8 +20,6 @@
               url: https://wiki.henriquesebastiao.com
             - title: TCC
               url: https://tcc.henriquesebastiao.com
-            - title: CHR
-              url: https://chr.henriquesebastiao.com
         
         - type: custom-api
           cache: 1h
@@ -392,7 +390,7 @@
               hide: true
             duplicati:
               name: Duplicati
-              url: https://duplicati.local
+              url: http://172.16.0.2:8018
               icon: di:duplicati
             go2rtc:
               name: go2rtc
@@ -516,10 +514,6 @@
               name: Audiobookshelf
               url: https://audiobookshelf.local
               icon: di:audiobookshelf
-            glance-mila:
-              name: Glance Mila
-              icon: di:glance
-              url: https://mila.henriquesebastiao.com
             vagas-dev-api:
               id: vagas-dev
               name: Vagas Dev

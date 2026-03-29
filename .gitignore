@@ -1,11 +1,6 @@
 .env
 *.env
-containers/pinepods/data/
-containers/homeassistant/data/
-containers/duplicati/config/
-containers/wallos/db/
-containers/wallos/logos/
-containers/beaverhabits/data/
+containers/duplicati/
 containers/vaultwarden/data/
 containers/zabbix/data/
 containers/calibre-web/config/
@@ -25,4 +20,4 @@ containers/nginx-proxy-manager/
 containers/komodo/
 containers/forgejo/
 containers/freshrss/
-containers/glance-mila/.env
+containers/grafana/
