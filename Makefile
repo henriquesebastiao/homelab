@@ -1,8 +1,8 @@
-update:
-	./scripts/save-config.sh
+env:
+	./scripts/encrypt-env.sh
 
 docker-prune:
 	docker system prune -a
 	docker system prune -a --volumes
 
-.PHONY: update docker-prune
+.PHONY: env docker-prune
