@@ -465,7 +465,7 @@
               icon: di:dozzle
             umami:
               name: Umami
-              url: https://umami.local/dashboard
+              url: https://umami.local/websites
               icon: auto-invert sh:umami
               id: umami
             jellyfin:
