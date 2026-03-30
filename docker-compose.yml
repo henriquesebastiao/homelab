@@ -61,6 +61,12 @@ services:
   
   # https://github.com/linuxserver/docker-duplicati
   # https://docs.duplicati.com/
+  #
+  # Diretórios de backups
+  # --------------------------------------------
+  # Drive                           -> Home Server
+  # --------------------------------------------
+  # Backups/duplicati/calibre/      -> $HOME/homelab/containers/calibre-web/
   duplicati:
     image: linuxserver/duplicati:2.2.0@sha256:9272af8564040fca2959dba7df3f9e1d6f7b08f3a802840e904f309b0b246b16
     container_name: duplicati
