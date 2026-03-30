@@ -26,7 +26,7 @@ services:
   # https://github.com/linuxserver/docker-calibre-web
   # https://github.com/janeczku/calibre-web
   calibre-web:
-    image: linuxserver/calibre-web:0.6.26@sha256:87920663935599355d902c3682525c1630a0fd206dd2945aa7ad5c1119245d23
+    image: linuxserver/calibre-web:0.6.26@sha256:2cf8a3c5ea045b570f4075c2495af90c71d9148e38b586f4b48ed1be6e19a785
     container_name: calibre-web
     environment:
       - PUID=1000
