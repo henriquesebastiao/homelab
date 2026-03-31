@@ -1,0 +1,15 @@
+# Display username always
+SPACESHIP_USER_SHOW=always
+
+# Docker
+SPACESHIP_DOCKER_SHOW=false
+SPACESHIP_DOCKER_COMPOSE_SHOW=false
+
+# Git
+SPACESHIP_GIT_STATUS_SHOW=true
+
+# Venvs
+SPACESHIP_VENV_GENERIC_NAMES=(venv .venv)
+
+# Package
+SPACESHIP_PACKAGE_SHOW=false

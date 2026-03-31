@@ -1,0 +1,42 @@
+# Python
+alias activate="source .venv/bin/activate"
+
+# Poetry
+alias pshell="poetry shell"
+alias pexport="poetry export --with dev --without-hashes --without-urls --output requirements.txt"
+alias pexport-production="poetry export -f requirements.txt --output requirements.txt --without-hashes --without dev"
+
+# Docker
+alias dsclean="docker system prune -a"
+alias diclean="docker image prune -a"
+
+# Serial Ports
+# Allow all users to access the serial port
+alias serial='sudo chmod a+rw /dev/ttyACM0'
+
+# List all serial ports
+alias lss='ls /dev/ttyA*'
+
+# Airmon-ng
+alias disable-wlan0mon="sudo airmon-ng stop wlan0mon"
+
+# Utils
+alias weather="curl 'https://wttr.in/Aripuana?lang=pt'" # Previsão do tempo
+alias ipp="curl https://api.ipify.org" # IP Público
+alias aliases="cat ~/.aliases"
+#alias ls="lsd"
+alias lst="eza -T"
+alias dotcommit="git commit -m 'update: $(date -u +"%Y-%m-%d %H:%M:%S %Z")'"
+
+# Ubuntu
+alias apts="apt search"
+
+# Obsidian
+alias obcommit="git commit -m 'vault backup: $(date -u +"%Y-%m-%d %H:%M:%S %Z")'"
+
+# Tailscale
+alias tailup="sudo tailscale up --accept-dns --accept-routes"
+alias taildown="sudo tailscale down"
+
+# Aliases
+alias cl="clear"

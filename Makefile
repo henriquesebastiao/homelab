@@ -14,4 +14,7 @@ install:
 compare:
 	dotdrop compare --profile=server
 
-.PHONY: env docker-prune update install compare
+encrypt-import:
+	dotdrop import --transw=_encrypt --transr=_decrypt $(filter-out $@,$(MAKECMDGOALS))
+
+.PHONY: env docker-prune update install compare encrypt-import

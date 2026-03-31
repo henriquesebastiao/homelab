@@ -29,9 +29,60 @@ dotfiles:
   f_settings.json:
     src: local/share/code-server/User/settings.json
     dst: ~/.local/share/code-server/User/settings.json
+  f_bpytop.conf:
+    src: config/bpytop/bpytop.conf
+    dst: ~/.config/bpytop/bpytop.conf
+    chmod: '664'
+  f_config.yml:
+    src: config/gh/config.yml
+    dst: ~/.config/gh/config.yml
+    chmod: '600'
+  f_htoprc:
+    src: config/htop/htoprc
+    dst: ~/.config/htop/htoprc
+    chmod: '600'
+  f_config.conf:
+    src: config/neofetch/config.conf
+    dst: ~/.config/neofetch/config.conf
+  f_spaceship.zsh:
+    src: config/spaceship.zsh
+    dst: ~/.config/spaceship.zsh
+  f_aliases:
+    src: aliases
+    dst: ~/.aliases
+  f_bashrc:
+    src: bashrc
+    dst: ~/.bashrc
+    chmod: '644'
+    trans_install: _decrypt
+    trans_update: _encrypt
+  f_gitconfig:
+    src: gitconfig
+    dst: ~/.gitconfig
+  f_profile:
+    src: profile
+    dst: ~/.profile
+    chmod: '644'
+    trans_install: _decrypt
+    trans_update: _encrypt
+  f_zshrc:
+    src: zshrc
+    dst: ~/.zshrc
+    trans_install: _decrypt
+    trans_update: _encrypt
 profiles:
   server:
     dotfiles:
     - f_config.yaml
     - f_env
     - f_settings.json
+    - f_bpytop.conf
+    - f_config.yml
+    - f_htoprc
+    - f_config.conf
+    - f_spaceship.zsh
+    - f_aliases
+    - f_bashrc
+    - f_gitconfig
+    - f_profile
+    - f_zshrc
