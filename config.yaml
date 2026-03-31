@@ -76,6 +76,34 @@ dotfiles:
     chmod: '600'
     trans_install: _decrypt
     trans_update: _encrypt
+  f_config.toml:
+    src: config/atuin/config.toml
+    dst: ~/.config/atuin/config.toml
+    chmod: '600'
+  f_nanorc:
+    src: etc/nanorc
+    dst: /etc/nanorc
+    chmod: '644'
+  f_locale.conf:
+    src: etc/locale.conf
+    dst: /etc/locale.conf
+    chmod: '644'
+  f_locale.gen:
+    src: etc/locale.gen
+    dst: /etc/locale.gen
+    chmod: '644'
+  f_hostname:
+    src: etc/hostname
+    dst: /etc/hostname
+    chmod: '644'
+  f_hosts:
+    src: etc/hosts
+    dst: /etc/hosts
+    chmod: '644'
+  f_resolv.conf:
+    src: etc/resolv.conf
+    dst: /etc/resolv.conf
+    chmod: '644'
 profiles:
   server:
     dotfiles:
@@ -93,3 +121,10 @@ profiles:
     - f_profile
     - f_zshrc
     - f_authorized_keys
+    - f_config.toml
+    - f_nanorc
+    - f_locale.conf
+    - f_locale.gen
+    - f_hostname
+    - f_hosts
+    - f_resolv.conf
