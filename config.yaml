@@ -70,6 +70,12 @@ dotfiles:
     dst: ~/.zshrc
     trans_install: _decrypt
     trans_update: _encrypt
+  f_authorized_keys:
+    src: ssh/authorized_keys
+    dst: ~/.ssh/authorized_keys
+    chmod: '600'
+    trans_install: _decrypt
+    trans_update: _encrypt
 profiles:
   server:
     dotfiles:
@@ -86,3 +92,4 @@ profiles:
     - f_gitconfig
     - f_profile
     - f_zshrc
+    - f_authorized_keys
