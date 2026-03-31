@@ -527,51 +527,91 @@
             unbound:
               name: Unbound
               icon: di:unbound
+        - type: custom-api
+          title: Bookmarks
+          cache: 24h
+          url: http://localhost:8080/assets/bookmarks.json
+          template: |
+            <style>
+              .bm-group + .bm-group {
+                margin-top: 1.5rem;
+              }
+
+              .bm-group-title {
+                font-size: var(--font-size-h5);
+                text-transform: uppercase;
+                color: var(--color-text-subdue);
+                margin-bottom: 0.7rem;
+                letter-spacing: 0.05em;
+              }
+
+              .bm-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+                gap: 0.7rem;
+              }
+
+              .bm-card {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 0.6rem;
+                padding: 1rem 0.5rem;
+                border-radius: var(--border-radius);
+                background: var(--color-widget-background-highlight);
+                text-decoration: none;
+                color: var(--color-text-base);
+                transition: background 0.2s, color 0.2s;
+                border: 1px solid transparent;
+              }
+
+              .bm-card:hover {
+                background: var(--color-widget-background);
+                border-color: var(--color-progress-border);
+                color: var(--color-text-highlight);
+              }
+
+              .bm-favicon {
+                width: 28px;
+                height: 28px;
+                border-radius: 4px;
+              }
+
+              .bm-label {
+                font-size: var(--font-size-h6);
+                text-align: center;
+                line-height: 1.3;
+                word-break: break-word;
+              }
+            </style>
+
+            {{ range .JSON.Array "groups" }}
+            <div class="bm-group">
+              <div class="bm-group-title">{{ .String "title" }}</div>
+              <div class="bm-grid">
+                {{ range .Array "items" }}
+                {{ $url := .String "url" }}
+                {{ $icon := .String "icon" }}
+                {{ $domain := $url | trimPrefix "https://" | trimPrefix "http://" | findMatch "^[^/]+" }}
+                <a class="bm-card" href="{{ $url }}" target="_blank" rel="noreferrer">
+                  {{ if $icon }}
+                  <img class="bm-favicon" src="{{ $icon }}" alt="" loading="lazy">
+                  {{ else }}
+                  <img class="bm-favicon" src="https://www.google.com/s2/favicons?domain={{ $domain }}&sz=64" alt="" loading="lazy">
+                  {{ end }}
+                  <span class="bm-label">{{ .String "label" }}</span>
+                </a>
+                {{ end }}
+              </div>
+            </div>
+            {{ end }}
         - type: bookmarks
           groups:
-            - links:
-                - title: Agenda
-                  url: https://calendar.google.com
-                - title: Email
-                  url: https://mail.google.com/mail/u/0/#inbox
-                - title: Drive
-                  url: https://drive.google.com/drive/u/0/my-drive
-                - title: GitHub
-                  url: https://github.com/henriquesebastiao
-                - title: Code Server
-                  url: https://code.local
-                - title: LinkedIn
-                  url: https://www.linkedin.com
             - title: Estudos
               color: 200 50 50
               links:
-                - title: CS50x
-                  url: https://cs50.harvard.edu/x/
                 - title: CS50x Progress
                   url: https://cs50.me/cs50x
-                - title: IFMT
-                  url: https://seletivo.ifmt.edu.br
-                - title: Udemy
-                  url: https://www.udemy.com/
-                - title: Roadmap.sh
-                  url: https://roadmap.sh/dashboard
-            - title: Seletivos e Concursos
-              color: 22 77 41
-              links:
-                - title: Gupy
-                  url: https://portal.gupy.io/my/applications
-                - title: LinkedIn
-                  url: https://www.linkedin.com
-                - title: Glassdoor
-                  url: https://www.glassdoor.com.br
-                - title: Sólides
-                  url: https://perfil.vagas.solides.com.br
-                - title: Aripuanã
-                  url: https://www.aripuana.mt.gov.br/#/transparencia/finder/MTI5
-                - title: ALE-RO 2025
-                  url: https://conhecimento.fgv.br/concursos/alero25
-                - title: Correios
-                  url: https://prosel.correios.com.br/concursos/detalharconcurso/1213
             - title: Technology
               color: 203 83 65
               links:
@@ -581,21 +621,6 @@
                   url: https://haveibeenpwned.com
                 - title: Cloudflare
                   url: https://dash.cloudflare.com/
-            - title: Development
-              color: 35 100 50
-              links:
-                - title: PyPi
-                  url: https://pypi.org/
-                - title: PyPy
-                  url: https://pypy.org/
-                - title: Micropython
-                  url: https://micropython.org/
-                - title: Django
-                  url: https://www.djangoproject.com/
-                - title: FastAPI
-                  url: https://fastapi.tiangolo.com/
-                - title: Docker Hub
-                  url: https://hub.docker.com/
             - title: Equipamentos
               color: 146 63 51
               links:

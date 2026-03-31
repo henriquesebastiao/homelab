@@ -1,0 +1,62 @@
+{
+  "groups": [
+    {
+      "title": "Cotidiano",
+      "items": [
+        { "label": "Agenda", "url": "https://calendar.google.com/calendar/u/0/r", "icon": "https://ssl.gstatic.com/calendar/images/dynamiclogo_2020q4/calendar_30_2x.png" },
+        { "label": "Gmail", "url": "https://mail.google.com/mail/u/0/#inbox" },
+        { "label": "Drive", "url": "https://drive.google.com/drive/u/0/my-drive", "icon": "//ssl.gstatic.com/images/branding/product/1x/drive_2020q4_48dp.png" },
+        { "label": "LinkedIn", "url": "https://www.linkedin.com/" }
+      ]
+    },
+    {
+      "title": "Ferramentas",
+      "items": [
+        { "label": "Code Server", "url": "https://code.local/", "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-original.svg" },
+        { "label": "PyPi", "url": "https://pypi.org/" },
+        { "label": "GitHub", "url": "https://github.com", "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg" },
+        { "label": "Cloudflare", "url": "https://dash.cloudflare.com/" },
+        { "label": "Docker Hub", "url": "https://hub.docker.com/" }
+      ]
+    },
+    {
+      "title": "Recursos",
+      "items": [
+        { "label": "Cheat Sheets", "url": "https://cheatsheets.zip" },
+        { "label": "Pwned", "url": "https://haveibeenpwned.com/" }
+      ]
+    },
+    {
+      "title": "Documentação",
+      "items": [
+        { "label": "Python", "url": "https://docs.python.org/pt-br/3.14/", "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" },
+        { "label": "FastAPI", "url": "https://fastapi.tiangolo.com/" },
+        { "label": "Django", "url": "https://docs.djangoproject.com/pt-br/" },
+        { "label": "MDN", "url": "https://developer.mozilla.org" },
+        { "label": "Next.js", "url": "https://nextjs.org/docs" },
+        { "label": "Micropython", "url": "https://docs.micropython.org/en/latest/", "icon": "https://micropython.org/static/img/Mlogo_138wh.png" },
+        { "label": "Docker", "url": "https://docs.docker.com" }
+      ]
+    },
+    {
+      "title": "Estudos",
+      "items": [
+        { "label": "Udemy", "url": "https://www.udemy.com/" },
+        { "label": "CS50x", "url": "https://cs50.harvard.edu/x/" },
+        { "label": "Roadmap.sh", "url": "https://roadmap.sh/dashboard" },
+        { "label": "Seletivos IFMT", "url": "https://seletivo.ifmt.edu.br/" }
+      ]
+    },
+    {
+      "title": "Vagas",
+      "items": [
+        { "label": "Gupy", "url": "https://portal.gupy.io/my/applications" },
+        { "label": "Glassdoor", "url": "https://www.glassdoor.com.br/" },
+        { "label": "Sólides", "url": "https://perfil.vagas.solides.com.br/" },
+        { "label": "Aripuanã", "url": "https://www.aripuana.mt.gov.br/#/transparencia/finder/MTI5" },
+        { "label": "Correios", "url": "https://prosel.correios.com.br/concursos/detalharconcurso/1213" },
+        { "label": "ALE-RO", "url": "https://conhecimento.fgv.br/concursos/alero25" }
+      ]
+    }
+  ]
+}

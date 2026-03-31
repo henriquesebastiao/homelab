@@ -1,0 +1,37 @@
+config:
+  backup: true
+  banner: true
+  create: true
+  dotpath: dotfiles
+  keepdot: false
+  link_dotfile_default: nolink
+  link_on_import: nolink
+  longkey: false
+variables:
+  keyid: 6F5C3CD702976E14
+trans_install:
+  _decrypt: gpg -q -d {0} > {1}
+trans_update:
+  _encrypt: gpg -q -r {{@@ keyid @@}} --armor --no-tty -o {1} -e {0}
+dotfiles:
+  f_config.yaml:
+    src: config/code-server/config.yaml
+    dst: ~/.config/code-server/config.yaml
+    chmod: '644'
+    trans_install: _decrypt
+    trans_update: _encrypt
+  f_env:
+    src: homelab/.env
+    dst: ~/homelab/.env
+    chmod: '664'
+    trans_install: _decrypt
+    trans_update: _encrypt
+  f_settings.json:
+    src: local/share/code-server/User/settings.json
+    dst: ~/.local/share/code-server/User/settings.json
+profiles:
+  server:
+    dotfiles:
+    - f_config.yaml
+    - f_env
+    - f_settings.json
