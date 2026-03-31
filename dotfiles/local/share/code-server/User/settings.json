@@ -1,6 +1,73 @@
 {
-    "workbench.colorTheme": "Default Dark Modern",
-    "window.menuBarVisibility": "visible",
+    "editor.autoClosingBrackets": "always",
+    "editor.cursorBlinking": "phase",
+    "editor.cursorSmoothCaretAnimation": "off",
+    "editor.fontFamily": "'JetBrains Mono', 'monospace', monospace",
+    "editor.fontLigatures": true,
+    "editor.minimap.autohide": "mouseover",
+    "editor.tabSize": 4,
+    "explorer.compactFolders": false,
+    "explorer.confirmDelete": false,
+    "explorer.confirmDragAndDrop": false,
+    "explorer.confirmPasteNative": false,
+    "extensions.ignoreRecommendations": true,
+    "files.exclude": {
+        "**/.mypy_cache": true,
+        "**/.ruff_cache": true,
+        "**/.pytest_cache": true,
+        "**/__pycache__": true
+    },
+    "git.autofetch": true,
+    "git.autofetchPeriod": 60,
+    "git.confirmSync": false,
+    "git.mergeEditor": true,
+    "security.workspace.trust.untrustedFiles": "open",
+    "window.titleBarStyle": "custom",
+    "workbench.startupEditor": "none",
+    "workbench.tree.indent": 15,
+    "workbench.tree.renderIndentGuides": "none",
+
+    "autoDocstring.docstringFormat": "google",
+    "autoDocstring.guessTypes": true,
+    "python.testing.pytestEnabled": true,
+    "python.testing.pytestArgs": [
+        "--rootdir","${workspaceFolder}/tests"
+    ],
+    "[markdown]": {
+        "editor.wordWrap": "off"
+    },
+    "files.autoSave": "afterDelay",
+    "chat.instructionsFilesLocations": {
+        ".github/instructions": true,
+        "/tmp/postman-collections-post-response.instructions.md": true,
+        "/tmp/postman-collections-pre-request.instructions.md": true,
+        "/tmp/postman-folder-post-response.instructions.md": true,
+        "/tmp/postman-folder-pre-request.instructions.md": true,
+        "/tmp/postman-http-request-post-response.instructions.md": true,
+        "/tmp/postman-http-request-pre-request.instructions.md": true
+    },
+    "[dockercompose]": {
+        "editor.insertSpaces": true,
+        "editor.tabSize": 2,
+        "editor.autoIndent": "advanced",
+        "editor.quickSuggestions": {
+            "other": true,
+            "comments": false,
+            "strings": true
+        },
+    },
+    "diffEditor.ignoreTrimWhitespace": false,
+    "gitblame.inlineMessageEnabled": true,
+    "gitblame.inlineMessageFormat": "${author.name} (${time.ago})",
+    "terminal.integrated.cursorBlinking": true,
+    "terminal.integrated.defaultProfile.linux": "zsh",
+    "python.terminal.shellIntegration.enabled": false,
+    "python.defaultInterpreterPath": "/bin/python3",
     "remote.autoForwardPortsSource": "hybrid",
-    "workbench.iconTheme": "material-icon-theme"
+    "workbench.iconTheme": "material-icon-theme",
+    "accessibility.signals.terminalBell": {
+        "sound": "on"
+    },
+    "terminal.integrated.enableVisualBell": true,
+    "workbench.colorTheme": "Dark Modern",
 }
