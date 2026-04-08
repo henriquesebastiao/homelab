@@ -20,6 +20,12 @@
       ]
     },
     {
+      "title": "Serviços",
+      "items": [
+        { "label": "Energisa", "url": "https://servicos.energisa.com.br/home" }
+      ]
+    },
+    {
       "title": "Recursos",
       "items": [
         { "label": "Cheat Sheets", "url": "https://cheatsheets.zip" },
