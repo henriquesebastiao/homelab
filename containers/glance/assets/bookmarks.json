@@ -22,7 +22,8 @@
     {
       "title": "Serviços",
       "items": [
-        { "label": "Energisa", "url": "https://servicos.energisa.com.br/home" }
+        { "label": "Energisa", "url": "https://servicos.energisa.com.br/home" },
+        { "label": "DAE", "url": "https://aripuana.cogesan.com.br/portal", "icon": "https://aripuana.cogesan.com.br/res/favicon.ico" }
       ]
     },
     {
@@ -50,7 +51,7 @@
         { "label": "Udemy", "url": "https://www.udemy.com/" },
         { "label": "CS50x", "url": "https://cs50.harvard.edu/x/" },
         { "label": "Roadmap.sh", "url": "https://roadmap.sh/dashboard" },
-        { "label": "Seletivos IFMT", "url": "https://seletivo.ifmt.edu.br/" }
+        { "label": "Seletivos IFMT", "url": "https://seletivo.ifmt.edu.br/", "icon": "https://www2.ifal.edu.br/acesso-a-sistemas/logo2.png/@@images/7521182e-8704-4536-b6b7-543a00049a9d.png" }
       ]
     },
     {
