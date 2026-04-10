@@ -105,21 +105,6 @@ services:
       - FB_ROOT=/data
       - FB_NOAUTH=true
   
-  # https://forgejo.org/docs/latest/
-  forgejo:
-    image: codeberg.org/forgejo/forgejo:14
-    container_name: forgejo
-    environment:
-      - USER_UID=1000
-      - USER_GID=1000
-    restart: always
-    volumes:
-      - /home/hick/homelab/containers/forgejo/data:/data
-      - /etc/localtime:/etc/localtime:ro
-    ports:
-      - '8012:3000'
-      - '222:22'
-  
   # https://github.com/FreshRSS/FreshRSS#installation
   # https://freshrss.org/
   freshrss:

@@ -104,6 +104,12 @@ dotfiles:
     src: etc/resolv.conf
     dst: /etc/resolv.conf
     chmod: '644'
+  f_app.ini:
+    src: etc/forgejo/app.ini
+    dst: /etc/forgejo/app.ini
+    chmod: '644'
+    trans_install: _decrypt
+    trans_update: _encrypt
 profiles:
   server:
     dotfiles:
@@ -128,3 +134,4 @@ profiles:
     - f_hostname
     - f_hosts
     - f_resolv.conf
+    - f_app.ini
