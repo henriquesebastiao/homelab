@@ -13,6 +13,7 @@
       "title": "Ferramentas",
       "items": [
         { "label": "Code Server", "url": "https://code.local/", "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-original.svg" },
+        { "label": "Forgejo", "url": "https://git.local/", "icon": "https://forgejo.org/favicon.png" },
         { "label": "PyPi", "url": "https://pypi.org/" },
         { "label": "GitHub", "url": "https://github.com", "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg" },
         { "label": "Cloudflare", "url": "https://dash.cloudflare.com/" },
