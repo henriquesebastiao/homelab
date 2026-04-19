@@ -389,7 +389,6 @@ services:
       timeout: 3s
   
   # https://docs.pi-hole.net/docker/
-  # https://docs.pi-hole.net/guides/dns/unbound/
   pihole:
     container_name: pihole
     image: pihole/pihole:2026.04.0@sha256:300cc8f9e966b00440358aafef21f91b32dfe8887e8bd9a6193ed1c4328655d4
@@ -412,7 +411,6 @@ services:
       FTLCONF_webserver_api_password: ${PIHOLE_PASSWORD:-pihole-pass}
       # If using Docker's default `bridge` network setting the dns listening mode should be set to 'all'
       FTLCONF_dns_listeningMode: 'all'
-      FTLCONF_dns_upstreams: unbound#53
     # Volumes store your data between container upgrades
     volumes:
       # For persisting Pi-hole's databases and common configuration file
@@ -432,8 +430,6 @@ services:
       dns_network:
     security_opt:
       - seccomp:unconfined
-    depends_on:
-      - unbound
     restart: unless-stopped
   
   # https://github.com/linuxserver/docker-qbittorrent
@@ -544,17 +540,6 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
-  
-  # https://github.com/NLnetLabs/unbound
-  # https://www.uncommonengineer.com/docs/engineer/LAB/pihole-docker-unbound/
-  unbound:
-    container_name: unbound
-    image: klutchell/unbound:latest
-    volumes:
-      - /home/hick/homelab/containers/unbound:/etc/unbound/custom.conf.d
-    restart: unless-stopped
-    networks:
-      dns_network:
   
   # https://github.com/louislam/uptime-kuma/wiki
   uptime-kuma:

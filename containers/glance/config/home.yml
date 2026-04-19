@@ -522,9 +522,6 @@
             vagas-dev-web:
               parent: vagas-dev
               name: Nginx
-            unbound:
-              name: Unbound
-              icon: di:unbound
         - type: custom-api
           title: Bookmarks
           cache: 24h
