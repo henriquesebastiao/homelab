@@ -110,6 +110,10 @@ dotfiles:
     chmod: '644'
     trans_install: _decrypt
     trans_update: _encrypt
+  f_50-cloud-init.yaml:
+    src: etc/netplan/50-cloud-init.yaml
+    dst: /etc/netplan/50-cloud-init.yaml
+    chmod: '777'
 profiles:
   server:
     dotfiles:
@@ -135,3 +139,4 @@ profiles:
     - f_hosts
     - f_resolv.conf
     - f_app.ini
+    - f_50-cloud-init.yaml
