@@ -24,7 +24,8 @@
       "title": "Serviços",
       "items": [
         { "label": "Energisa", "url": "https://servicos.energisa.com.br/home" },
-        { "label": "DAE", "url": "https://aripuana.cogesan.com.br/portal", "icon": "https://aripuana.cogesan.com.br/res/favicon.ico" }
+        { "label": "DAE", "url": "https://aripuana.cogesan.com.br/portal", "icon": "https://aripuana.cogesan.com.br/res/favicon.ico" },
+        { "label": "Banco Central", "url": "https://meubc.bcb.gov.br/meubc/" }
       ]
     },
     {
