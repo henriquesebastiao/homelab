@@ -352,7 +352,7 @@ services:
   
   # https://docs.n8n.io/hosting/installation/docker/
   n8n:
-    image: n8nio/n8n:2.16.1@sha256:ad20607cdd24bac004ec44804b6b8ded9a2fbf92ed46c4496bf007762c883af2
+    image: n8nio/n8n:2.17.4@sha256:a3ee0f0a48b926e661e5f81681b90a666f1d40907d5e0d5f90f1ea26fea183a6
     container_name: n8n
     restart: unless-stopped
     ports:
