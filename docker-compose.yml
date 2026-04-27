@@ -622,7 +622,7 @@ services:
       - zabbix-database
 
   zabbix-server:
-    image: zabbix/zabbix-server-pgsql:7.4.8-alpine@sha256:b118d2f69194c0bf1cb52698050db06fa06e4a11ebb271c6af889dba183e7d69
+    image: zabbix/zabbix-server-pgsql:7.4.9-alpine@sha256:92d280d694a2192dc0ca9e4677abd6ae2d68132d6739d5fcbde10b58f544e5d4
     container_name: zabbix-server
     hostname: zabbix-server
     restart: unless-stopped
