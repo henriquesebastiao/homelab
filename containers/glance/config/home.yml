@@ -522,6 +522,10 @@
             vagas-dev-web:
               parent: vagas-dev
               name: Nginx
+            downtify:
+              name: Downtify
+              url: https://downtify.local
+              icon: si:fastapi
         - type: custom-api
           title: Bookmarks
           cache: 24h

@@ -48,6 +48,16 @@ services:
     restart: always
     command: tunnel --no-autoupdate run --token ${CLOUDFLARED_TOKEN}
   
+  downtify:
+    image: ghcr.io/henriquesebastiao/downtify:2.4.1@sha256:53790f3dbdaeb460caeb334713e2f259c72db7d33fbac559b71ee149c187dfa6
+    container_name: downtify
+    restart: unless-stopped
+    ports:
+      - 8020:8000
+    volumes:
+      - /home/hick/homelab/containers/jellyfin/media/downtify:/downloads
+      - /home/hick/homelab/containers/downtify/data:/data
+
   # https://dozzle.dev/guide/what-is-dozzle
   # https://github.com/amir20/dozzle
   dozzle:

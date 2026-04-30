@@ -21,6 +21,7 @@
 8017 -> vagas-dev-web
 8018 -> duplicati
 8019 -> vaultwarden
+8020 -> downtify
 8024 -> calibre-web
 8025 -> immich
 8026 -> uptime-kuma
