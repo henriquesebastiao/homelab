@@ -463,7 +463,7 @@ services:
   
   # https://docs.speedtest-tracker.dev/
   speedtest-tracker:
-    image: linuxserver/speedtest-tracker:1.13.12@sha256:2af8df42ae2e32d162ce9230002e726789700e38e527e9c74a746aa983b86888
+    image: linuxserver/speedtest-tracker:1.14.0@sha256:2f2360315ab5144234b9b81fea46a8777045efcb455da50d2ee87d440af8e3b1
     restart: unless-stopped
     container_name: speedtest-tracker
     ports:
