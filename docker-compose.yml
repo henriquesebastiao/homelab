@@ -444,7 +444,7 @@ services:
   
   # https://github.com/linuxserver/docker-qbittorrent
   qbittorrent:
-    image: linuxserver/qbittorrent:5.1.4@sha256:a89108b1bf43de072a35a59a3ee41b97b564538faae5cbb3f6c803aa7f5fd9f7
+    image: linuxserver/qbittorrent:5.1.4@sha256:c9990949e968e99333f47f49da7d16e81ba6e1469c8c46807a65b984c9e8b6ff
     container_name: qbittorrent
     environment:
       - PUID=1000
