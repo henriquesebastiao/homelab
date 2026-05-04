@@ -18,7 +18,10 @@
         { "label": "PyPi", "url": "https://pypi.org/" },
         { "label": "GitHub", "url": "https://github.com", "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg" },
         { "label": "Cloudflare", "url": "https://dash.cloudflare.com/" },
-        { "label": "Docker Hub", "url": "https://hub.docker.com/" }
+        { "label": "Docker Hub", "url": "https://hub.docker.com/" },
+        { "label": "Canva", "url": "https://www.canva.com/" },
+        { "label": "Facebook Ads", "url": "https://business.facebook.com" },
+        { "label": "Fiverr", "url": "https://br.fiverr.com/" }
       ]
     },
     {
