@@ -78,7 +78,7 @@ services:
   # --------------------------------------------
   # Backups/duplicati/calibre/      -> $HOME/homelab/containers/calibre-web/
   duplicati:
-    image: linuxserver/duplicati:2.3.0@sha256:e13e45989514928a22c5209019c51af8aa83233f378e32498fe8a0f6ec10cc7b
+    image: linuxserver/duplicati:2.3.0@sha256:0d552df1217f81ea800526cd15679d9ff5c25e0d952f16378e45fe7c5bc177d2
     container_name: duplicati
     restart: unless-stopped
     privileged: true
