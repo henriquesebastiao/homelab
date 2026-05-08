@@ -615,7 +615,7 @@ services:
 
   # https://www.zabbix.com/documentation/current/en/manual/installation/containers  
   zabbix-frontend:
-    image: zabbix/zabbix-web-nginx-pgsql:7.4.9-alpine@sha256:4171f82155ce4c0a177130c4ad418d48bbe81a431dc10d0678fbe28a9bf17779
+    image: zabbix/zabbix-web-nginx-pgsql:7.4.10-alpine@sha256:b810d84400c4527473226f0ccdb7c29eee9397cabfaa220a8ed9135bd110e530
     hostname: zabbix-frontend
     container_name: zabbix-frontend
     restart: unless-stopped
