@@ -647,7 +647,7 @@ services:
       - zabbix-database
 
   zabbix-agent:
-    image: zabbix/zabbix-agent2:7.4.9-alpine@sha256:d116686102fc2e479b66c10719485d2dd3650ae70442ae4bac3262466ef2eba7
+    image: zabbix/zabbix-agent2:7.4.10-alpine@sha256:dc9a2ae2bebf401e8a5bac047e6b3f1f3b4566207101c9df6510be48b9fbda29
     container_name: zabbix-agent
     hostname: zabbix-agent
     restart: unless-stopped
