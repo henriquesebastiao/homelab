@@ -102,8 +102,6 @@
               name: Nginx
             stirling-pdf:
               hide: true
-            speedtest-tracker:
-              hide: true
             pihole:
               hide: true
             qbittorrent:

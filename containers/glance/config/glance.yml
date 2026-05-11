@@ -43,9 +43,3 @@ pages:
   # put its contents here, though multiple pages are easier to manage when separated
   - $include: home.yml
   - $include: projects.yml
-
-auth:
-  secret-key: mj4EThFXF/85jh29L9tMHBsvS5mdgYRdZuaokH3/PydjVf3Q8scYPJvvSbVyS/kBhOondnOtRRWabHxRjvIY6w==
-  users:
-    hick:
-      password: ${ADMIN_GLANCE_PASSWORD}

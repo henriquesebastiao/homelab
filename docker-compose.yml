@@ -153,19 +153,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     ports:
       - 8007:8080
-    env_file: /home/hick/homelab/containers/glance/.env
-  
-  glance-mila:
-    container_name: glance-mila
-    image: glanceapp/glance:v0.8.4@sha256:6df86a7e8868d1eda21f35205134b1962c422957e42a0c44d4717c8e8f741b1a
-    restart: unless-stopped
-    volumes:
-      - /home/hick/homelab/containers/glance-mila/config:/app/config
-      - /home/hick/homelab/containers/glance-mila/assets:/app/assets
-      - /etc/localtime:/etc/localtime:ro
-    ports:
-      - 8014:8080
-    env_file: /home/hick/homelab/containers/glance-mila/.env
+    # env_file: /home/hick/homelab/containers/glance/.env
   
   # https://go2rtc.org/
   # https://github.com/AlexxIT/go2rtc
@@ -265,67 +253,67 @@ services:
     environment:
       - JELLYFIN_PublishedServerUrl=http://server.local:8096
   
-  # https://komo.do/docs/setup/mongo
-  komodo-mongo:
-    image: mongo:8.2.7@sha256:7abfba0d07c9330373f8173981ea4d09cd8a82cdf0e86ccaf7008848d1d24f62
-    container_name: komodo-mongo
-    labels:
-      komodo.skip: # Prevent Komodo from stopping with StopAllContainers
-    command: --quiet --wiredTigerCacheSizeGB 0.25
-    restart: unless-stopped
-    # ports:
-    #   - 27017:27017
-    volumes:
-      - komodo-mongo-data:/data/db
-      - komodo-mongo-config:/data/configdb
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: admin
+  # # https://komo.do/docs/setup/mongo
+  # komodo-mongo:
+  #   image: mongo:8.2.7@sha256:7abfba0d07c9330373f8173981ea4d09cd8a82cdf0e86ccaf7008848d1d24f62
+  #   container_name: komodo-mongo
+  #   labels:
+  #     komodo.skip: # Prevent Komodo from stopping with StopAllContainers
+  #   command: --quiet --wiredTigerCacheSizeGB 0.25
+  #   restart: unless-stopped
+  #   # ports:
+  #   #   - 27017:27017
+  #   volumes:
+  #     - komodo-mongo-data:/data/db
+  #     - komodo-mongo-config:/data/configdb
+  #   environment:
+  #     MONGO_INITDB_ROOT_USERNAME: admin
+  #     MONGO_INITDB_ROOT_PASSWORD: admin
   
-  komodo-core:
-    image: ghcr.io/moghtech/komodo-core:1.19.5@sha256:a1cceb4f971443b1e9f2a767788f663d0afb6244ee2135f7fe3fd1036af37ade
-    container_name: komodo-core
-    labels:
-      komodo.skip: # Prevent Komodo from stopping with StopAllContainers
-    restart: unless-stopped
-    env_file: /home/hick/homelab/containers/komodo/.env
-    depends_on:
-      - komodo-mongo
-    ports:
-      - 9120:9120
-    environment:
-      KOMODO_DATABASE_ADDRESS: komodo-mongo:27017
-      KOMODO_DATABASE_USERNAME: admin
-      KOMODO_DATABASE_PASSWORD: admin
-    volumes:
-      ## Store dated backups of the database - https://komo.do/docs/setup/backup
-      - /home/hick/homelab/containers/komodo/core/backups:/backups
-      ## Store sync files on server
-      # - /path/to/syncs:/syncs
-      ## Optionally mount a custom core.config.toml
-      # - /path/to/core.config.toml:/config/config.toml
-    ## Allows for systemd Periphery connection at 
-    ## "https://host.docker.internal:8120"
-    # extra_hosts:
-    #   - host.docker.internal:host-gateway
+  # komodo-core:
+  #   image: ghcr.io/moghtech/komodo-core:1.19.5@sha256:a1cceb4f971443b1e9f2a767788f663d0afb6244ee2135f7fe3fd1036af37ade
+  #   container_name: komodo-core
+  #   labels:
+  #     komodo.skip: # Prevent Komodo from stopping with StopAllContainers
+  #   restart: unless-stopped
+  #   env_file: /home/hick/homelab/containers/komodo/.env
+  #   depends_on:
+  #     - komodo-mongo
+  #   ports:
+  #     - 9120:9120
+  #   environment:
+  #     KOMODO_DATABASE_ADDRESS: komodo-mongo:27017
+  #     KOMODO_DATABASE_USERNAME: admin
+  #     KOMODO_DATABASE_PASSWORD: admin
+  #   volumes:
+  #     ## Store dated backups of the database - https://komo.do/docs/setup/backup
+  #     - /home/hick/homelab/containers/komodo/core/backups:/backups
+  #     ## Store sync files on server
+  #     # - /path/to/syncs:/syncs
+  #     ## Optionally mount a custom core.config.toml
+  #     # - /path/to/core.config.toml:/config/config.toml
+  #   ## Allows for systemd Periphery connection at 
+  #   ## "https://host.docker.internal:8120"
+  #   # extra_hosts:
+  #   #   - host.docker.internal:host-gateway
   
-  komodo-periphery:
-    image: ghcr.io/moghtech/komodo-periphery:1.19.5@sha256:bd79cf960ed054fe8e02384322303e462448679b1149dde48bbef151417255b1
-    container_name: komodo-periphery
-    labels:
-      komodo.skip: # Prevent Komodo from stopping with StopAllContainers
-    restart: unless-stopped
-    env_file: /home/hick/homelab/containers/komodo/.env
-    volumes:
-      ## Mount external docker socket
-      - /var/run/docker.sock:/var/run/docker.sock
-      ## Allow Periphery to see processes outside of container
-      - /proc:/proc
-      ## Specify the Periphery agent root directory.
-      ## Must be the same inside and outside the container,
-      ## or docker will get confused. See https://github.com/moghtech/komodo/discussions/180.
-      ## Default: /etc/komodo.
-      - ${PERIPHERY_ROOT_DIRECTORY:-/etc/komodo}:${PERIPHERY_ROOT_DIRECTORY:-/etc/komodo}
+  # komodo-periphery:
+  #   image: ghcr.io/moghtech/komodo-periphery:1.19.5@sha256:bd79cf960ed054fe8e02384322303e462448679b1149dde48bbef151417255b1
+  #   container_name: komodo-periphery
+  #   labels:
+  #     komodo.skip: # Prevent Komodo from stopping with StopAllContainers
+  #   restart: unless-stopped
+  #   env_file: /home/hick/homelab/containers/komodo/.env
+  #   volumes:
+  #     ## Mount external docker socket
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #     ## Allow Periphery to see processes outside of container
+  #     - /proc:/proc
+  #     ## Specify the Periphery agent root directory.
+  #     ## Must be the same inside and outside the container,
+  #     ## or docker will get confused. See https://github.com/moghtech/komodo/discussions/180.
+  #     ## Default: /etc/komodo.
+  #     - ${PERIPHERY_ROOT_DIRECTORY:-/etc/komodo}:${PERIPHERY_ROOT_DIRECTORY:-/etc/komodo}
 
   # https://github.com/librespeed/speedtest-go
   librespeed:
@@ -360,24 +348,24 @@ services:
       - DOWNLOAD_MODE=sequential
       - DEFAULT_THEME=dark
   
-  # https://docs.n8n.io/hosting/installation/docker/
-  n8n:
-    image: n8nio/n8n:2.19.5@sha256:b1b0c592735e24acd3cc64db83f94ef4efd8e331e47c6883249cc51cc1bea16b
-    container_name: n8n
-    restart: unless-stopped
-    ports:
-      - 8027:443
-    environment:
-      - GENERIC_TIMEZONE=${TIMEZONE}
-      - TZ=${TIMEZONE}
-      - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
-      - N8N_RUNNERS_ENABLED=true
-      - N8N_SECURE_COOKIE=${N8N_SECURE_COOKIE}
-      - N8N_HOST=${N8N_HOST}
-      - N8N_PORT=${N8N_PORT}
-      - N8N_PROTOCOL=${N8N_PROTOCOL}
-    volumes:
-      - /home/hick/homelab/containers/n8n/data:/home/node/.n8n
+  # # https://docs.n8n.io/hosting/installation/docker/
+  # n8n:
+  #   image: n8nio/n8n:2.19.5@sha256:b1b0c592735e24acd3cc64db83f94ef4efd8e331e47c6883249cc51cc1bea16b
+  #   container_name: n8n
+  #   restart: unless-stopped
+  #   ports:
+  #     - 8027:443
+  #   environment:
+  #     - GENERIC_TIMEZONE=${TIMEZONE}
+  #     - TZ=${TIMEZONE}
+  #     - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
+  #     - N8N_RUNNERS_ENABLED=true
+  #     - N8N_SECURE_COOKIE=${N8N_SECURE_COOKIE}
+  #     - N8N_HOST=${N8N_HOST}
+  #     - N8N_PORT=${N8N_PORT}
+  #     - N8N_PROTOCOL=${N8N_PROTOCOL}
+  #   volumes:
+  #     - /home/hick/homelab/containers/n8n/data:/home/node/.n8n
   
   # https://nginxproxymanager.com/setup/
   nginx-proxy-manager:
@@ -424,7 +412,7 @@ services:
     # Volumes store your data between container upgrades
     volumes:
       # For persisting Pi-hole's databases and common configuration file
-      - '/home/hick/homelab/containers/pihole/etc:/etc/pihole'
+      - 'pihole_data:/etc/pihole'
       # Uncomment the below if you have custom dnsmasq config files that you want to persist. Not needed for most starting fresh with Pi-hole v6. If you're upgrading from v5 you and have used this directory before, you should keep it enabled for the first v6 container start to allow for a complete migration. It can be removed afterwards. Needs environment variable FTLCONF_misc_etc_dnsmasq_d: 'true'
       #- './etc-dnsmasq.d:/etc/dnsmasq.d'
     cap_add:
@@ -436,10 +424,6 @@ services:
       - SYS_TIME
       # Optional, if Pi-hole should get some more processing time
       - SYS_NICE
-    networks:
-      dns_network:
-    security_opt:
-      - seccomp:unconfined
     restart: unless-stopped
   
   # https://github.com/linuxserver/docker-qbittorrent
@@ -460,27 +444,6 @@ services:
       - 6881:6881
       - 6881:6881/udp
     restart: unless-stopped
-  
-  # https://docs.speedtest-tracker.dev/
-  speedtest-tracker:
-    image: linuxserver/speedtest-tracker:1.14.0@sha256:e283ceb118e80257d2ce47bc10560b2c79582b79d3955b36bb67efe1713b0ad3
-    restart: unless-stopped
-    container_name: speedtest-tracker
-    ports:
-      - 8008:80
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - APP_KEY=base64:h/7HdA9fMLDluj0fJ4NcG13CquLdgJTs9062lfXnmAs=
-      - DB_CONNECTION=sqlite
-      - APP_TIMEZONE=${TIMEZONE}
-      - DISPLAY_TIMEZONE=${TIMEZONE}
-      - APP_DEBUG=true
-      - SPEEDTEST_SCHEDULE=*/30 * * * *
-      # - SPEEDTEST_SERVERS=
-    volumes:
-      - /home/hick/homelab/containers/speedtest-tracker/config:/config
-      - /home/hick/homelab/containers/speedtest-tracker/config/keys:/config/keys
   
   # https://github.com/syncthing/syncthing/blob/main/README-Docker.md
   syncthing:
@@ -513,6 +476,17 @@ services:
     environment:
       - LANGS=pt_BR
       - DISABLE_ADDITIONAL_FEATURES=true
+  
+  tapmap:
+    image: olalie/tapmap:v1.6.3@sha256:7829241c1297d3d38e43cab86e318376f8b1bdfd265be6fb864b9b823c1ede81
+    container_name: tapmap
+    network_mode: host # 8050
+    pid: host
+    environment:
+      - TAPMAP_IN_DOCKER=1
+    volumes:
+      - /home/hick/homelab/containers/tapmap/data:/data
+    restart: unless-stopped
   
   # https://docs.umami.is/docs/install
   umami:
@@ -562,44 +536,44 @@ services:
       - 8026:3001
     restart: always
   
-  vagas-dev-api:
-    image: ghcr.io/henriquesebastiao/vagas-dev/api:0.2.4@sha256:3d7e7c1cca935fa5050ead5367327a5123d863849bbe2d03697ce34273626dac
-    container_name: vagas-dev-api
-    restart: always
-    env_file:
-      - /home/hick/homelab/containers/vagas-dev/.env
-    depends_on:
-      vagas-dev-db:
-        condition: service_healthy
+  # vagas-dev-api:
+  #   image: ghcr.io/henriquesebastiao/vagas-dev/api:0.2.4@sha256:3d7e7c1cca935fa5050ead5367327a5123d863849bbe2d03697ce34273626dac
+  #   container_name: vagas-dev-api
+  #   restart: always
+  #   env_file:
+  #     - /home/hick/homelab/containers/vagas-dev/.env
+  #   depends_on:
+  #     vagas-dev-db:
+  #       condition: service_healthy
   
-  vagas-dev-db:
-    container_name: vagas-dev-db
-    image: postgres:18.3-alpine@sha256:4da1a4828be12604092fa55311276f08f9224a74a62dcb4708bd7439e2a03911
-    ports:
-      - 8016:5432
-    volumes:
-      - pgdata-vagas-dev:/var/lib/postgresql/data
-    env_file:
-      - /home/hick/homelab/containers/vagas-dev/.env
-    restart: always
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${VAGAS_DEV_POSTGRES_USER} -d ${VAGAS_DEV_POSTGRES_DB}"]
-      interval: 10s
-      retries: 5
-      start_period: 30s
-      timeout: 10s
-  vagas-dev-web:
-    container_name: vagas-dev-web
-    image: nginx:1.29.8-alpine@sha256:5616878291a2eed594aee8db4dade5878cf7edcb475e59193904b198d9b830de
-    restart: always
-    volumes:
-      - /home/hick/homelab/containers/vagas-dev/nginx.conf:/etc/nginx/nginx.conf
-    ports:
-      - 8017:80
-    environment:
-      - NGINX_PORT=80
-    depends_on:
-      - vagas-dev-api
+  # vagas-dev-db:
+  #   container_name: vagas-dev-db
+  #   image: postgres:18.3-alpine@sha256:4da1a4828be12604092fa55311276f08f9224a74a62dcb4708bd7439e2a03911
+  #   ports:
+  #     - 8016:5432
+  #   volumes:
+  #     - pgdata-vagas-dev:/var/lib/postgresql/data
+  #   env_file:
+  #     - /home/hick/homelab/containers/vagas-dev/.env
+  #   restart: always
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "pg_isready -U ${VAGAS_DEV_POSTGRES_USER} -d ${VAGAS_DEV_POSTGRES_DB}"]
+  #     interval: 10s
+  #     retries: 5
+  #     start_period: 30s
+  #     timeout: 10s
+  # vagas-dev-web:
+  #   container_name: vagas-dev-web
+  #   image: nginx:1.29.8-alpine@sha256:5616878291a2eed594aee8db4dade5878cf7edcb475e59193904b198d9b830de
+  #   restart: always
+  #   volumes:
+  #     - /home/hick/homelab/containers/vagas-dev/nginx.conf:/etc/nginx/nginx.conf
+  #   ports:
+  #     - 8017:80
+  #   environment:
+  #     - NGINX_PORT=80
+  #   depends_on:
+  #     - vagas-dev-api
   
   # https://github.com/dani-garcia/vaultwarden
   vaultwarden:
@@ -668,10 +642,6 @@ services:
     volumes:
       - /home/hick/homelab/containers/zabbix/data:/var/lib/postgresql/data
 
-networks:
-  dns_network:
-    driver: bridge
-
 volumes:
   filebrowser_data:
   filebrowser_database:
@@ -680,4 +650,5 @@ volumes:
   komodo-mongo-config:
   model-cache:
   umami-db-data:
+  pihole_data:
   pgdata-vagas-dev:

@@ -4,7 +4,6 @@ containers/vaultwarden/data/
 containers/zabbix/data/
 containers/calibre-web/config/
 containers/calibre-web/books/
-containers/speedtest-tracker/config/
 containers/go2rtc/config/
 containers/immich/
 containers/immich-db/
@@ -21,6 +20,7 @@ containers/forgejo/
 containers/freshrss/
 containers/grafana/
 containers/downtify/
+containers/tapmap/
 
 # Permitido
 
