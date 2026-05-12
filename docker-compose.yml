@@ -177,7 +177,7 @@ services:
   # https://github.com/linuxserver/docker-calibre-web
   # https://github.com/janeczku/calibre-web
   calibre-web:
-    image: linuxserver/calibre-web:0.6.26@sha256:604044baccb002db9dafc477f0426e5b2982d67efaa24216731b064a022cebb0
+    image: linuxserver/calibre-web:0.6.26@sha256:8dfec6e631dd6eb432a37f8a638f5a2b6e4a4927ce71e2b26bb82a1bb3a3ff15
     container_name: calibre-web
     environment:
       <<: [*timezone-env, *calibre-web-env, *user-permissions]
@@ -196,7 +196,7 @@ services:
     <<: [*cloudflare-dns, *restart]
   
   downtify:
-    image: ghcr.io/henriquesebastiao/downtify:2.6.1@sha256:045233125aa8b41d4e504a73beeb7964d0ef75b1e00175b6a95130c0df8eba29
+    image: ghcr.io/henriquesebastiao/downtify:2.7.0@sha256:95d00787cfcd645ce8e48aead56b6a6b96c6f85646c14d8f7a6491f1a03e0cbc
     container_name: downtify
     ports:
       - 8020:8000
@@ -225,7 +225,7 @@ services:
   # --------------------------------------------
   # Backups/duplicati/calibre/      -> $HOME/homelab/containers/calibre-web/
   duplicati:
-    image: linuxserver/duplicati:2.3.0@sha256:0d552df1217f81ea800526cd15679d9ff5c25e0d952f16378e45fe7c5bc177d2
+    image: linuxserver/duplicati:2.3.0@sha256:96527b9d11c1a83af9a7a1a58f944eb468e8fedcb5b9bfe8e205c358825db50e
     container_name: duplicati
     privileged: true
     ports:
@@ -241,7 +241,7 @@ services:
   # https://filebrowser.org/installation.html
   # https://github.com/filebrowser/filebrowser
   filebrowser:
-    image: filebrowser/filebrowser:v2.63.2@sha256:4dce87308b9f9cfbcf8d0a284fc9565d2b515530a6bae2d920b388161e093f26
+    image: filebrowser/filebrowser:v2.63.3@sha256:289c5dd677c56662440f26eeb44266ed9746fe563d2e9100f546bff558534d70
     container_name: filebrowser
     user: "0:0"
     ports:
@@ -538,7 +538,7 @@ services:
   
   # https://github.com/linuxserver/docker-qbittorrent
   qbittorrent:
-    image: linuxserver/qbittorrent:5.2.0@sha256:8bff8880f4e056c068ac6359de4cbcf44fb4811493cf15d83c1341fa05a515c0
+    image: linuxserver/qbittorrent:5.2.0@sha256:2e0148428b6769e2ee1eb6781246b6fca4b70cd680edfcb16e7113d9d6cb1631
     container_name: qbittorrent
     environment:
       <<: [*timezone-env, *qbittorrent-env, *user-permissions]
