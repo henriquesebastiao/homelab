@@ -4,6 +4,157 @@
 # - Os containers estão dispostos em ordem alfabéticas neste arquivo
 # - No início de cada serviço há um ou mais links para a documentação ou tutoriais de como configurar cada serviço
 
+x-cloudflare-dns: &cloudflare-dns
+  dns:
+    - 1.1.1.1
+    - 1.0.0.1
+
+x-local-dns: &local-dns
+  dns:
+    - 172.16.0.2
+
+x-timezone-env: &timezone-env
+  TZ: ${TIMEZONE}
+
+x-user-permissions: &user-permissions
+  PUID: 1000
+  PGID: 1000
+
+x-restart: &restart
+  restart: unless-stopped
+
+x-docker-socket: &docker-socket
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+
+x-calibre-web-env: &calibre-web-env
+  DOCKER_MODS: linuxserver/mods:universal-calibre #optional
+  OAUTHLIB_RELAX_TOKEN_SCOPE: 1 #optional
+
+x-duplicati-env: &duplicati-env
+  DUPLICATI__WEBSERVICE_PASSWORD: ${DUPLICATI__WEBSERVICE_PASSWORD}
+  SETTINGS_ENCRYPTION_KEY: ${SETTINGS_ENCRYPTION_KEY}
+
+x-filebrowser-env: &filebrowser-env
+  FB_ROOT: /data
+  FB_NOAUTH: true
+
+x-freshrss-env: &freshrss-env
+  CRON_MIN: '2,32'
+  FRESHRSS_INSTALL: |-
+    --api-enabled
+    --default-user hick
+    --language pt-BR
+  FRESHRSS_USER: |-
+    --api-password ${FRESHRSS_PASSWORD}
+    --email ${FRESHRSS_EMAIL}
+    --language pt-BR
+    --password ${FRESHRSS_PASSWORD}
+    --user ${FRESHRSS_USER}
+
+x-immich-env: &immich-env
+  IMMICH_VERSION: release
+  POSTGRES_PASSWORD: postgres
+  POSTGRES_USER: postgres
+  POSTGRES_DB: immich
+  POSTGRES_INITDB_ARGS: '--data-checksums'
+
+x-jellyfin-env: &jellyfin-env
+  JELLYFIN_PublishedServerUrl: http://server.local:8096
+
+x-komodo-env: &komodo-env
+  KOMODO_DATABASE_ADDRESS: komodo-mongo:27017
+  KOMODO_DATABASE_USERNAME: admin
+  KOMODO_DATABASE_PASSWORD: admin
+  MONGO_INITDB_ROOT_USERNAME: admin
+  MONGO_INITDB_ROOT_PASSWORD: admin
+  COMPOSE_KOMODO_IMAGE_TAG: 2
+  COMPOSE_KOMODO_BACKUPS_PATH: /etc/komodo/backups
+  KOMODO_HOST: https://example.komodo.com
+  KOMODO_TITLE: Komodo
+  KOMODO_PERIPHERY_PUBLIC_KEY: file:/config/keys/periphery.pub
+  KOMODO_LOCAL_AUTH: true
+  KOMODO_INIT_ADMIN_USERNAME: admin
+  KOMODO_INIT_ADMIN_PASSWORD: admin
+  KOMODO_FIRST_SERVER_NAME: Local
+  KOMODO_DISABLE_CONFIRM_DIALOG: false
+  KOMODO_DISABLE_INIT_RESOURCES: false
+  KOMODO_WEBHOOK_SECRET: a_random_secret
+  KOMODO_JWT_SECRET: a_random_jwt_secret
+  KOMODO_JWT_TTL: 1-day
+  KOMODO_MONITORING_INTERVAL: 15-sec
+  KOMODO_RESOURCE_POLL_INTERVAL: 1-hr
+  KOMODO_DISABLE_USER_REGISTRATION: false
+  KOMODO_ENABLE_NEW_USERS: false
+  KOMODO_DISABLE_NON_ADMIN_CREATE: false
+  KOMODO_TRANSPARENT_MODE: false
+  KOMODO_OIDC_ENABLED: false
+  KOMODO_GITHUB_OAUTH_ENABLED: false
+  KOMODO_GOOGLE_OAUTH_ENABLED: false
+  KOMODO_LOGGING_PRETTY: false
+  KOMODO_PRETTY_STARTUP_CONFIG: false
+  PERIPHERY_CORE_ADDRESS: ws://komodo-core:9120
+  PERIPHERY_CONNECT_AS: Local
+  PERIPHERY_ROOT_DIRECTORY: /etc/komodo
+  PERIPHERY_DISABLE_TERMINALS: false
+  PERIPHERY_DISABLE_CONTAINER_TERMINALS: false
+  PERIPHERY_INCLUDE_DISK_MOUNTS: /etc/hostname
+  PERIPHERY_LOGGING_PRETTY: false
+  PERIPHERY_PRETTY_STARTUP_CONFIG: false
+
+x-librespeed-env: &librespeed-env
+  MODE: standalone
+  # TITLE: "Teste de Velocidade"
+  # TELEMETRY: "false"
+  # ENABLE_ID_OBFUSCATION: "false"
+  # REDACT_IP_ADDRESSES: "false"
+  # PASSWORD:
+  # EMAIL:
+  # DISABLE_IPINFO: "false"
+  # IPINFO_APIKEY: "your api key"
+  # DISTANCE: "km"
+  # WEBPORT: 8080
+
+x-metube-env: &metube-env
+  DEFAULT_THEME: dark
+
+x-pihole-env: &pihole-env
+  # Set a password to access the web interface. Not setting one will result in a random password being assigned
+  FTLCONF_webserver_api_password: ${PIHOLE_PASSWORD:-pihole-pass}
+  # If using Docker's default `bridge` network setting the dns listening mode should be set to 'all'
+  FTLCONF_dns_listeningMode: 'all'
+
+x-qbittorrent-env: &qbittorrent-env
+  WEBUI_PORT: 8033
+  TORRENTING_PORT: 6881
+
+x-stirling-pdf-env: &stirling-pdf-env
+  LANGS: pt_BR
+  DISABLE_ADDITIONAL_FEATURES: 'true'
+
+x-tapmap-env: &tapmap-env
+  TAPMAP_IN_DOCKER: '1' # Set this to '1' if you want to run Tapmap in Docker. It enables some Docker-specific features and optimizations.
+
+x-umami-env: &umami-env
+  DATABASE_URL: postgresql://umami:umami@umami-db:5432/umami
+  DATABASE_TYPE: postgresql
+  APP_SECRET: ljVRotlgItt2dHR8TgvXvfKAfvf6AFiydmNfvKx-7oE
+  POSTGRES_DB: umami
+  POSTGRES_USER: umami
+  POSTGRES_PASSWORD: umami
+
+x-vaultwarden-env: &vaultwarden-env
+  DOMAIN: "https://vault.local"
+
+x-zabbix-env: &zabbix-env
+  DB_SERVER_HOST: zabbix-database
+  POSTGRES_USER: zabbix
+  POSTGRES_PASSWORD: zabbix
+  POSTGRES_DB: zabbix
+  ZBX_SERVER_HOST: zabbix-server
+  PHP_TZ: UTC
+  ZBX_HOSTNAME: zabbix-agent
+
 services:
 
   # https://www.audiobookshelf.org/docs#docker-compose-install
@@ -20,8 +171,8 @@ services:
       - /mnt/hd_externo/containers/audiobookshelf/config:/config
       - /mnt/hd_externo/containers/audiobookshelf/metadata:/metadata
     environment:
-      - TZ=${TIMEZONE}
-    restart: always
+      <<: *timezone-env
+    <<: *restart
 
   # https://github.com/linuxserver/docker-calibre-web
   # https://github.com/janeczku/calibre-web
@@ -29,45 +180,41 @@ services:
     image: linuxserver/calibre-web:0.6.26@sha256:604044baccb002db9dafc477f0426e5b2982d67efaa24216731b064a022cebb0
     container_name: calibre-web
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Etc/UTC
-      - DOCKER_MODS=linuxserver/mods:universal-calibre #optional
-      - OAUTHLIB_RELAX_TOKEN_SCOPE=1 #optional
+      <<: [*timezone-env, *calibre-web-env, *user-permissions]
     volumes:
-      - /home/hick/homelab/containers/calibre-web/config:/config
-      - /home/hick/homelab/containers/calibre-web/books:/books
+      - ${BASE}/calibre-web/config:/config
+      - ${BASE}/calibre-web/books:/books
     ports:
       - 8024:8083
-    restart: unless-stopped
+    <<: [*local-dns, *restart]
 
   # https://hub.docker.com/r/cloudflare/cloudflared
   cloudflared:
     image: cloudflare/cloudflared:latest
     container_name: cloudflared
-    restart: always
     command: tunnel --no-autoupdate run --token ${CLOUDFLARED_TOKEN}
+    <<: [*cloudflare-dns, *restart]
   
   downtify:
     image: ghcr.io/henriquesebastiao/downtify:2.6.1@sha256:045233125aa8b41d4e504a73beeb7964d0ef75b1e00175b6a95130c0df8eba29
     container_name: downtify
-    restart: unless-stopped
     ports:
       - 8020:8000
     volumes:
-      - /home/hick/homelab/containers/jellyfin/media/downtify:/downloads
-      - /home/hick/homelab/containers/downtify/data:/data
+      - ${BASE}/jellyfin/media/downtify:/downloads
+      - ${BASE}/downtify/data:/data
+    <<: [*cloudflare-dns, *restart]
 
   # https://dozzle.dev/guide/what-is-dozzle
   # https://github.com/amir20/dozzle
   dozzle:
     container_name: dozzle
     image: amir20/dozzle:v10.5.1@sha256:2f8d5c2b6181533a58246313b1d840a69ae04e6c1010e2f6bb52c2228342b443
-    restart: unless-stopped
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      <<: *user-permissions
     ports:
       - 8005:8080
+    <<: [*docker-socket, *local-dns, *restart]
   
   # https://github.com/linuxserver/docker-duplicati
   # https://docs.duplicati.com/
@@ -80,28 +227,22 @@ services:
   duplicati:
     image: linuxserver/duplicati:2.3.0@sha256:0d552df1217f81ea800526cd15679d9ff5c25e0d952f16378e45fe7c5bc177d2
     container_name: duplicati
-    restart: unless-stopped
     privileged: true
     ports:
       - 8018:8200
     volumes:
-      - /home/hick/homelab/containers/duplicati/config:/config
+      - ${BASE}/duplicati/config:/config
       - /home/hick/backups:/backups
       - /:/source:rw
-    user: '0'
     environment:
-      DUPLICATI__WEBSERVICE_PASSWORD: ${DUPLICATI__WEBSERVICE_PASSWORD}
-      PUID: 0
-      PGID: 0
-      SETTINGS_ENCRYPTION_KEY: ${SETTINGS_ENCRYPTION_KEY}
-      TZ: ${TIMEZONE}
+      <<: [*timezone-env, *duplicati-env, *user-permissions]
+    <<: [*local-dns, *restart]
 
   # https://filebrowser.org/installation.html
   # https://github.com/filebrowser/filebrowser
   filebrowser:
     image: filebrowser/filebrowser:v2.63.2@sha256:4dce87308b9f9cfbcf8d0a284fc9565d2b515530a6bae2d920b388161e093f26
     container_name: filebrowser
-    restart: unless-stopped
     user: "0:0"
     ports:
       - 8015:80
@@ -112,48 +253,39 @@ services:
       - /home/hick:/data
       - /mnt/hd_externo:/data/hd
     environment:
-      - FB_ROOT=/data
-      - FB_NOAUTH=true
+      <<: *filebrowser-env
+    <<: [*local-dns, *restart]
   
   # https://github.com/FreshRSS/FreshRSS#installation
   # https://freshrss.org/
   freshrss:
     image: freshrss/freshrss:1.28.1@sha256:9100f649f5c946f589f54cdb9be7a65996528f48f691ef90eb262a0e06e5a522
     container_name: freshrss
-    restart: unless-stopped
     ports:
       - 8036:80
     volumes:
-      - /home/hick/homelab/containers/freshrss/data:/var/www/FreshRSS/data
-      - /home/hick/homelab/containers/freshrss/extensions:/var/www/FreshRSS/extensions
+      - ${BASE}/freshrss/data:/var/www/FreshRSS/data
+      - ${BASE}/freshrss/extensions:/var/www/FreshRSS/extensions
     environment:
-      TZ: ${TIMEZONE}
-      CRON_MIN: '2,32'
-      FRESHRSS_INSTALL: |-
-        --api-enabled
-        --default-user hick
-        --language pt-BR
-      FRESHRSS_USER: |-
-        --api-password ${FRESHRSS_PASSWORD}
-        --email ${FRESHRSS_EMAIL}
-        --language pt-BR
-        --password ${FRESHRSS_PASSWORD}
-        --user ${FRESHRSS_USER}
+      <<: [*freshrss-env, *timezone-env, *user-permissions]
+    <<: [*local-dns, *restart]
 
   # https://github.com/glanceapp/glance
   glance:
     container_name: glance
     image: glanceapp/glance:v0.8.4@sha256:6df86a7e8868d1eda21f35205134b1962c422957e42a0c44d4717c8e8f741b1a
-    restart: unless-stopped
     volumes:
-      - /home/hick/homelab/containers/glance/config:/app/config
-      - /home/hick/homelab/containers/glance/assets:/app/assets
+      - ${BASE}/glance/config:/app/config
+      - ${BASE}/glance/assets:/app/assets
       - /etc/localtime:/etc/localtime:ro
       # Optionally, also mount docker socket if you want to use the docker containers widget
       - /var/run/docker.sock:/var/run/docker.sock:ro
     ports:
       - 8007:8080
-    # env_file: /home/hick/homelab/containers/glance/.env
+    environment:
+      <<: *user-permissions
+    <<: [*cloudflare-dns, *restart]
+    # env_file: ${BASE}/glance/.env
   
   # https://go2rtc.org/
   # https://github.com/AlexxIT/go2rtc
@@ -162,52 +294,52 @@ services:
     container_name: go2rtc
     network_mode: host       # important for WebRTC, HomeKit, UDP cameras
     privileged: true         # only for FFmpeg hardware transcoding
-    restart: unless-stopped  # autorestart on fail or config change from WebUI
     environment:
-      - TZ=${TIMEZONE}  # timezone in logs
+      <<: [*timezone-env, *user-permissions]
     volumes:
-      - "/home/hick/homelab/containers/go2rtc/config:/config"   # folder for go2rtc.yaml file (edit from WebUI)
+      - "${BASE}/go2rtc/config:/config"   # folder for go2rtc.yaml file (edit from WebUI)
+    <<: [*local-dns, *restart]
 
   # https://grafana.com/docs/grafana/latest/setup-grafana/installation/docker/
   grafana:
     image: grafana/grafana:13.0.1@sha256:0f86bada30d65ef9d0183b90c1e2682ac92d53d95da8bed322b984ea78a4a73a
     container_name: grafana
-    restart: unless-stopped
     ports:
       - 8004:3000
     user: '0'
     volumes:
-      - /home/hick/homelab/containers/grafana:/var/lib/grafana
+      - ${BASE}/grafana:/var/lib/grafana
+    <<: [*cloudflare-dns, *restart]
   
   # https://docs.immich.app/install/docker-compose
   immich:
     container_name: immich
     image: ghcr.io/immich-app/immich-server:v2.7.5@sha256:c15bff75068effb03f4355997d03dc7e0fc58720c2b54ad6f7f10d1bc57efaa5
     volumes:
-      - /home/hick/homelab/containers/immich/data:/data # Directory where photos and videos are stored
+      - ${BASE}/immich/data:/data # Directory where photos and videos are stored
       - /etc/localtime:/etc/localtime:ro
-    env_file:
-      - .env
+    environment:
+      <<: [*immich-env, *user-permissions]
     ports:
       - 8025:2283
     depends_on:
       - immich-redis
       - immich-db
       - immich-machine-learning
-    restart: always
     healthcheck:
       disable: false
+    <<: [*local-dns, *restart]
 
   immich-machine-learning:
     container_name: immich-machine-learning
     image: ghcr.io/immich-app/immich-machine-learning:v2.7.5@sha256:a2501141440f10516d329fdfba2c68082e19eb9ba6016c061ac80d23beadf7f3
     volumes:
       - model-cache:/cache
-    env_file:
-      - .env
-    restart: always
+    environment:
+      <<: [*immich-env, *user-permissions]
     healthcheck:
       disable: false
+    <<: [*local-dns, *restart]
 
   immich-redis:
     container_name: immich-redis
@@ -215,24 +347,23 @@ services:
     image: docker.io/valkey/valkey:8-bookworm@sha256:fea8b3e67b15729d4bb70589eb03367bab9ad1ee89c876f54327fc7c6e618571
     healthcheck:
       test: redis-cli ping || exit 1
-    restart: always
+    environment:
+      <<: [*immich-env, *user-permissions]
+    <<: [*restart, *local-dns]
 
   immich-db:
     container_name: immich-postgres
     hostname: database
     image: ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0@sha256:8d292bdb796aa58bbbaa47fe971c8516f6f57d6a47e7172e62754feb6ed4e7b0
     environment:
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_USER: postgres
-      POSTGRES_DB: immich
-      POSTGRES_INITDB_ARGS: '--data-checksums'
+      <<: [*immich-env, *user-permissions]
       # Uncomment the DB_STORAGE_TYPE: 'HDD' var if your database isn't stored on SSDs
       # DB_STORAGE_TYPE: 'HDD'
     volumes:
       # Do not edit the next line. If you want to change the database storage location on your system, edit the value of DB_DATA_LOCATION in the .env file
-      - /home/hick/homelab/containers/immich-db/db:/var/lib/postgresql/data
+      - ${BASE}/immich-db/db:/var/lib/postgresql/data
     shm_size: 128mb
-    restart: always
+    <<: [*restart, *local-dns]
   
   # https://jellyfin.org/docs/general/installation/container/
   jellyfin:
@@ -240,113 +371,98 @@ services:
     container_name: jellyfin
     network_mode: 'host'
     volumes:
-      - /home/hick/homelab/containers/jellyfin/config:/config
-      - /home/hick/homelab/containers/jellyfin/cache:/cache
+      - ${BASE}/jellyfin/config:/config
+      - ${BASE}/jellyfin/cache:/cache
       - type: bind
-        source: /home/hick/homelab/containers/jellyfin/media
+        source: ${BASE}/jellyfin/media
         target: /media
       - type: bind
         source: /mnt/hd_externo/Videos
         target: /media/hd/Videos
-    restart: unless-stopped
     # Optional - alternative address used for autodiscovery
     environment:
-      - JELLYFIN_PublishedServerUrl=http://server.local:8096
+      <<: [*jellyfin-env, *user-permissions]
+    <<: [*cloudflare-dns, *restart]
   
   # # https://komo.do/docs/setup/mongo
-  # komodo-mongo:
-  #   image: mongo:8.2.7@sha256:7abfba0d07c9330373f8173981ea4d09cd8a82cdf0e86ccaf7008848d1d24f62
-  #   container_name: komodo-mongo
-  #   labels:
-  #     komodo.skip: # Prevent Komodo from stopping with StopAllContainers
-  #   command: --quiet --wiredTigerCacheSizeGB 0.25
-  #   restart: unless-stopped
-  #   # ports:
-  #   #   - 27017:27017
-  #   volumes:
-  #     - komodo-mongo-data:/data/db
-  #     - komodo-mongo-config:/data/configdb
-  #   environment:
-  #     MONGO_INITDB_ROOT_USERNAME: admin
-  #     MONGO_INITDB_ROOT_PASSWORD: admin
+  komodo-mongo:
+    image: mongo:8.2.7@sha256:7abfba0d07c9330373f8173981ea4d09cd8a82cdf0e86ccaf7008848d1d24f62
+    container_name: komodo-mongo
+    labels:
+      komodo.skip: # Prevent Komodo from stopping with StopAllContainers
+    command: --quiet --wiredTigerCacheSizeGB 0.25
+    # ports:
+    #   - 27017:27017
+    volumes:
+      - komodo-mongo-data:/data/db
+      - komodo-mongo-config:/data/configdb
+    environment:
+      <<: [*timezone-env, *komodo-env, *user-permissions]
+    <<: [*local-dns, *restart]
+  komodo-core:
+    image: ghcr.io/moghtech/komodo-core:1.19.5@sha256:a1cceb4f971443b1e9f2a767788f663d0afb6244ee2135f7fe3fd1036af37ade
+    container_name: komodo-core
+    labels:
+      komodo.skip: # Prevent Komodo from stopping with StopAllContainers
+    depends_on:
+      - komodo-mongo
+    ports:
+      - 9120:9120
+    environment:
+      <<: [*timezone-env, *komodo-env, *user-permissions]
+    volumes:
+      ## Store dated backups of the database - https://komo.do/docs/setup/backup
+      - ${BASE}/komodo/core/backups:/backups
+      ## Store sync files on server
+      # - /path/to/syncs:/syncs
+      ## Optionally mount a custom core.config.toml
+      # - /path/to/core.config.toml:/config/config.toml
+    ## Allows for systemd Periphery connection at 
+    ## "https://host.docker.internal:8120"
+    # extra_hosts:
+    #   - host.docker.internal:host-gateway
+    <<: [*local-dns, *restart]
   
-  # komodo-core:
-  #   image: ghcr.io/moghtech/komodo-core:1.19.5@sha256:a1cceb4f971443b1e9f2a767788f663d0afb6244ee2135f7fe3fd1036af37ade
-  #   container_name: komodo-core
-  #   labels:
-  #     komodo.skip: # Prevent Komodo from stopping with StopAllContainers
-  #   restart: unless-stopped
-  #   env_file: /home/hick/homelab/containers/komodo/.env
-  #   depends_on:
-  #     - komodo-mongo
-  #   ports:
-  #     - 9120:9120
-  #   environment:
-  #     KOMODO_DATABASE_ADDRESS: komodo-mongo:27017
-  #     KOMODO_DATABASE_USERNAME: admin
-  #     KOMODO_DATABASE_PASSWORD: admin
-  #   volumes:
-  #     ## Store dated backups of the database - https://komo.do/docs/setup/backup
-  #     - /home/hick/homelab/containers/komodo/core/backups:/backups
-  #     ## Store sync files on server
-  #     # - /path/to/syncs:/syncs
-  #     ## Optionally mount a custom core.config.toml
-  #     # - /path/to/core.config.toml:/config/config.toml
-  #   ## Allows for systemd Periphery connection at 
-  #   ## "https://host.docker.internal:8120"
-  #   # extra_hosts:
-  #   #   - host.docker.internal:host-gateway
-  
-  # komodo-periphery:
-  #   image: ghcr.io/moghtech/komodo-periphery:1.19.5@sha256:bd79cf960ed054fe8e02384322303e462448679b1149dde48bbef151417255b1
-  #   container_name: komodo-periphery
-  #   labels:
-  #     komodo.skip: # Prevent Komodo from stopping with StopAllContainers
-  #   restart: unless-stopped
-  #   env_file: /home/hick/homelab/containers/komodo/.env
-  #   volumes:
-  #     ## Mount external docker socket
-  #     - /var/run/docker.sock:/var/run/docker.sock
-  #     ## Allow Periphery to see processes outside of container
-  #     - /proc:/proc
-  #     ## Specify the Periphery agent root directory.
-  #     ## Must be the same inside and outside the container,
-  #     ## or docker will get confused. See https://github.com/moghtech/komodo/discussions/180.
-  #     ## Default: /etc/komodo.
-  #     - ${PERIPHERY_ROOT_DIRECTORY:-/etc/komodo}:${PERIPHERY_ROOT_DIRECTORY:-/etc/komodo}
+  komodo-periphery:
+    image: ghcr.io/moghtech/komodo-periphery:1.19.5@sha256:bd79cf960ed054fe8e02384322303e462448679b1149dde48bbef151417255b1
+    container_name: komodo-periphery
+    labels:
+      komodo.skip: # Prevent Komodo from stopping with StopAllContainers
+    environment:
+      <<: [*timezone-env, *komodo-env, *user-permissions]
+    volumes:
+      ## Mount external docker socket
+      - /var/run/docker.sock:/var/run/docker.sock
+      ## Allow Periphery to see processes outside of container
+      - /proc:/proc
+      ## Specify the Periphery agent root directory.
+      ## Must be the same inside and outside the container,
+      ## or docker will get confused. See https://github.com/moghtech/komodo/discussions/180.
+      ## Default: /etc/komodo.
+      - ${PERIPHERY_ROOT_DIRECTORY:-/etc/komodo}:${PERIPHERY_ROOT_DIRECTORY:-/etc/komodo}
+    <<: [*local-dns, *restart]
 
   # https://github.com/librespeed/speedtest-go
   librespeed:
     container_name: librespeed
     image: ghcr.io/librespeed/speedtest:latest
-    restart: always
     environment:
-      MODE: standalone
-      #TITLE: "LibreSpeed"
-      #TELEMETRY: "false"
-      #ENABLE_ID_OBFUSCATION: "false"
-      #REDACT_IP_ADDRESSES: "false"
-      #PASSWORD:
-      #EMAIL:
-      #DISABLE_IPINFO: "false"
-      #IPINFO_APIKEY: "your api key"
-      #DISTANCE: "km"
-      #WEBPORT: 8080
+      <<: [*librespeed-env, *user-permissions]
     ports:
       - 8030:8080 # webport mapping (host:container)
+    <<: [*local-dns, *restart]
   
   # https://github.com/alexta69/metube
   metube:
     container_name: metube
     image: ghcr.io/alexta69/metube:2026.04.28@sha256:caf21da7d83a4003b429ef1126e9c1499f36f8401a1f8a7b158f70b94ade8edd
-    restart: unless-stopped
     ports:
       - 8009:8081
     volumes:
-      - /home/hick/homelab/containers/metube/downloads:/downloads
+      - ${BASE}/metube/downloads:/downloads
     environment:
-      - DOWNLOAD_MODE=sequential
-      - DEFAULT_THEME=dark
+      <<: [*metube-env, *user-permissions]
+    <<: [*local-dns, *restart]
   
   # # https://docs.n8n.io/hosting/installation/docker/
   # n8n:
@@ -365,26 +481,26 @@ services:
   #     - N8N_PORT=${N8N_PORT}
   #     - N8N_PROTOCOL=${N8N_PROTOCOL}
   #   volumes:
-  #     - /home/hick/homelab/containers/n8n/data:/home/node/.n8n
+  #     - ${BASE}/n8n/data:/home/node/.n8n
   
   # https://nginxproxymanager.com/setup/
   nginx-proxy-manager:
     image: jc21/nginx-proxy-manager:2.14.0@sha256:2aa69b382a384b676c0d4f1d6f2eac40ecd478fcf7af1cfb3f9f1d3cd0c81e12
     container_name: nginx-proxy-manager
-    restart: unless-stopped
     ports:
       - '80:80' # Public HTTP Port
       - '443:443' # Public HTTPS Port
       - '8081:81' # Admin Web Port
     volumes:
-      - /home/hick/homelab/containers/nginx-proxy-manager/data:/data
-      - /home/hick/homelab/containers/nginx-proxy-manager/letsencrypt:/etc/letsencrypt
+      - ${BASE}/nginx-proxy-manager/data:/data
+      - ${BASE}/nginx-proxy-manager/letsencrypt:/etc/letsencrypt
     environment:
-      TZ: ${TIMEZONE}
+      <<: [*timezone-env, *user-permissions]
     healthcheck:
       test: ["CMD", "/usr/bin/check-health"]
       interval: 10s
       timeout: 3s
+    <<: [*local-dns, *restart]
   
   # https://docs.pi-hole.net/docker/
   pihole:
@@ -403,13 +519,7 @@ services:
       # Uncomment the line below if you are using Pi-hole as your NTP server
       #- "123:123/udp"
     environment:
-      # Set the appropriate timezone for your location (https://en.wikipedia.org/wiki/List_of_tz_database_time_zones), e.g:
-      TZ: ${TIMEZONE}
-      # Set a password to access the web interface. Not setting one will result in a random password being assigned
-      FTLCONF_webserver_api_password: ${PIHOLE_PASSWORD:-pihole-pass}
-      # If using Docker's default `bridge` network setting the dns listening mode should be set to 'all'
-      FTLCONF_dns_listeningMode: 'all'
-    # Volumes store your data between container upgrades
+      <<: [*pihole-env, *timezone-env, *user-permissions]
     volumes:
       # For persisting Pi-hole's databases and common configuration file
       - 'pihole_data:/etc/pihole'
@@ -424,36 +534,31 @@ services:
       - SYS_TIME
       # Optional, if Pi-hole should get some more processing time
       - SYS_NICE
-    restart: unless-stopped
+    <<: [*cloudflare-dns, *restart]
   
   # https://github.com/linuxserver/docker-qbittorrent
   qbittorrent:
     image: linuxserver/qbittorrent:5.2.0@sha256:8bff8880f4e056c068ac6359de4cbcf44fb4811493cf15d83c1341fa05a515c0
     container_name: qbittorrent
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=${TIMEZONE}
-      - WEBUI_PORT=8033
-      - TORRENTING_PORT=6881
+      <<: [*timezone-env, *qbittorrent-env, *user-permissions]
     volumes:
-      - /home/hick/homelab/containers/qbittorrent/config:/config
-      - /home/hick/homelab/containers/qbittorrent/downloads:/downloads #optional
+      - ${BASE}/qbittorrent/config:/config
+      - ${BASE}/qbittorrent/downloads:/downloads #optional
     ports:
       - 8033:8033
       - 6881:6881
       - 6881:6881/udp
-    restart: unless-stopped
+    <<: [*local-dns, *restart]
   
   # https://github.com/syncthing/syncthing/blob/main/README-Docker.md
-  syncthing:
+  syncthing:  # TODO
     image: syncthing/syncthing:2.0.16@sha256:4a961394ca471f4e48f31ad2cef50697e502c8799e2e98477a1c3844e0c5bc54
     container_name: syncthing
     environment:
-      - PUID=1000
-      - PGID=1000
+      <<: *user-permissions
     volumes:
-      - /home/hick/homelab/containers/syncthing:/var/syncthing
+      - ${BASE}/syncthing:/var/syncthing
     ports:
       - 8032:8384 # Web UI
       - 22000:22000/tcp # TCP file transfers
@@ -470,12 +575,11 @@ services:
   stirling-pdf:
     image: stirlingtools/stirling-pdf:1.6.0@sha256:1f73a8f898fe269cbbccea3be577064dd87fc4334de349fcc5b1afa1bcebf240
     container_name: stirling-pdf
-    restart: unless-stopped
     ports:
       - 8011:8080
     environment:
-      - LANGS=pt_BR
-      - DISABLE_ADDITIONAL_FEATURES=true
+      <<: [*stirling-pdf-env, *user-permissions]
+    <<: [*local-dns, *restart]
   
   tapmap:
     image: olalie/tapmap:v1.6.3@sha256:7829241c1297d3d38e43cab86e318376f8b1bdfd265be6fb864b9b823c1ede81
@@ -483,10 +587,10 @@ services:
     network_mode: host # 8050
     pid: host
     environment:
-      - TAPMAP_IN_DOCKER=1
+      <<: [*tapmap-env, *user-permissions]
     volumes:
-      - /home/hick/homelab/containers/tapmap/data:/data
-    restart: unless-stopped
+      - ${BASE}/tapmap/data:/data
+    <<: [*cloudflare-dns, *restart]
   
   # https://docs.umami.is/docs/install
   umami:
@@ -495,53 +599,52 @@ services:
     ports:
       - 8006:3000
     environment:
-      DATABASE_URL: postgresql://umami:umami@umami-db:5432/umami
-      DATABASE_TYPE: postgresql
-      APP_SECRET: ljVRotlgItt2dHR8TgvXvfKAfvf6AFiydmNfvKx-7oE
+      <<: [*umami-env, *user-permissions]
     depends_on:
       umami-db:
         condition: service_healthy
     init: true
-    restart: always
     healthcheck:
       test: ["CMD-SHELL", "curl http://localhost:3000/api/heartbeat"]
       interval: 5s
       timeout: 5s
       retries: 5
+    <<: [*local-dns, *restart]
 
   umami-db:
     image: postgres:15-alpine
     container_name: umami-db
     environment:
-      POSTGRES_DB: umami
-      POSTGRES_USER: umami
-      POSTGRES_PASSWORD: umami
+      <<: [*umami-env, *user-permissions]
     volumes:
       - umami-db-data:/var/lib/postgresql/data
-    restart: always
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U umami -d umami"]
       interval: 5s
       timeout: 5s
       retries: 5
+    <<: [*local-dns, *restart]
   
   # https://github.com/louislam/uptime-kuma/wiki
   uptime-kuma:
     image: louislam/uptime-kuma:2.3.2@sha256:9aeb4e51d038047f414309c77a1af553281ca535723cb88907d907269d0a908e
     container_name: uptime-kuma
     volumes:
-      - /home/hick/homelab/containers/uptime-kuma/data:/app/data
+      - ${BASE}/uptime-kuma/data:/app/data
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - 8026:3001
-    restart: always
+    environment:
+      <<: *user-permissions
+    <<: [*local-dns, *restart]
+    
   
   # vagas-dev-api:
   #   image: ghcr.io/henriquesebastiao/vagas-dev/api:0.2.4@sha256:3d7e7c1cca935fa5050ead5367327a5123d863849bbe2d03697ce34273626dac
   #   container_name: vagas-dev-api
   #   restart: always
   #   env_file:
-  #     - /home/hick/homelab/containers/vagas-dev/.env
+  #     - ${BASE}/vagas-dev/.env
   #   depends_on:
   #     vagas-dev-db:
   #       condition: service_healthy
@@ -554,7 +657,7 @@ services:
   #   volumes:
   #     - pgdata-vagas-dev:/var/lib/postgresql/data
   #   env_file:
-  #     - /home/hick/homelab/containers/vagas-dev/.env
+  #     - ${BASE}/vagas-dev/.env
   #   restart: always
   #   healthcheck:
   #     test: ["CMD-SHELL", "pg_isready -U ${VAGAS_DEV_POSTGRES_USER} -d ${VAGAS_DEV_POSTGRES_DB}"]
@@ -567,7 +670,7 @@ services:
   #   image: nginx:1.29.8-alpine@sha256:5616878291a2eed594aee8db4dade5878cf7edcb475e59193904b198d9b830de
   #   restart: always
   #   volumes:
-  #     - /home/hick/homelab/containers/vagas-dev/nginx.conf:/etc/nginx/nginx.conf
+  #     - ${BASE}/vagas-dev/nginx.conf:/etc/nginx/nginx.conf
   #   ports:
   #     - 8017:80
   #   environment:
@@ -579,46 +682,40 @@ services:
   vaultwarden:
     image: vaultwarden/server:1.36.0@sha256:d626d04934cd1192ad8ced1adb975099fca78cec33ab467d2d3c923cde7f3b0c
     container_name: vaultwarden
-    restart: unless-stopped
     environment:
-      DOMAIN: "https://vault.local"
+      <<: [*vaultwarden-env, *user-permissions]
     volumes:
-      - /home/hick/homelab/containers/vaultwarden/data/:/data/
+      - ${BASE}/vaultwarden/data/:/data/
     ports:
       - 8019:80
+    <<: [*local-dns, *restart]
 
   # https://www.zabbix.com/documentation/current/en/manual/installation/containers  
   zabbix-frontend:
     image: zabbix/zabbix-web-nginx-pgsql:7.4.10-alpine@sha256:b810d84400c4527473226f0ccdb7c29eee9397cabfaa220a8ed9135bd110e530
     hostname: zabbix-frontend
     container_name: zabbix-frontend
-    restart: unless-stopped
     environment:
-      DB_SERVER_HOST: zabbix-database
-      POSTGRES_USER: zabbix
-      POSTGRES_PASSWORD: zabbix
-      ZBX_SERVER_HOST: zabbix-server
-      PHP_TZ: UTC
+      <<: [*zabbix-env, *user-permissions]
     ports:
       - 8003:8080
     depends_on:
       - zabbix-server
       - zabbix-database
+    <<: [*local-dns, *restart]
 
   zabbix-server:
     image: zabbix/zabbix-server-pgsql:7.4.10-alpine@sha256:944ac5ae2f58c643af43133a4c43e44fba856893e32ddcc73ee7ac1abab9c158
     container_name: zabbix-server
     hostname: zabbix-server
-    restart: unless-stopped
     init: true
     environment:
-      DB_SERVER_HOST: zabbix-database
-      POSTGRES_USER: zabbix
-      POSTGRES_PASSWORD: zabbix
+      <<: [*zabbix-env, *user-permissions]
     ports:
       - 10050:10050
     depends_on:
       - zabbix-database
+    <<: [*local-dns, *restart]
 
   zabbix-agent:
     image: zabbix/zabbix-agent2:7.4.10-alpine@sha256:dc9a2ae2bebf401e8a5bac047e6b3f1f3b4566207101c9df6510be48b9fbda29
@@ -627,20 +724,18 @@ services:
     restart: unless-stopped
     init: true
     environment:
-      ZBX_HOSTNAME: zabbix-agent
-      ZBX_SERVER_HOST: zabbix-server
+      <<: [*zabbix-env, *user-permissions]
+    <<: [*local-dns, *restart]
 
   zabbix-database:
     image: postgres:13.18-alpine3.20@sha256:77815c1f18ae761b0e503503a494475a03149d7ce544934ccecdbafdb3956c94
     container_name: zabbix-database
     hostname: zabbix-database
-    restart: unless-stopped
     environment:
-      POSTGRES_PASSWORD: zabbix
-      POSTGRES_USER: zabbix
-      POSTGRES_DB: zabbix
+      <<: [*zabbix-env, *user-permissions]      
     volumes:
-      - /home/hick/homelab/containers/zabbix/data:/var/lib/postgresql/data
+      - ${BASE}/zabbix/data:/var/lib/postgresql/data
+    <<: [*local-dns, *restart]
 
 volumes:
   filebrowser_data:
