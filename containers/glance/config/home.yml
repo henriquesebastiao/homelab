@@ -381,10 +381,6 @@
               name: LibreSpeed
               url: http://librespeed.local
               icon: di:librespeed
-            syncthing:
-              name: Syncthing
-              url: https://syncthing.local
-              icon: di:syncthing
             metube:
               name: MeTube
               url: http://metube.local

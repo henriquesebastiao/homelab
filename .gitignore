@@ -11,7 +11,6 @@ containers/pihole/etc/
 containers/uptime-kuma/data/
 containers/jellyfin/
 containers/n8n/
-containers/syncthing/
 containers/qbittorrent/
 containers/metube/
 containers/nginx-proxy-manager/

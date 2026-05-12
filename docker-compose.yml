@@ -550,26 +550,6 @@ services:
       - 6881:6881
       - 6881:6881/udp
     <<: [*local-dns, *restart]
-  
-  # https://github.com/syncthing/syncthing/blob/main/README-Docker.md
-  syncthing:  # TODO
-    image: syncthing/syncthing:2.0.16@sha256:4a961394ca471f4e48f31ad2cef50697e502c8799e2e98477a1c3844e0c5bc54
-    container_name: syncthing
-    environment:
-      <<: *user-permissions
-    volumes:
-      - ${BASE}/syncthing:/var/syncthing
-    ports:
-      - 8032:8384 # Web UI
-      - 22000:22000/tcp # TCP file transfers
-      - 22000:22000/udp # QUIC file transfers
-      - 21027:21027/udp # Receive local discovery broadcasts
-    restart: unless-stopped
-    healthcheck:
-      test: curl -fkLsS -m 2 127.0.0.1:8384/rest/noauth/health | grep -o --color=never OK || exit 1
-      interval: 1m
-      timeout: 10s
-      retries: 3
 
   # https://docs.stirlingpdf.com/Installation/Docker%20Install
   stirling-pdf:
