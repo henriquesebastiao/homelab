@@ -52,13 +52,6 @@ x-freshrss-env: &freshrss-env
     --password ${FRESHRSS_PASSWORD}
     --user ${FRESHRSS_USER}
 
-x-immich-env: &immich-env
-  IMMICH_VERSION: release
-  POSTGRES_PASSWORD: postgres
-  POSTGRES_USER: postgres
-  POSTGRES_DB: immich
-  POSTGRES_INITDB_ARGS: '--data-checksums'
-
 x-jellyfin-env: &jellyfin-env
   JELLYFIN_PublishedServerUrl: http://server.local:8096
 
@@ -124,24 +117,9 @@ x-pihole-env: &pihole-env
   # If using Docker's default `bridge` network setting the dns listening mode should be set to 'all'
   FTLCONF_dns_listeningMode: 'all'
 
-x-qbittorrent-env: &qbittorrent-env
-  WEBUI_PORT: 8033
-  TORRENTING_PORT: 6881
-
 x-stirling-pdf-env: &stirling-pdf-env
   LANGS: pt_BR
   DISABLE_ADDITIONAL_FEATURES: 'true'
-
-x-tapmap-env: &tapmap-env
-  TAPMAP_IN_DOCKER: '1' # Set this to '1' if you want to run Tapmap in Docker. It enables some Docker-specific features and optimizations.
-
-x-umami-env: &umami-env
-  DATABASE_URL: postgresql://umami:umami@umami-db:5432/umami
-  DATABASE_TYPE: postgresql
-  APP_SECRET: ljVRotlgItt2dHR8TgvXvfKAfvf6AFiydmNfvKx-7oE
-  POSTGRES_DB: umami
-  POSTGRES_USER: umami
-  POSTGRES_PASSWORD: umami
 
 x-vaultwarden-env: &vaultwarden-env
   DOMAIN: "https://vault.local"
@@ -156,23 +134,6 @@ x-zabbix-env: &zabbix-env
   ZBX_HOSTNAME: zabbix-agent
 
 services:
-
-  # https://www.audiobookshelf.org/docs#docker-compose-install
-  # https://www.audiobookshelf.org/docs#docker-compose-upgrade
-  # https://www.audiobookshelf.org/docs#env-configuration
-  audiobookshelf:
-    image: ghcr.io/advplyr/audiobookshelf:2.34.0@sha256:4143292c530f6ac6700afd13360c04f477e4f1a81c1c97c4224b1c7e4330c5c4
-    container_name: audiobookshelf
-    ports:
-      - 13378:80
-    volumes:
-      - /mnt/hd_externo/containers/audiobookshelf/audiobooks:/audiobooks
-      - /mnt/hd_externo/containers/audiobookshelf/podcasts:/podcasts
-      - /mnt/hd_externo/containers/audiobookshelf/config:/config
-      - /mnt/hd_externo/containers/audiobookshelf/metadata:/metadata
-    environment:
-      <<: *timezone-env
-    <<: *restart
 
   # https://github.com/linuxserver/docker-calibre-web
   # https://github.com/janeczku/calibre-web
@@ -286,19 +247,6 @@ services:
       <<: *user-permissions
     <<: [*cloudflare-dns, *restart]
     # env_file: ${BASE}/glance/.env
-  
-  # https://go2rtc.org/
-  # https://github.com/AlexxIT/go2rtc
-  go2rtc: # HTTP Port: 1984, RSTP Port: 8554, WebRTC Port: 8554
-    image: alexxit/go2rtc:1.9.14@sha256:675c318b23c06fd862a61d262240c9a63436b4050d177ffc68a32710d9e05bae
-    container_name: go2rtc
-    network_mode: host       # important for WebRTC, HomeKit, UDP cameras
-    privileged: true         # only for FFmpeg hardware transcoding
-    environment:
-      <<: [*timezone-env, *user-permissions]
-    volumes:
-      - "${BASE}/go2rtc/config:/config"   # folder for go2rtc.yaml file (edit from WebUI)
-    <<: [*local-dns, *restart]
 
   # https://grafana.com/docs/grafana/latest/setup-grafana/installation/docker/
   grafana:
@@ -310,60 +258,6 @@ services:
     volumes:
       - ${BASE}/grafana:/var/lib/grafana
     <<: [*cloudflare-dns, *restart]
-  
-  # https://docs.immich.app/install/docker-compose
-  immich:
-    container_name: immich
-    image: ghcr.io/immich-app/immich-server:v2.7.5@sha256:c15bff75068effb03f4355997d03dc7e0fc58720c2b54ad6f7f10d1bc57efaa5
-    volumes:
-      - ${BASE}/immich/data:/data # Directory where photos and videos are stored
-      - /etc/localtime:/etc/localtime:ro
-    environment:
-      <<: [*immich-env, *user-permissions]
-    ports:
-      - 8025:2283
-    depends_on:
-      - immich-redis
-      - immich-db
-      - immich-machine-learning
-    healthcheck:
-      disable: false
-    <<: [*local-dns, *restart]
-
-  immich-machine-learning:
-    container_name: immich-machine-learning
-    image: ghcr.io/immich-app/immich-machine-learning:v2.7.5@sha256:a2501141440f10516d329fdfba2c68082e19eb9ba6016c061ac80d23beadf7f3
-    volumes:
-      - model-cache:/cache
-    environment:
-      <<: [*immich-env, *user-permissions]
-    healthcheck:
-      disable: false
-    <<: [*local-dns, *restart]
-
-  immich-redis:
-    container_name: immich-redis
-    hostname: redis
-    image: docker.io/valkey/valkey:8-bookworm@sha256:fea8b3e67b15729d4bb70589eb03367bab9ad1ee89c876f54327fc7c6e618571
-    healthcheck:
-      test: redis-cli ping || exit 1
-    environment:
-      <<: [*immich-env, *user-permissions]
-    <<: [*restart, *local-dns]
-
-  immich-db:
-    container_name: immich-postgres
-    hostname: database
-    image: ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0@sha256:8d292bdb796aa58bbbaa47fe971c8516f6f57d6a47e7172e62754feb6ed4e7b0
-    environment:
-      <<: [*immich-env, *user-permissions]
-      # Uncomment the DB_STORAGE_TYPE: 'HDD' var if your database isn't stored on SSDs
-      # DB_STORAGE_TYPE: 'HDD'
-    volumes:
-      # Do not edit the next line. If you want to change the database storage location on your system, edit the value of DB_DATA_LOCATION in the .env file
-      - ${BASE}/immich-db/db:/var/lib/postgresql/data
-    shm_size: 128mb
-    <<: [*restart, *local-dns]
   
   # https://jellyfin.org/docs/general/installation/container/
   jellyfin:
@@ -535,21 +429,6 @@ services:
       # Optional, if Pi-hole should get some more processing time
       - SYS_NICE
     <<: [*cloudflare-dns, *restart]
-  
-  # https://github.com/linuxserver/docker-qbittorrent
-  qbittorrent:
-    image: linuxserver/qbittorrent:5.2.0@sha256:2e0148428b6769e2ee1eb6781246b6fca4b70cd680edfcb16e7113d9d6cb1631
-    container_name: qbittorrent
-    environment:
-      <<: [*timezone-env, *qbittorrent-env, *user-permissions]
-    volumes:
-      - ${BASE}/qbittorrent/config:/config
-      - ${BASE}/qbittorrent/downloads:/downloads #optional
-    ports:
-      - 8033:8033
-      - 6881:6881
-      - 6881:6881/udp
-    <<: [*local-dns, *restart]
 
   # https://docs.stirlingpdf.com/Installation/Docker%20Install
   stirling-pdf:
@@ -559,50 +438,6 @@ services:
       - 8011:8080
     environment:
       <<: [*stirling-pdf-env, *user-permissions]
-    <<: [*local-dns, *restart]
-  
-  tapmap:
-    image: olalie/tapmap:v1.6.3@sha256:7829241c1297d3d38e43cab86e318376f8b1bdfd265be6fb864b9b823c1ede81
-    container_name: tapmap
-    network_mode: host # 8050
-    pid: host
-    environment:
-      <<: [*tapmap-env, *user-permissions]
-    volumes:
-      - ${BASE}/tapmap/data:/data
-    <<: [*cloudflare-dns, *restart]
-  
-  # https://docs.umami.is/docs/install
-  umami:
-    image: ghcr.io/umami-software/umami:postgresql-latest@sha256:e3f80c0625aad7179b49da27d475357cabb1068b8cacd9a792cfd6966888b123
-    container_name: umami
-    ports:
-      - 8006:3000
-    environment:
-      <<: [*umami-env, *user-permissions]
-    depends_on:
-      umami-db:
-        condition: service_healthy
-    init: true
-    healthcheck:
-      test: ["CMD-SHELL", "curl http://localhost:3000/api/heartbeat"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
-    <<: [*local-dns, *restart]
-
-  umami-db:
-    image: postgres:15-alpine
-    container_name: umami-db
-    environment:
-      <<: [*umami-env, *user-permissions]
-    volumes:
-      - umami-db-data:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U umami -d umami"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
     <<: [*local-dns, *restart]
   
   # https://github.com/louislam/uptime-kuma/wiki
@@ -724,6 +559,5 @@ volumes:
   komodo-mongo-data:
   komodo-mongo-config:
   model-cache:
-  umami-db-data:
   pihole_data:
   pgdata-vagas-dev:

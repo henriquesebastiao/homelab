@@ -72,8 +72,6 @@
             prometheus-manejo:
               parent: manejo
               name: Prometheus
-            umami-db:
-              hide: true
             web-manejo:
               parent: manejo
               name: Nginx
@@ -102,8 +100,6 @@
               hide: true
             pihole:
               hide: true
-            qbittorrent:
-              hide: true
             homeassistant:
               hide: true
             uptime-kuma:
@@ -116,21 +112,9 @@
               hide: true
             dozzle:
               hide: true
-            umami:
-              hide: true
             jellyfin:
               hide: true
             vaultwarden:
-              hide: true
-            immich:
-              hide: true
-            immich-machine-learning:
-              hide: true
-            immich-redis:
-              hide: true
-            immich-postgres:
-              hide: true
-            go2rtc:
               hide: true
             n8n:
               hide: true

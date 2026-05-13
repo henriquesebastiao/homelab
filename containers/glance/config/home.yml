@@ -287,15 +287,8 @@
               name: Duplicati
               url: http://172.16.0.2:8018
               icon: di:duplicati
-            go2rtc:
-              name: go2rtc
-              url: http://go2rtc.local
-              icon: sh:go2rtc
             prometheus-manejo:
               hide: true
-            umami-db:
-              parent: umami
-              name: Database
             web-manejo:
               hide: true
             glance:
@@ -320,10 +313,6 @@
               name: File Browser
               url: http://filebrowser.local
               icon: di:filebrowser
-            qbittorrent:
-              name: qBittorrent
-              url: http://172.16.0.2:8033
-              icon: di:qbittorrent
             pihole:
               name: Pi-hole
               url: http://pihole.local/admin/
@@ -350,11 +339,6 @@
               name: Dozzle
               url: http://dozzle.local
               icon: di:dozzle
-            umami:
-              name: Umami
-              url: http://umami.local/websites
-              icon: auto-invert sh:umami
-              id: umami
             jellyfin:
               name: Jellyfin
               url: http://jellyfin.local/web/#/home.html
@@ -363,20 +347,6 @@
               name: Vaultwarden
               url: https://vault.henriquesebastiao.com
               icon: auto-invert di:vaultwarden
-            immich:
-              name: Immich
-              url: http://immich.local
-              icon: di:immich
-              id: immich
-            immich-machine-learning:
-              parent: immich
-              name: Machine Learning
-            immich-redis:
-              parent: immich
-              name: Redis
-            immich-postgres:
-              parent: immich
-              name: Database
             librespeed:
               name: LibreSpeed
               url: http://librespeed.local
@@ -395,10 +365,6 @@
               name: Nginx Proxy Manager
               url: http://proxy.local
               icon: sh:nginx-proxy-manager
-            audiobookshelf:
-              name: Audiobookshelf
-              url: http://audiobookshelf.local
-              icon: di:audiobookshelf
             vagas-dev-api:
               id: vagas-dev
               name: Vagas Dev
@@ -413,9 +379,6 @@
               name: Downtify
               url: http://downtify.local
               icon: si:fastapi
-            tapmap:
-              name: Tapmap
-              url: http://tapmap.local
         - type: custom-api
           title: Bookmarks
           cache: 24h

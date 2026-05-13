@@ -4,14 +4,10 @@ containers/vaultwarden/data/
 containers/zabbix/data/
 containers/calibre-web/config/
 containers/calibre-web/books/
-containers/go2rtc/config/
-containers/immich/
-containers/immich-db/
 containers/pihole/etc/
 containers/uptime-kuma/data/
 containers/jellyfin/
 containers/n8n/
-containers/qbittorrent/
 containers/metube/
 containers/nginx-proxy-manager/
 containers/komodo/
@@ -19,7 +15,6 @@ containers/forgejo/
 containers/freshrss/
 containers/grafana/
 containers/downtify/
-containers/tapmap/
 
 # Permitido
 
