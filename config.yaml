@@ -20,12 +20,6 @@ dotfiles:
     chmod: '644'
     trans_install: _decrypt
     trans_update: _encrypt
-  f_env:
-    src: homelab/.env
-    dst: ~/homelab/.env
-    chmod: '664'
-    trans_install: _decrypt
-    trans_update: _encrypt
   f_settings.json:
     src: local/share/code-server/User/settings.json
     dst: ~/.local/share/code-server/User/settings.json
@@ -84,7 +78,6 @@ profiles:
   server:
     dotfiles:
     - f_config.yaml
-    - f_env
     - f_settings.json
     - f_bpytop.conf
     - f_config.yml
