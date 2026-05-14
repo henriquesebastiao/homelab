@@ -23,6 +23,7 @@ dotfiles:
   f_settings.json:
     src: local/share/code-server/User/settings.json
     dst: ~/.local/share/code-server/User/settings.json
+    chmod: '664'
   f_bpytop.conf:
     src: config/bpytop/bpytop.conf
     dst: ~/.config/bpytop/bpytop.conf
@@ -38,12 +39,15 @@ dotfiles:
   f_config.conf:
     src: config/neofetch/config.conf
     dst: ~/.config/neofetch/config.conf
+    chmod: '664'
   f_spaceship.zsh:
     src: config/spaceship.zsh
     dst: ~/.config/spaceship.zsh
+    chmod: '664'
   f_aliases:
     src: aliases
     dst: ~/.aliases
+    chmod: '664'
   f_bashrc:
     src: bashrc
     dst: ~/.bashrc
@@ -53,6 +57,7 @@ dotfiles:
   f_gitconfig:
     src: gitconfig
     dst: ~/.gitconfig
+    chmod: '664'
   f_profile:
     src: profile
     dst: ~/.profile
@@ -64,6 +69,7 @@ dotfiles:
     dst: ~/.zshrc
     trans_install: _decrypt
     trans_update: _encrypt
+    chmod: '664'
   f_authorized_keys:
     src: ssh/authorized_keys
     dst: ~/.ssh/authorized_keys
