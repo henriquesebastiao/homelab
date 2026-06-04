@@ -516,7 +516,7 @@ services:
     <<: [*local-dns, *restart]
 
   zabbix-server:
-    image: zabbix/zabbix-server-pgsql:7.4.10-alpine@sha256:944ac5ae2f58c643af43133a4c43e44fba856893e32ddcc73ee7ac1abab9c158
+    image: zabbix/zabbix-server-pgsql:7.4.11-alpine@sha256:fb39b35ae2bdf67cf5a2abced2450c398f37dee1c59b9869e69c151c92db0034
     container_name: zabbix-server
     hostname: zabbix-server
     init: true
