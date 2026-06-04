@@ -15,6 +15,7 @@ containers/forgejo/
 containers/freshrss/
 containers/grafana/
 containers/downtify/
+containers/navidrome/
 
 # Permitido
 

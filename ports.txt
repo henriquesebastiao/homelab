@@ -4,6 +4,7 @@
 80 -> nginx-proxy-manager
 443 -> nginx-proxy-manager
 3000 -> forgejo
+4533 -> navidrome
 8001 -> pihole
 8003 -> zabbix
 8004 -> grafana

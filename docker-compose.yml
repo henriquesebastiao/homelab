@@ -374,6 +374,20 @@ services:
   #     - ${BASE}/n8n/data:/home/node/.n8n
   
   # https://nginxproxymanager.com/setup/
+
+  # https://www.navidrome.org/docs/installation/docker/
+  navidrome:
+    image: deluan/navidrome:0.61.2@sha256:9fa40b3d8dec43ceb2213d1fa551da3dcfef6ac6d19c2e534efb92527c2bafd2
+    container_name: navidrome
+    ports:
+      - "4533:4533"
+    environment:
+      <<: [*timezone-env, *user-permissions]
+    volumes:
+      - ${BASE}/navidrome/data:/data
+      - ${BASE}/jellyfin/media/downtify:/music:ro
+    <<: [*local-dns, *restart]
+
   nginx-proxy-manager:
     image: jc21/nginx-proxy-manager:2.15.1@sha256:52b2c59994f3d36acfcf70a1626f29734df0ed8c71bacc0269f78b6f939858bb
     container_name: nginx-proxy-manager
