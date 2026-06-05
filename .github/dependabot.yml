@@ -3,7 +3,9 @@ updates:
   - package-ecosystem: "docker-compose"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "cron"
+      cronjob: "0 0 1 * *" # Às 0h do dia 1 de cada mês
+      timezone: "America/Cuiaba"
     assignees:
       - "henriquesebastiao"
     ignore:
