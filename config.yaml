@@ -80,6 +80,10 @@ dotfiles:
     src: config/atuin/config.toml
     dst: ~/.config/atuin/config.toml
     chmod: '600'
+  f_override.conf:
+    src: etc/systemd/system/docker.service.d/override.conf
+    dst: /etc/systemd/system/docker.service.d/override.conf
+    chmod: '644'
 profiles:
   server:
     dotfiles:
@@ -97,3 +101,4 @@ profiles:
     - f_zshrc
     - f_authorized_keys
     - f_config.toml
+    - f_override.conf
