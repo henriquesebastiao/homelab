@@ -60,6 +60,13 @@
               icon: di:duplicati
             prometheus-manejo:
               hide: true
+            searxng-core:
+              name: SearXNG
+              id: searxng
+              url: http://teste.com
+              icon: di:searxng
+            searxng-valkey:
+              parent: searxng
             web-manejo:
               hide: true
             glance:

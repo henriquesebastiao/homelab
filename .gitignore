@@ -16,6 +16,7 @@ containers/freshrss/
 containers/grafana/
 containers/downtify/
 containers/navidrome/
+containers/searxng/
 
 # Permitido
 

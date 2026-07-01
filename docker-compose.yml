@@ -439,6 +439,29 @@ services:
       # Optional, if Pi-hole should get some more processing time
       - SYS_NICE
     <<: [*cloudflare-dns, *restart]
+  
+  searxng-core:
+    container_name: searxng-core
+    image: docker.io/searxng/searxng:${SEARXNG_VERSION:-latest}
+    ports:
+      - ${SEARXNG_HOST:+${SEARXNG_HOST}:}${SEARXNG_PORT:-8080}:${SEARXNG_PORT:-8080}
+    env_file: ${BASE}/searxng/.env
+    environment:
+      SEARXNG_LIMITER: "false"
+    volumes:
+      - ${BASE}/searxng/core-config/:/etc/searxng/:Z
+      - searxng-core-data:/var/cache/searxng/
+    <<: [*local-dns, *restart]
+
+  searxng-valkey:
+    container_name: searxng-valkey
+    image: docker.io/valkey/valkey:9-alpine
+    command: valkey-server --save 30 1 --loglevel warning
+    environment:
+      <<: *user-permissions
+    volumes:
+      - searxng-valkey-data:/data/
+    <<: [*local-dns, *restart]
 
   # https://docs.stirlingpdf.com/Installation/Docker%20Install
   stirling-pdf:
@@ -571,3 +594,5 @@ volumes:
   model-cache:
   pihole_data:
   pgdata-vagas-dev:
+  searxng-core-data:
+  searxng-valkey-data:
