@@ -202,7 +202,7 @@ services:
   # https://filebrowser.org/installation.html
   # https://github.com/filebrowser/filebrowser
   filebrowser:
-    image: filebrowser/filebrowser:v2.63.12@sha256:fc8c3a46c16bbdf97362b20c50164e97de9c1dd5f63230d28a4cb15248b53ec3
+    image: filebrowser/filebrowser:v2.63.17@sha256:271ec822a03112ee8d2fc7042e8434995dfa74421e6a48e031be68c88fcded1c
     container_name: filebrowser
     user: "0:0"
     ports:
