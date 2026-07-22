@@ -129,6 +129,10 @@
               name: LibreSpeed
               url: http://librespeed.local
               icon: di:librespeed
+            speedtest-tracker:
+              name: Speedtest Tracker
+              url: http://speedtest.local
+              icon: sh:speedtest-tracker
             metube:
               name: MeTube
               url: http://metube.local

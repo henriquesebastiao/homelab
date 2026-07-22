@@ -462,6 +462,25 @@ services:
     volumes:
       - searxng-valkey-data:/data/
     <<: [*local-dns, *restart]
+  
+  speedtest-tracker:
+    image: linuxserver/speedtest-tracker:1.14.5@sha256:c33d119bb60fb58a5848564d85926caeadb61c813c8c536850215cdf9f3b48a7
+    container_name: speedtest-tracker
+    ports:
+        - 8021:80
+    environment:
+      DB_CONNECTION: sqlite
+      APP_KEY: base64:7MVqhKqatr4m9fsyoYm/WUSE88mWb9qMSA6i+Aa6qpY=
+      APP_URL: http://speedtest.local
+      APP_TIMEZONE: America/Manaus
+      APP_LOCALE: pt-BR
+      SPEEDTEST_SERVERS: 33211 # Invinet
+      SPEEDTEST_SCHEDULE: 30 * * * * # A cada 30 minutos
+      <<: *user-permissions
+    volumes:
+      - ${BASE}/speedtest/data:/config
+      - ${BASE}/speedtest/custom-ssl-keys:/config/keys
+    <<: [*local-dns, *restart]
 
   # https://docs.stirlingpdf.com/Installation/Docker%20Install
   stirling-pdf:

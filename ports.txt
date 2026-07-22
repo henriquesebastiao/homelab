@@ -19,6 +19,7 @@
 8018 -> duplicati
 8019 -> vaultwarden
 8020 -> downtify
+8021 -> speedtest-tracker
 8024 -> calibre-web
 8026 -> uptime-kuma
 8027 -> n8n
