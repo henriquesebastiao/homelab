@@ -160,7 +160,7 @@
             downtify:
               name: Downtify
               url: http://downtify.local
-              icon: si:fastapi
+              icon: sh:downtify
             navidrome:
               name: Navidrome
               url: http://navidrome.local
