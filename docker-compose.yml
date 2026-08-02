@@ -138,7 +138,7 @@ services:
   # https://github.com/linuxserver/docker-calibre-web
   # https://github.com/janeczku/calibre-web
   calibre-web:
-    image: linuxserver/calibre-web:0.6.26@sha256:293884804cff3f9a665700901719393c30a2c6776a81da588ea35bd03176695f
+    image: linuxserver/calibre-web:0.6.26@sha256:a7277fd8884b3d77e8659a2d82b0974af9812d4c1f4040c98b910da21e764a36
     container_name: calibre-web
     environment:
       <<: [*timezone-env, *calibre-web-env, *user-permissions]
