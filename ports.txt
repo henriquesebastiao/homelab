@@ -5,6 +5,8 @@
 443 -> nginx-proxy-manager
 3000 -> forgejo
 4533 -> navidrome
+6881/tcp -> qbittorrent
+6881/udp -> qbittorrent
 8001 -> pihole
 8003 -> zabbix
 8004 -> grafana
@@ -20,6 +22,7 @@
 8019 -> vaultwarden
 8020 -> downtify
 8021 -> speedtest-tracker
+8022 -> qbittorrent
 8024 -> calibre-web
 8026 -> uptime-kuma
 8027 -> n8n

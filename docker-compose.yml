@@ -440,6 +440,24 @@ services:
       - SYS_NICE
     <<: [*cloudflare-dns, *restart]
   
+  # https://github.com/linuxserver/docker-qbittorrent
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:5.2.3@sha256:b024436f8ca665d16d9a997d26fd27fdf867ee5566ba09f32764e7b2976d3e02
+    container_name: qbittorrent
+    environment:
+      <<: [*timezone-env, *user-permissions]
+      WEBUI_PORT: 8022
+      TORRENTING_PORT: 6881
+    volumes:
+      - qbittorrent-config:/config
+      - ${BASE}/qbittorrent/downloads:/downloads #optional
+    ports:
+      - 8022:8022
+      - 6881:6881
+      - 6881:6881/udp
+    stop_grace_period: "10s" #optional
+    <<: [*local-dns, *restart]
+  
   searxng-core:
     container_name: searxng-core
     image: docker.io/searxng/searxng:${SEARXNG_VERSION:-latest}
@@ -613,5 +631,6 @@ volumes:
   model-cache:
   pihole_data:
   pgdata-vagas-dev:
+  qbittorrent-config:
   searxng-core-data:
   searxng-valkey-data:
