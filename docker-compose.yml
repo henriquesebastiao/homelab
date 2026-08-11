@@ -55,46 +55,6 @@ x-freshrss-env: &freshrss-env
 x-jellyfin-env: &jellyfin-env
   JELLYFIN_PublishedServerUrl: http://server.local:8096
 
-x-komodo-env: &komodo-env
-  KOMODO_DATABASE_ADDRESS: komodo-mongo:27017
-  KOMODO_DATABASE_USERNAME: admin
-  KOMODO_DATABASE_PASSWORD: admin
-  MONGO_INITDB_ROOT_USERNAME: admin
-  MONGO_INITDB_ROOT_PASSWORD: admin
-  COMPOSE_KOMODO_IMAGE_TAG: 2
-  COMPOSE_KOMODO_BACKUPS_PATH: /etc/komodo/backups
-  KOMODO_HOST: https://example.komodo.com
-  KOMODO_TITLE: Komodo
-  KOMODO_PERIPHERY_PUBLIC_KEY: file:/config/keys/periphery.pub
-  KOMODO_LOCAL_AUTH: true
-  KOMODO_INIT_ADMIN_USERNAME: admin
-  KOMODO_INIT_ADMIN_PASSWORD: admin
-  KOMODO_FIRST_SERVER_NAME: Local
-  KOMODO_DISABLE_CONFIRM_DIALOG: false
-  KOMODO_DISABLE_INIT_RESOURCES: false
-  KOMODO_WEBHOOK_SECRET: a_random_secret
-  KOMODO_JWT_SECRET: a_random_jwt_secret
-  KOMODO_JWT_TTL: 1-day
-  KOMODO_MONITORING_INTERVAL: 15-sec
-  KOMODO_RESOURCE_POLL_INTERVAL: 1-hr
-  KOMODO_DISABLE_USER_REGISTRATION: false
-  KOMODO_ENABLE_NEW_USERS: false
-  KOMODO_DISABLE_NON_ADMIN_CREATE: false
-  KOMODO_TRANSPARENT_MODE: false
-  KOMODO_OIDC_ENABLED: false
-  KOMODO_GITHUB_OAUTH_ENABLED: false
-  KOMODO_GOOGLE_OAUTH_ENABLED: false
-  KOMODO_LOGGING_PRETTY: false
-  KOMODO_PRETTY_STARTUP_CONFIG: false
-  PERIPHERY_CORE_ADDRESS: ws://komodo-core:9120
-  PERIPHERY_CONNECT_AS: Local
-  PERIPHERY_ROOT_DIRECTORY: /etc/komodo
-  PERIPHERY_DISABLE_TERMINALS: false
-  PERIPHERY_DISABLE_CONTAINER_TERMINALS: false
-  PERIPHERY_INCLUDE_DISK_MOUNTS: /etc/hostname
-  PERIPHERY_LOGGING_PRETTY: false
-  PERIPHERY_PRETTY_STARTUP_CONFIG: false
-
 x-librespeed-env: &librespeed-env
   MODE: standalone
   # TITLE: "Teste de Velocidade"
@@ -273,64 +233,6 @@ services:
     environment:
       <<: [*jellyfin-env, *user-permissions]
     <<: [*cloudflare-dns, *restart]
-  
-  # # https://komo.do/docs/setup/mongo
-  komodo-mongo:
-    image: mongo:8.2.9@sha256:a706cb4e493bcd0262f345b3b0c78732ca0e54301f0d7bbe2b66f26313ce7ccb
-    container_name: komodo-mongo
-    labels:
-      komodo.skip: # Prevent Komodo from stopping with StopAllContainers
-    command: --quiet --wiredTigerCacheSizeGB 0.25
-    # ports:
-    #   - 27017:27017
-    volumes:
-      - komodo-mongo-data:/data/db
-      - komodo-mongo-config:/data/configdb
-    environment:
-      <<: [*timezone-env, *komodo-env, *user-permissions]
-    <<: [*local-dns, *restart]
-  komodo-core:
-    image: ghcr.io/moghtech/komodo-core:1.19.5@sha256:a1cceb4f971443b1e9f2a767788f663d0afb6244ee2135f7fe3fd1036af37ade
-    container_name: komodo-core
-    labels:
-      komodo.skip: # Prevent Komodo from stopping with StopAllContainers
-    depends_on:
-      - komodo-mongo
-    ports:
-      - 9120:9120
-    environment:
-      <<: [*timezone-env, *komodo-env, *user-permissions]
-    volumes:
-      ## Store dated backups of the database - https://komo.do/docs/setup/backup
-      - ${BASE}/komodo/core/backups:/backups
-      ## Store sync files on server
-      # - /path/to/syncs:/syncs
-      ## Optionally mount a custom core.config.toml
-      # - /path/to/core.config.toml:/config/config.toml
-    ## Allows for systemd Periphery connection at 
-    ## "https://host.docker.internal:8120"
-    # extra_hosts:
-    #   - host.docker.internal:host-gateway
-    <<: [*local-dns, *restart]
-  
-  komodo-periphery:
-    image: ghcr.io/moghtech/komodo-periphery:1.19.5@sha256:bd79cf960ed054fe8e02384322303e462448679b1149dde48bbef151417255b1
-    container_name: komodo-periphery
-    labels:
-      komodo.skip: # Prevent Komodo from stopping with StopAllContainers
-    environment:
-      <<: [*timezone-env, *komodo-env, *user-permissions]
-    volumes:
-      ## Mount external docker socket
-      - /var/run/docker.sock:/var/run/docker.sock
-      ## Allow Periphery to see processes outside of container
-      - /proc:/proc
-      ## Specify the Periphery agent root directory.
-      ## Must be the same inside and outside the container,
-      ## or docker will get confused. See https://github.com/moghtech/komodo/discussions/180.
-      ## Default: /etc/komodo.
-      - ${PERIPHERY_ROOT_DIRECTORY:-/etc/komodo}:${PERIPHERY_ROOT_DIRECTORY:-/etc/komodo}
-    <<: [*local-dns, *restart]
 
   # https://github.com/librespeed/speedtest-go
   librespeed:
@@ -590,8 +492,6 @@ volumes:
   filebrowser_data:
   filebrowser_database:
   filebrowser_config:
-  komodo-mongo-data:
-  komodo-mongo-config:
   model-cache:
   pihole_data:
   pgdata-vagas-dev:

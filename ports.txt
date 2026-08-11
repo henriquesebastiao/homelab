@@ -29,5 +29,4 @@
 8080 -> vscode server
 8081 -> nginx-proxy-manager
 8096 -> jellyfin
-9120 -> komodo
 10050 -> zabbix server

@@ -39,17 +39,6 @@
               name: Zabbix
               url: http://zabbix.local
               icon: di:zabbix
-            komodo-core:
-              id: komodo
-              name: Komodo
-              url: https://komodo.local
-              icon: di:komodo
-            komodo-mongo:
-              parent: komodo
-              name: MongoDB
-            komodo-periphery:
-              parent: komodo
-              name: Komodo Periphery
             db-poupy:
               hide: true
             db-dotum:

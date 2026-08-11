@@ -10,7 +10,6 @@ containers/jellyfin/
 containers/n8n/
 containers/metube/
 containers/nginx-proxy-manager/
-containers/komodo/
 containers/forgejo/
 containers/freshrss/
 containers/grafana/
