@@ -4,7 +4,6 @@
 80 -> nginx-proxy-manager
 443 -> nginx-proxy-manager
 3000 -> forgejo
-4533 -> navidrome
 6881/tcp -> qbittorrent
 6881/udp -> qbittorrent
 8001 -> pihole

@@ -260,7 +260,7 @@ services:
   
   # https://jellyfin.org/docs/general/installation/container/
   jellyfin:
-    image: jellyfin/jellyfin:10.11.11.20260606-153911@sha256:aefb67e6a7ff1debdd154a78a7bbb780fd0c873d8639210a7f6a2016ad2b35db
+    image: jellyfin/jellyfin:10.11.11@sha256:aefb67e6a7ff1debdd154a78a7bbb780fd0c873d8639210a7f6a2016ad2b35db
     container_name: jellyfin
     network_mode: 'host'
     volumes:
@@ -374,19 +374,6 @@ services:
   #     - ${BASE}/n8n/data:/home/node/.n8n
   
   # https://nginxproxymanager.com/setup/
-
-  # https://www.navidrome.org/docs/installation/docker/
-  navidrome:
-    image: deluan/navidrome:0.62.0@sha256:c4b5cb36a790b3eb63ca6a68bbe2fe149c2d7fa2e586f7a480e61db630e6664b
-    container_name: navidrome
-    ports:
-      - "4533:4533"
-    environment:
-      <<: [*timezone-env, *user-permissions]
-    volumes:
-      - ${BASE}/navidrome/data:/data
-      - ${BASE}/jellyfin/media/downtify:/music:ro
-    <<: [*local-dns, *restart]
 
   nginx-proxy-manager:
     image: jc21/nginx-proxy-manager:2.15.1@sha256:52b2c59994f3d36acfcf70a1626f29734df0ed8c71bacc0269f78b6f939858bb

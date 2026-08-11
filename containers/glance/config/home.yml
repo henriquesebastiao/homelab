@@ -161,10 +161,6 @@
               name: Downtify
               url: http://downtify.local
               icon: sh:downtify
-            navidrome:
-              name: Navidrome
-              url: http://navidrome.local
-              icon: di:navidrome
             qbittorrent:
               name: Qbittorrent
               url: http://qbittorrent.local
