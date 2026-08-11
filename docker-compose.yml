@@ -445,29 +445,6 @@ services:
     stop_grace_period: "10s" #optional
     <<: [*local-dns, *restart]
   
-  searxng-core:
-    container_name: searxng-core
-    image: docker.io/searxng/searxng:${SEARXNG_VERSION:-latest}
-    ports:
-      - ${SEARXNG_HOST:+${SEARXNG_HOST}:}${SEARXNG_PORT:-8080}:${SEARXNG_PORT:-8080}
-    env_file: ${BASE}/searxng/.env
-    environment:
-      SEARXNG_LIMITER: "false"
-    volumes:
-      - ${BASE}/searxng/core-config/:/etc/searxng/:Z
-      - searxng-core-data:/var/cache/searxng/
-    <<: [*local-dns, *restart]
-
-  searxng-valkey:
-    container_name: searxng-valkey
-    image: docker.io/valkey/valkey:9-alpine
-    command: valkey-server --save 30 1 --loglevel warning
-    environment:
-      <<: *user-permissions
-    volumes:
-      - searxng-valkey-data:/data/
-    <<: [*local-dns, *restart]
-  
   speedtest-tracker:
     image: linuxserver/speedtest-tracker:1.14.6@sha256:1647a57e0c125eac6c3a5256c499aa8f580fa7d27d0842376277cdf93e137018
     container_name: speedtest-tracker
@@ -619,5 +596,3 @@ volumes:
   pihole_data:
   pgdata-vagas-dev:
   qbittorrent-config:
-  searxng-core-data:
-  searxng-valkey-data:
