@@ -117,7 +117,7 @@ services:
     <<: [*cloudflare-dns, *restart]
   
   downtify:
-    image: ghcr.io/henriquesebastiao/downtify:2.9.1@sha256:4b03e99a179e9e501a5785d3a9ab74a5bac0d077d62ee1f676d4855b788cd341
+    image: ghcr.io/henriquesebastiao/downtify:2.10.0@sha256:9ee623da0dcd66ed26fd2aeea5bc5790dfb8b93d1a1c222e9170d263656fd74a
     container_name: downtify
     ports:
       - 8020:8000
