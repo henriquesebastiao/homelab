@@ -390,44 +390,45 @@ services:
     <<: [*local-dns, *restart]
     
   
-  # vagas-dev-api:
-  #   image: ghcr.io/henriquesebastiao/vagas-dev/api:0.2.4@sha256:3d7e7c1cca935fa5050ead5367327a5123d863849bbe2d03697ce34273626dac
-  #   container_name: vagas-dev-api
-  #   restart: always
-  #   env_file:
-  #     - ${BASE}/vagas-dev/.env
-  #   depends_on:
-  #     vagas-dev-db:
-  #       condition: service_healthy
+  vagas-dev-api:
+    image: ghcr.io/henriquesebastiao/vagas-dev/api:0.2.4@sha256:3d7e7c1cca935fa5050ead5367327a5123d863849bbe2d03697ce34273626dac
+    container_name: vagas-dev-api
+    restart: always
+    env_file:
+      - ${BASE}/vagas-dev/.env
+    depends_on:
+      vagas-dev-db:
+        condition: service_healthy
   
-  # vagas-dev-db:
-  #   container_name: vagas-dev-db
-  #   image: postgres:18.3-alpine@sha256:4da1a4828be12604092fa55311276f08f9224a74a62dcb4708bd7439e2a03911
-  #   ports:
-  #     - 8016:5432
-  #   volumes:
-  #     - pgdata-vagas-dev:/var/lib/postgresql/data
-  #   env_file:
-  #     - ${BASE}/vagas-dev/.env
-  #   restart: always
-  #   healthcheck:
-  #     test: ["CMD-SHELL", "pg_isready -U ${VAGAS_DEV_POSTGRES_USER} -d ${VAGAS_DEV_POSTGRES_DB}"]
-  #     interval: 10s
-  #     retries: 5
-  #     start_period: 30s
-  #     timeout: 10s
-  # vagas-dev-web:
-  #   container_name: vagas-dev-web
-  #   image: nginx:1.29.8-alpine@sha256:5616878291a2eed594aee8db4dade5878cf7edcb475e59193904b198d9b830de
-  #   restart: always
-  #   volumes:
-  #     - ${BASE}/vagas-dev/nginx.conf:/etc/nginx/nginx.conf
-  #   ports:
-  #     - 8017:80
-  #   environment:
-  #     - NGINX_PORT=80
-  #   depends_on:
-  #     - vagas-dev-api
+  vagas-dev-db:
+    container_name: vagas-dev-db
+    image: postgres:18.3-alpine@sha256:4da1a4828be12604092fa55311276f08f9224a74a62dcb4708bd7439e2a03911
+    ports:
+      - 8016:5432
+    volumes:
+      - pgdata-vagas-dev:/var/lib/postgresql/data
+    env_file:
+      - ${BASE}/vagas-dev/.env
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${VAGAS_DEV_POSTGRES_USER} -d ${VAGAS_DEV_POSTGRES_DB}"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
+
+  vagas-dev-web:
+    container_name: vagas-dev-web
+    image: nginx:1.29.8-alpine@sha256:5616878291a2eed594aee8db4dade5878cf7edcb475e59193904b198d9b830de
+    restart: always
+    volumes:
+      - ${BASE}/vagas-dev/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - 8017:80
+    environment:
+      - NGINX_PORT=80
+    depends_on:
+      - vagas-dev-api
   
   # https://github.com/dani-garcia/vaultwarden
   vaultwarden:
