@@ -255,6 +255,21 @@ services:
     environment:
       <<: [*metube-env, *user-permissions]
     <<: [*local-dns, *restart]
+
+  navidrome:
+    image: deluan/navidrome:0.64.0@sha256:a384948b81bd1529986c5960169e7fc4fa00f46bde6bd517971a4c36671db2af
+    container_name: navidrome
+    environment:
+      <<: [*timezone-env, *user-permissions]
+    ports:
+      - 4533:4533
+    # environment:
+    #   # Optional: put your config options customization here. Examples:
+    #   # ND_LOGLEVEL: debug
+    volumes:
+      - ${BASE}/navidrome/data:/data
+      - ${BASE}/navidrome/music:/music:ro
+    <<: [*local-dns, *restart]
   
   # # https://docs.n8n.io/hosting/installation/docker/
   # n8n:
@@ -345,6 +360,20 @@ services:
       - 6881:6881
       - 6881:6881/udp
     stop_grace_period: "10s" #optional
+    <<: [*local-dns, *restart]
+  
+  slskd:
+    image: slskd/slskd:0.26.0@sha256:ecd4026d4f8fb504e2cc55323efa2c1f5b56d20d3686b018249cc36b48ea17a6
+    container_name: slskd
+    environment:
+      SLSKD_REMOTE_CONFIGURATION: true
+      <<: [*timezone-env, *user-permissions]
+    ports:
+      - 5030:5030
+      - 5031:5031
+      - 50300:50300
+    volumes:
+      - ${BASE}/slskd/data:/app
     <<: [*local-dns, *restart]
   
   speedtest-tracker:
