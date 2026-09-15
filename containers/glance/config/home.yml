@@ -25,6 +25,14 @@
               hide: true
             app-manejo:
               hide: true
+            slskd:
+              name: Soulseek
+              url: http://slskd.local
+              icon: di:slskd
+            navidrome:
+              name: Navidrome
+              url: http://navidrome.local
+              icon: di:navidrome
             calibre-web:
               name: Calibre Web
               url: http://calibre.local
