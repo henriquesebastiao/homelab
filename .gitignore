@@ -9,7 +9,7 @@ containers/uptime-kuma/data/
 containers/jellyfin/
 containers/n8n/
 containers/metube/
-containers/nginx-proxy-manager/
+containers/nginx/
 containers/forgejo/
 containers/freshrss/
 containers/grafana/
@@ -17,6 +17,8 @@ containers/downtify/
 containers/speedtest/
 containers/navidrome/
 containers/slskd/
+secrets/
+letsencrypt/
 
 # Permitido
 

@@ -117,10 +117,8 @@ services:
     <<: [*cloudflare-dns, *restart]
   
   downtify:
-    image: ghcr.io/henriquesebastiao/downtify:3.0.0@sha256:cf92b1e0b21e64a533414749010af0fe603d52a1113549691c4155e192b4f14a
+    image: ghcr.io/henriquesebastiao/downtify:3.1.0@sha256:fa1ec39be35b8de29c9ca257631710beaec0cd51908b39ec2bb49b998e3d6a08
     container_name: downtify
-    ports:
-      - 8020:8000
     volumes:
       - ${BASE}/jellyfin/media/downtify:/downloads
       - ${BASE}/downtify/data:/data
@@ -181,8 +179,6 @@ services:
   freshrss:
     image: freshrss/freshrss:1.29.1@sha256:ab6b363102ccdbc39f6a62db926f567c61a5289bf25ba460f1c34423d8cc1a4d
     container_name: freshrss
-    ports:
-      - 8036:80
     volumes:
       - ${BASE}/freshrss/data:/var/www/FreshRSS/data
       - ${BASE}/freshrss/extensions:/var/www/FreshRSS/extensions
@@ -200,8 +196,6 @@ services:
       - /etc/localtime:/etc/localtime:ro
       # Optionally, also mount docker socket if you want to use the docker containers widget
       - /var/run/docker.sock:/var/run/docker.sock:ro
-    ports:
-      - 8007:8080
     environment:
       <<: *user-permissions
     <<: [*cloudflare-dns, *restart]
@@ -292,22 +286,19 @@ services:
   
   # https://nginxproxymanager.com/setup/
 
-  nginx-proxy-manager:
-    image: jc21/nginx-proxy-manager:2.15.1@sha256:52b2c59994f3d36acfcf70a1626f29734df0ed8c71bacc0269f78b6f939858bb
-    container_name: nginx-proxy-manager
+  nginx:
+    image: nginx:1.30.5-alpine@sha256:bf3201ab56f23e5954646379c775d511fc466e9f11376d9725361064ad07ed35
+    container_name: nginx
     ports:
-      - '80:80' # Public HTTP Port
-      - '443:443' # Public HTTPS Port
-      - '8081:81' # Admin Web Port
+      - '8007:8007' # Glance
+      - '8020:8020' # Downtify
+      - '8036:8036' # FreshRSS
     volumes:
-      - ${BASE}/nginx-proxy-manager/data:/data
-      - ${BASE}/nginx-proxy-manager/letsencrypt:/etc/letsencrypt
+      - ${BASE}/nginx/conf.d:/etc/nginx/conf.d:ro
+      - ${BASE}/nginx/snippets:/etc/nginx/snippets:ro
+      - /home/hick/homelab/letsencrypt:/etc/letsencrypt:ro
     environment:
       <<: [*timezone-env, *user-permissions]
-    healthcheck:
-      test: ["CMD", "/usr/bin/check-health"]
-      interval: 10s
-      timeout: 3s
     <<: [*local-dns, *restart]
   
   # https://docs.pi-hole.net/docker/

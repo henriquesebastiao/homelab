@@ -129,14 +129,13 @@
               icon: sh:metube
             freshrss:
               name: FreshRSS
-              url: http://freshrss.local
+              url: https://server.henriquesebastiao.com:8036
               icon: sh:freshrss
             n8n-postgres-chat-memory:
               hide: true
-            nginx-proxy-manager:
-              name: Nginx Proxy Manager
-              url: http://proxy.local
-              icon: sh:nginx-proxy-manager
+            nginx:
+              name: Nginx
+              icon: di:nginx
             vagas-dev-api:
               id: vagas-dev
               name: Vagas Dev
@@ -149,7 +148,7 @@
               name: Nginx
             downtify:
               name: Downtify
-              url: http://downtify.local
+              url: https://server.henriquesebastiao.com:8020
               icon: sh:downtify
             qbittorrent:
               name: Qbittorrent
