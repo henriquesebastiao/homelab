@@ -81,6 +81,15 @@ x-stirling-pdf-env: &stirling-pdf-env
   LANGS: pt_BR
   DISABLE_ADDITIONAL_FEATURES: 'true'
 
+x-umami-env: &umami-env
+  DATABASE_URL: postgresql://umami:umami@umami-db:5432/umami
+  DATABASE_TYPE: postgresql
+  APP_SECRET: ${UMAMI_SECRET}
+  POSTGRES_DB: umami
+  POSTGRES_USER: umami
+  POSTGRES_PASSWORD: umami
+  HOSTNAME: 0.0.0.0
+
 x-vaultwarden-env: &vaultwarden-env
   DOMAIN: "https://server.henriquesebastiao.com:8019"
 
@@ -292,6 +301,7 @@ services:
     image: nginx:1.30.5-alpine@sha256:bf3201ab56f23e5954646379c775d511fc466e9f11376d9725361064ad07ed35
     container_name: nginx
     ports:
+      - '8006:8006' # Umami
       - '8001:8001' # Pi-hole
       - '8007:8007' # Glance
       - '8019:8019' # Vaultwarden
@@ -398,6 +408,34 @@ services:
       - 8011:8080
     environment:
       <<: [*stirling-pdf-env, *user-permissions]
+    <<: [*local-dns, *restart]
+
+  # https://docs.umami.is/docs/install
+  umami:
+    image: ghcr.io/umami-software/umami:postgresql-latest@sha256:85909afc45bdcda1917394594a087421fdbb05610fded0fa9f6fb861abb2f367
+    container_name: umami
+    environment:
+      <<: [*umami-env, *user-permissions]
+    env_file:
+      - .env
+    depends_on:
+      umami-db:
+        condition: service_healthy
+    init: true
+    <<: [*local-dns, *restart]
+  
+  umami-db:
+    image: postgres:15-alpine@sha256:f7d23353e1b15400d22ebe31189f4d314b87a4c129cc400c8c2d8d4ca127bf81
+    container_name: umami-db
+    environment:
+      <<: [*umami-env, *user-permissions]
+    volumes:
+      - umami-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U umami -d umami"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
     <<: [*local-dns, *restart]
   
   # https://github.com/louislam/uptime-kuma/wiki
@@ -519,3 +557,4 @@ volumes:
   pihole_data:
   pgdata-vagas-dev:
   qbittorrent-config:
+  umami-db-data:
