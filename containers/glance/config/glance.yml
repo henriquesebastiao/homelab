@@ -2,6 +2,7 @@
 
 server:
   assets-path: /app/assets
+  proxied: true
 
 theme:
   # Note: assets are cached by the browser, changes to the CSS file
@@ -43,3 +44,9 @@ pages:
   # put its contents here, though multiple pages are easier to manage when separated
   - $include: home.yml
   - $include: projects.yml
+
+auth:
+  secret-key: eNLtjX+gbwElttIur1jsTavy1Y+0T637ITJrRM5UKZhta9jfuF5Cftpliq8HRr0WOHlZUTWOIks8+cVzLuxChQ==
+  users:
+    hick:
+      password-hash: $2a$10$70J2OgrTM7QgGmGqA..hg.PeD8rkAjmTFj1ub.gQR0jS5WM/NZXf2

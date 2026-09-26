@@ -83,7 +83,7 @@
               icon: di:filebrowser
             pihole:
               name: Pi-hole
-              url: http://pihole.local/admin/
+              url: http://server.henriquesebastiao.com:8001/admin/
               icon: di:pi-hole
             uptime-kuma:
               name: Uptime Kuma
@@ -109,11 +109,11 @@
               icon: di:dozzle
             jellyfin:
               name: Jellyfin
-              url: http://jellyfin.local/web/#/home.html
+              url: http://200.80.118.164:8096/web/#/home.html
               icon: di:jellyfin
             vaultwarden:
               name: Vaultwarden
-              url: https://vault.henriquesebastiao.com
+              url: https://server.henriquesebastiao.com:8019
               icon: auto-invert di:vaultwarden
             librespeed:
               name: LibreSpeed
@@ -292,7 +292,7 @@
                   hide: false
         - type: dns-stats
           service: pihole-v6
-          url: http://172.16.0.2:8001
-          password: 35218785
+          url: https://server.henriquesebastiao.com:8001
+          password: ${PIHOLE_PASSWORD}
           allow-insecure: true
           hour-format: 24h
