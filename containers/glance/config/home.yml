@@ -37,7 +37,7 @@
               id: umami
               name: Umami
               url: https://server.henriquesebastiao.com:8006
-              icon: di:umami
+              icon: auto-invert di:umami
             umami-db:
               parent: umami
               name: Umami DB
