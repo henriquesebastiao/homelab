@@ -4,7 +4,7 @@ updates:
     directory: "/"
     schedule:
       interval: "cron"
-      cronjob: "0 0 1 * *" # Às 0h do dia 1 de cada mês
+      cronjob: "0 0 * * *" # Às 0h todos os dias
       timezone: "America/Cuiaba"
     assignees:
       - "henriquesebastiao"
