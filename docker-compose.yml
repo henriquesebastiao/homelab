@@ -120,7 +120,7 @@ services:
 
   # https://hub.docker.com/r/cloudflare/cloudflared
   cloudflared:
-    image: cloudflare/cloudflared:latest
+    image: cloudflare/cloudflared:2026.9.3@sha256:072c067d25ccbe61d46e18f0d0723255f2bb5304f7317caa95b27031520ff92c
     container_name: cloudflared
     command: tunnel --no-autoupdate run --token ${CLOUDFLARED_TOKEN}
     <<: [*cloudflare-dns, *restart]
