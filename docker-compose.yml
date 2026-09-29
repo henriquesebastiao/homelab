@@ -530,7 +530,7 @@ services:
     <<: [*local-dns, *restart]
 
   zabbix-agent:
-    image: zabbix/zabbix-agent2:7.4.11-alpine@sha256:e81391e2788408167b445e98806362a7a201f344d685f4d1203ea4eef65d0104
+    image: zabbix/zabbix-agent2:7.4.15-alpine@sha256:a4641f733827aa13af61bf3ccd3b11f61129b2635726b38ad231ac3c42229a0e
     container_name: zabbix-agent
     hostname: zabbix-agent
     restart: unless-stopped
