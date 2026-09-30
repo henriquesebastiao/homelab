@@ -382,7 +382,7 @@ services:
     <<: [*local-dns, *restart]
   
   speedtest-tracker:
-    image: linuxserver/speedtest-tracker:1.15.0@sha256:1193562c4ab4fe29cffd5e6ad4c042a2ed02e218999bedc7c801c96e032d9f9b
+    image: linuxserver/speedtest-tracker:1.15.0@sha256:dc439a8bbadd3d0d4a4af4ee64bf30a6db9ced425c00ac12ea2ff04e15669ed1
     container_name: speedtest-tracker
     ports:
         - 8021:80
