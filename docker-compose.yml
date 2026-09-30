@@ -252,7 +252,7 @@ services:
   # https://github.com/alexta69/metube
   metube:
     container_name: metube
-    image: ghcr.io/alexta69/metube:2026.07.27@sha256:b6e945b63df6357bc16c7bfcb1b4479856b2087f6d8a5e59f0d3f4996a707e12
+    image: ghcr.io/alexta69/metube:2026.09.29@sha256:8e2fe9beeefc55a02f6e1d04cad0fc3c22e8f067d309188f016551dc99ec27b3
     ports:
       - 8009:8081
     volumes:
