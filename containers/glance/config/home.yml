@@ -144,16 +144,6 @@
             nginx:
               name: Nginx
               icon: di:nginx
-            vagas-dev-api:
-              id: vagas-dev
-              name: Vagas Dev
-              icon: si:fastapi
-            vagas-dev-db:
-              parent: vagas-dev
-              name: Database
-            vagas-dev-web:
-              parent: vagas-dev
-              name: Nginx
             downtify:
               name: Downtify
               url: https://server.henriquesebastiao.com:8020
