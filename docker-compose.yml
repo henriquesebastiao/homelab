@@ -304,8 +304,6 @@ services:
     image: ghcr.io/librespeed/speedtest:latest
     environment:
       <<: [*librespeed-env, *user-permissions]
-    ports:
-      - 8030:8080 # webport mapping (host:container)
     <<: [*local-dns, *restart]
   
   # https://github.com/alexta69/metube
@@ -369,6 +367,7 @@ services:
       - '8007:8007' # Glance
       - '8008:8008' # Calibre Web
       - '8010:8010' # File Browser
+      - '8012:8012' # Libre Speed
       - '8019:8019' # Vaultwarden
       - '8020:8020' # Downtify
       - '8036:8036' # FreshRSS

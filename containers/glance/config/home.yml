@@ -91,7 +91,7 @@
               icon: auto-invert di:vaultwarden
             librespeed:
               name: LibreSpeed
-              url: http://librespeed.local
+              url: https://server.henriquesebastiao.com:8012
               icon: di:librespeed
             speedtest-tracker:
               name: Speedtest Tracker
