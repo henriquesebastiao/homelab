@@ -43,7 +43,7 @@
               name: Umami DB
             calibre-web:
               name: Calibre Web
-              url: http://calibre.local
+              url: https://server.henriquesebastiao.com:8008
               icon: di:calibre-web
             zabbix-agent:
               parent: zabbix

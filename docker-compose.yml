@@ -114,8 +114,6 @@ services:
     volumes:
       - ${BASE}/calibre-web/config:/config
       - ${BASE}/calibre-web/books:/books
-    ports:
-      - 8024:8083
     <<: [*local-dns, *restart]
 
   # https://hub.docker.com/r/cloudflare/cloudflared
@@ -367,6 +365,7 @@ services:
     ports:
       - '8001:8001' # Pi-hole
       - '8002:8002' # Immich
+      - '8008:8008' # Calibre Web
       - '8006:8006' # Umami
       - '8007:8007' # Glance
       - '8019:8019' # Vaultwarden
