@@ -144,6 +144,20 @@
             nginx:
               name: Nginx
               icon: di:nginx
+            immich-server:
+              name: Immich
+              icon: di:immich
+              id: immich
+              url: https://server.henriquesebastiao.com:8002
+            immich-machine-learning:
+              parent: immich
+              name: Machine Learning
+            immich-redis:
+              parent: immich
+              name: Redis
+            immich-database:
+              parent: immich
+              name: Database
             downtify:
               name: Downtify
               url: https://server.henriquesebastiao.com:8020

@@ -7,6 +7,7 @@
 6881/tcp -> qbittorrent
 6881/udp -> qbittorrent
 8001 -> pihole
+8002 -> immich
 8003 -> zabbix
 8004 -> grafana
 8005 -> dozzle

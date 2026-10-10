@@ -12,6 +12,7 @@ containers/metube/
 containers/forgejo/
 containers/freshrss/
 containers/grafana/
+containers/immich/
 containers/downtify/
 containers/speedtest/
 containers/navidrome/
