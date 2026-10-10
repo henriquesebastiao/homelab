@@ -91,7 +91,7 @@
               icon: di:filebrowser
             pihole:
               name: Pi-hole
-              url: http://server.henriquesebastiao.com:8001/admin/
+              url: https://server.henriquesebastiao.com:8001/admin/
               icon: di:pi-hole
             uptime-kuma:
               name: Uptime Kuma
