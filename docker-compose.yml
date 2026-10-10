@@ -213,8 +213,6 @@ services:
   grafana:
     image: grafana/grafana:13.2.3@sha256:b28bae15e219c998fb0e0424ed724930cc61b1f61fb404d47c862f9a23f9e572
     container_name: grafana
-    ports:
-      - 8004:3000
     user: '0'
     volumes:
       - ${BASE}/grafana:/var/lib/grafana
@@ -365,6 +363,7 @@ services:
       - '8001:8001' # Pi-hole
       - '8002:8002' # Immich
       - '8003:8003' # Zabbix
+      - '8004:8004' # Grafana
       - '8005:8005' # Dozzle
       - '8006:8006' # Umami
       - '8007:8007' # Glance

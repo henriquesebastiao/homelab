@@ -72,7 +72,7 @@
               icon: di:n8n
             grafana:
               name: Grafana
-              url: http://grafana.local
+              url: https://server.henriquesebastiao.com:8004
               icon: di:grafana
             cloudflared:
               name: Cloudflared
