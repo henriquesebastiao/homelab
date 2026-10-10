@@ -53,7 +53,7 @@
               icon: di:stirling-pdf
             filebrowser:
               name: File Browser
-              url: http://filebrowser.local
+              url: https://server.henriquesebastiao.com:8010
               icon: di:filebrowser
             pihole:
               name: Pi-hole
