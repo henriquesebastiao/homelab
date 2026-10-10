@@ -79,7 +79,7 @@
               icon: di:cloudflare
             dozzle:
               name: Dozzle
-              url: http://dozzle.local
+              url: https://server.henriquesebastiao.com:8005
               icon: di:dozzle
             jellyfin:
               name: Jellyfin

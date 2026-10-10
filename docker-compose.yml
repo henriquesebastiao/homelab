@@ -138,9 +138,10 @@ services:
     image: amir20/dozzle:v11.3.0@sha256:a7d69d20891d3dcc82636e24afa4c1c162b41d0673ef798b14f09e6b69accc5a
     environment:
       <<: *user-permissions
-    ports:
-      - 8005:8080
-    <<: [*docker-socket, *local-dns, *restart]
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+    - dozzle_data:/data
+    <<: [*local-dns, *restart]
   
   # https://github.com/linuxserver/docker-duplicati
   # https://docs.duplicati.com/
@@ -366,6 +367,7 @@ services:
       - '8001:8001' # Pi-hole
       - '8002:8002' # Immich
       - '8003:8003' # Zabbix
+      - '8005:8005' # Dozzle
       - '8008:8008' # Calibre Web
       - '8006:8006' # Umami
       - '8007:8007' # Glance
@@ -572,6 +574,7 @@ services:
     <<: [*local-dns, *restart]
 
 volumes:
+  dozzle_data:
   filebrowser_data:
   filebrowser_database:
   filebrowser_config:
