@@ -53,7 +53,7 @@
             zabbix-server:
               id: zabbix
               name: Zabbix
-              url: http://zabbix.local
+              url: https://server.henriquesebastiao.com:8003
               icon: di:zabbix
             db-poupy:
               hide: true

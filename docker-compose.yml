@@ -365,6 +365,7 @@ services:
     ports:
       - '8001:8001' # Pi-hole
       - '8002:8002' # Immich
+      - '8003:8003' # Zabbix
       - '8008:8008' # Calibre Web
       - '8006:8006' # Umami
       - '8007:8007' # Glance
@@ -532,8 +533,6 @@ services:
     container_name: zabbix-frontend
     environment:
       <<: [*zabbix-env, *user-permissions]
-    ports:
-      - 8003:8080
     depends_on:
       - zabbix-server
       - zabbix-database
