@@ -10,21 +10,9 @@
       widgets:       
         - type: docker-containers
           containers:
-            adminer-manejo:
-              hide: true
-            client-dotum:
-              hide: true
             zabbix-database:
               parent: zabbix
               name: Database
-            confy-redis:
-              hide: true
-            db-manejo:
-              hide: true
-            app-dotum:
-              hide: true
-            app-manejo:
-              hide: true
             slskd:
               name: Soulseek
               url: http://slskd.local
@@ -48,38 +36,16 @@
             zabbix-agent:
               parent: zabbix
               name: Agent
-            app-poupy:
-              hide: true
             zabbix-server:
               id: zabbix
               name: Zabbix
               url: https://server.henriquesebastiao.com:8003
               icon: di:zabbix
-            db-poupy:
-              hide: true
-            db-dotum:
-              hide: true
             duplicati:
               name: Duplicati
               url: http://172.16.0.2:8018
               icon: di:duplicati
-            prometheus-manejo:
-              hide: true
-            web-manejo:
-              hide: true
             glance:
-              hide: true
-            glance-mila:
-              hide: true
-            postgres-projects:
-              hide: true
-            confy-server:
-              hide: true
-            grafana-manejo:
-              hide: true
-            tempo-manejo:
-              hide: true
-            web-confy-server:
               hide: true
             stirling-pdf:
               name: Stirling PDF
