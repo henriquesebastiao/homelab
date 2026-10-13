@@ -52,9 +52,6 @@ x-freshrss-env: &freshrss-env
     --password ${FRESHRSS_PASSWORD}
     --user ${FRESHRSS_USER}
 
-x-jellyfin-env: &jellyfin-env
-  JELLYFIN_PublishedServerUrl: http://server.henriquesebastiao.com:8096
-
 x-librespeed-env: &librespeed-env
   MODE: standalone
   # TITLE: "Teste de Velocidade"
@@ -127,7 +124,7 @@ services:
     image: ghcr.io/henriquesebastiao/downtify:3.4.0@sha256:6cd5efad47b86b77b5c4eb8930d183ac8d960dd3b0fd31275bbf93256eb78254
     container_name: downtify
     volumes:
-      - ${BASE}/jellyfin/media/downtify:/downloads
+      - ${BASE}/downtify/downloads:/downloads
       - ${BASE}/downtify/data:/data
     <<: [*cloudflare-dns, *restart]
 
@@ -281,22 +278,6 @@ services:
     restart: always
     healthcheck:
       disable: false
-  
-  # https://jellyfin.org/docs/general/installation/container/
-  jellyfin:
-    image: jellyfin/jellyfin:12.2.20261005-225228@sha256:357724bf0ae27a672c7cbaa899db2d9abeb13dbd8657ccce750258a4c059d037
-    container_name: jellyfin
-    network_mode: 'host'
-    volumes:
-      - ${BASE}/jellyfin/config:/config
-      - ${BASE}/jellyfin/cache:/cache
-      - type: bind
-        source: ${BASE}/jellyfin/media
-        target: /media
-    # Optional - alternative address used for autodiscovery
-    environment:
-      <<: [*jellyfin-env, *user-permissions]
-    <<: [*cloudflare-dns, *restart]
 
   # https://github.com/librespeed/speedtest-go
   librespeed:

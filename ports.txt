@@ -27,6 +27,5 @@
 8027 -> n8n
 8030 -> librespeed
 8080 -> vscode server
-8096 -> jellyfin
 10050 -> zabbix server
 50300 -> slskd

@@ -81,10 +81,6 @@
               name: Dozzle
               url: https://server.henriquesebastiao.com:8005
               icon: di:dozzle
-            jellyfin:
-              name: Jellyfin
-              url: http://200.80.118.164:8096/web/#/home.html
-              icon: di:jellyfin
             vaultwarden:
               name: Vaultwarden
               url: https://server.henriquesebastiao.com:8019
