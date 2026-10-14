@@ -149,7 +149,7 @@ services:
   # --------------------------------------------
   # Backups/duplicati/calibre/      -> $HOME/homelab/containers/calibre-web/
   duplicati:
-    image: linuxserver/duplicati:2.4.0@sha256:78883c4ea7a33fd360c8cefe684609deed4ca12cf000ae7612f2f89bbfcb7369
+    image: linuxserver/duplicati:2.4.0@sha256:48897c65f01c7cb34a90d6aa722fd5674f3d5b9f3d82fa2f279141836826c1e3
     container_name: duplicati
     privileged: true
     ports:
