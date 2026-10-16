@@ -19,6 +19,8 @@ containers/slskd/
 secrets/
 letsencrypt/
 
+commit-message.md
+
 # Permitido
 
 !dotfiles/homelab/.env
