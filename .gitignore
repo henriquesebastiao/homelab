@@ -16,6 +16,7 @@ containers/downtify/
 containers/speedtest/
 containers/navidrome/
 containers/slskd/
+containers/nextcloud/
 secrets/
 letsencrypt/
 
