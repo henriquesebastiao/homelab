@@ -128,6 +128,38 @@
               name: Qbittorrent
               url: http://qbittorrent.local
               icon: di:qbittorrent
+            nextcloud-aio-mastercontainer:
+              name: Nextcloud
+              url: https://server.henriquesebastiao.com
+              icon: di:nextcloud
+              id: nextcloud
+            nextcloud-aio-apache:
+              parent: nextcloud
+              name: Apache
+            nextcloud-aio-imaginary:
+              parent: nextcloud
+              name: Imaginary
+            nextcloud-aio-notify-push:
+              parent: nextcloud
+              name: Notify Push
+            nextcloud-aio-whiteboard:
+              parent: nextcloud
+              name: Whiteboard
+            nextcloud-aio-database:
+              parent: nextcloud
+              name: Database
+            nextcloud-aio-redis:
+              parent: nextcloud
+              name: Redis
+            nextcloud-aio-eurooffice:
+              parent: nextcloud
+              name: Euro Office
+            nextcloud-aio-nextcloud:
+              parent: nextcloud
+              name: Nextcloud
+            nextcloud-aio-talk:
+              parent: nextcloud
+              name: Talk
         - type: bookmarks
           groups:
             - title:
