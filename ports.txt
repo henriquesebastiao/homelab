@@ -1,11 +1,7 @@
 21 -> ftp
 22 -> ssh
 53 -> pihole
-4533 -> navidrome
-5030 -> slskd
-5031 -> slskd
-6881/tcp -> qbittorrent
-6881/udp -> qbittorrent
+1984 -> go2rtc
 8001 -> pihole
 8002 -> immich
 8003 -> zabbix
@@ -22,11 +18,10 @@
 8019 -> vaultwarden
 8020 -> downtify
 8021 -> speedtest-tracker
-8022 -> qbittorrent
 8024 -> calibre-web
 8026 -> uptime-kuma
 8027 -> n8n
 8030 -> librespeed
 8080 -> vscode server
+8554 -> go2rtc
 10050 -> zabbix server
-50300 -> slskd

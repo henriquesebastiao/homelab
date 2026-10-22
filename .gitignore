@@ -14,9 +14,8 @@ containers/grafana/
 containers/immich/
 containers/downtify/
 containers/speedtest/
-containers/navidrome/
-containers/slskd/
 containers/nextcloud/
+containers/go2rtc/
 secrets/
 letsencrypt/
 

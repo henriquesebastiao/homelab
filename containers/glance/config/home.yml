@@ -2,164 +2,313 @@
   # Optionally, if you only have a single page you can hide the desktop navigation for a cleaner look
   # hide-desktop-navigation: true
   columns:
-    # - size: small
-    #   widgets:
-
+    - size: small
+      widgets:
+        - type: calendar
+          first-day-of-week: sunday
+        - type: custom-api
+          title: Sunrise & Sunset
+          cache: 10m              # curto para a posição do sol e a contagem regressiva andarem
+          options:
+            location: Aripuana, Brazil   # nome da cidade (geocodificação do Open-Meteo)
+            # latitude: -10.17           # opcional: com latitude e longitude a busca por nome é pulada
+            # longitude: -59.46
+            # country-code: BR           # opcional: limita a busca por nome a um país (ISO 3166-1)
+            time-format: 24h             # 24h ou 12h
+          template: |
+            <style>
+              .sun-widget { max-width: 34rem; margin-inline: auto; }
+              .sun-arc { display: block; width: 100%; height: auto; overflow: visible; }
+              .sun-horizon { stroke: var(--color-separator); stroke-width: 1.5; }
+              .sun-path-rest { fill: none; stroke: var(--color-text-subdue); stroke-width: 1.5; stroke-dasharray: 1 5; stroke-linecap: round; }
+              .sun-path-done { fill: none; stroke: var(--color-primary); stroke-width: 2.5; stroke-linecap: round; }
+              .sun-end { fill: var(--color-text-subdue); }
+              .sun-glow { fill: var(--color-primary); opacity: 0.2; }
+              .sun-disc { fill: var(--color-primary); }
+              .sun-times { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; margin-top: 0.6rem; }
+              .sun-time { white-space: nowrap; }
+              .sun-time:nth-child(2) { text-align: center; }
+              .sun-time:last-child { text-align: right; }
+              .sun-value { display: flex; align-items: center; gap: 0.4rem; }
+              .sun-time:nth-child(2) .sun-value { justify-content: center; }
+              .sun-time:last-child .sun-value { justify-content: flex-end; }
+              .sun-icon { width: 1.8rem; height: 1.8rem; flex-shrink: 0; color: var(--color-text-subdue); }
+              .sun-caption { display: none; margin-top: 0.2rem; }
+              @container widget (min-width: 420px) { .sun-caption { display: block; } }
+              .sun-footer { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0.6rem 1rem; margin-top: 1.2rem; padding-top: 1rem; border-top: 1px solid var(--color-separator); }
+              .sun-footer > * { white-space: nowrap; }
+              .sun-moon-row { display: flex; align-items: center; gap: 0.6rem; }
+              .sun-moon { width: 2rem; height: 2rem; flex-shrink: 0; }
+              .sun-moon-dark { fill: var(--color-text-base); opacity: 0.15; }
+              .sun-moon-lit { fill: var(--color-text-highlight); }
+            </style>
+        
+            {{- define "sun-hm" -}}
+              {{- $h := toInt (div . 3600.0) -}}
+              {{- $m := toInt (div (sub . (mul (toFloat $h) 3600.0)) 60.0) -}}
+              {{- if gt $h 0 }}{{ $h }}h {{ printf "%02d" $m }}m{{ else }}{{ $m }}m{{ end -}}
+            {{- end -}}
+        
+            {{- $layout := "15:04" }}
+            {{- if eq (.Options.StringOr "time-format" "24h") "12h" }}{{ $layout = "3:04 PM" }}{{ end }}
+            {{- /* latitude/longitude aceitam número ou texto no YAML (StringOr só lê texto, FloatOr/IntOr só números) */ -}}
+            {{- $lat := .Options.StringOr "latitude" "" | trimSpace }}
+            {{- if not $lat }}{{ $n := .Options.FloatOr "latitude" 1000.0 }}{{ if ne $n 1000.0 }}{{ $lat = printf "%g" $n }}{{ else }}{{ $i := .Options.IntOr "latitude" 1000 }}{{ if ne $i 1000 }}{{ $lat = printf "%d" $i }}{{ end }}{{ end }}{{ end }}
+            {{- $lon := .Options.StringOr "longitude" "" | trimSpace }}
+            {{- if not $lon }}{{ $n := .Options.FloatOr "longitude" 1000.0 }}{{ if ne $n 1000.0 }}{{ $lon = printf "%g" $n }}{{ else }}{{ $i := .Options.IntOr "longitude" 1000 }}{{ if ne $i 1000 }}{{ $lon = printf "%d" $i }}{{ end }}{{ end }}{{ end }}
+            {{- $place := .Options.StringOr "location" "" | trimSpace }}
+            {{- $cc := .Options.StringOr "country-code" "" | trimSpace }}
+            {{- $error := "" }}
+        
+            {{- /* 1. Coordenadas: das opções, ou geocodificando o nome (se "Cidade, País" não achar nada, tenta só "Cidade") */ -}}
+            {{- if not (and $lat $lon) }}
+              {{- $req := newRequest "https://geocoding-api.open-meteo.com/v1/search" | withParameter "name" $place | withParameter "count" "1" | withParameter "language" "pt" | withParameter "format" "json" }}
+              {{- if $cc }}{{ $req = withParameter "countryCode" $cc $req }}{{ end }}
+              {{- $geo := getResponse $req }}
+              {{- if and (eq (len ($geo.JSON.Array "results")) 0) (findMatch "," $place) }}
+                {{- $req = newRequest "https://geocoding-api.open-meteo.com/v1/search" | withParameter "name" (findMatch "^[^,]+" $place | trimSpace) | withParameter "count" "1" | withParameter "language" "pt" | withParameter "format" "json" }}
+                {{- if $cc }}{{ $req = withParameter "countryCode" $cc $req }}{{ end }}
+                {{- $geo = getResponse $req }}
+              {{- end }}
+              {{- if eq (len ($geo.JSON.Array "results")) 0 }}
+                {{- $error = printf "Local \"%s\" não encontrado. Confira o nome ou use latitude/longitude." $place }}
+              {{- else }}
+                {{- $lat = $geo.JSON.String "results.0.latitude" }}
+                {{- $lon = $geo.JSON.String "results.0.longitude" }}
+              {{- end }}
+            {{- end }}
+        
+            {{- if $error }}
+            <p class="color-negative">{{ $error }}</p>
+            {{- else }}
+              {{- /* 2. Ontem, hoje e amanhã (índices 0, 1, 2) no fuso do local */ -}}
+              {{- $fc := newRequest (printf "https://api.open-meteo.com/v1/forecast?latitude=%s&longitude=%s&daily=sunrise,sunset,daylight_duration&timezone=auto&past_days=1&forecast_days=2" $lat $lon) | getResponse }}
+              {{- $sunriseRaw := $fc.JSON.String "daily.sunrise.1" }}
+              {{- $sunsetRaw := $fc.JSON.String "daily.sunset.1" }}
+        
+              {{- if ne $fc.Response.StatusCode 200 }}
+            <p class="color-negative">Open-Meteo indisponível: {{ $fc.Response.Status }}</p>
+              {{- else if or (eq $sunriseRaw "") (eq $sunsetRaw "") }}
+            <p class="color-paragraph">Sem nascer ou pôr do sol hoje (região polar).</p>
+              {{- else }}
+                {{- $sunrise := parseTime "2006-01-02T15:04" $sunriseRaw }}
+                {{- $sunset := parseTime "2006-01-02T15:04" $sunsetRaw }}
+                {{- $nextSunrise := parseTime "2006-01-02T15:04" ($fc.JSON.String "daily.sunrise.2") }}
+                {{- $daylight := $fc.JSON.Float "daily.daylight_duration.1" }}
+                {{- $delta := sub $daylight ($fc.JSON.Float "daily.daylight_duration.0") }}
+        
+                {{- /* "agora" no relógio do local, comparável aos horários do Open-Meteo */ -}}
+                {{- $nowLocal := (now).UTC.Add (duration (printf "%ds" ($fc.JSON.Int "utc_offset_seconds"))) }}
+                {{- $elapsed := ($nowLocal.Sub $sunrise).Seconds }}
+                {{- $toSunset := ($sunset.Sub $nowLocal).Seconds }}
+                {{- $isDay := and (ge $elapsed 0.0) (gt $toSunset 0.0) }}
+                {{- $countdown := $toSunset }}
+                {{- if lt $elapsed 0.0 }}{{ $countdown = mul $elapsed -1.0 }}
+                {{- else if not $isDay }}{{ $countdown = ($nextSunrise.Sub $nowLocal).Seconds }}{{ end }}
+        
+                {{- /* posição do sol no arco: Bézier quadrática (20,70) (120,-40) (220,70), x linear no tempo */ -}}
+                {{- $p := div $elapsed ($sunset.Sub $sunrise).Seconds }}
+                {{- $sunX := add 20.0 (mul 200.0 $p) }}
+                {{- $sunY := sub 70.0 (mul 220.0 (mul $p (sub 1.0 $p))) }}
+                {{- $ctrlX := add 20.0 (mul 100.0 $p) }}
+                {{- $ctrlY := sub 70.0 (mul 110.0 $p) }}
+        
+                {{- /* fase da lua: lunação média de 29,53 dias a partir da lua nova de 06/01/2000 18:14 UTC */ -}}
+                {{- $cycles := div (div ((now).Sub (parseTime "2006-01-02T15:04" "2000-01-06T18:14")).Hours 24.0) 29.530588853 }}
+                {{- $phase := sub $cycles (toFloat (toInt $cycles)) }}
+                {{- $half := mul $phase 2.0 }}
+                {{- $g := mul (sub $half (toFloat (toInt $half))) 0.5 }}
+                {{- if gt $g 0.25 }}{{ $g = sub 0.5 $g }}{{ end }}
+                {{- $x := mul $g 6.283185307 }}
+                {{- $x2 := mul $x $x }}
+                {{- $cos := add (sub 1.0 (div $x2 2.0)) (div (mul $x2 $x2) 24.0) }}
+                {{- if lt $cos 0.0 }}{{ $cos = 0.0 }}{{ end }}
+                {{- $crescent := or (lt $phase 0.25) (gt $phase 0.75) }}
+                {{- $lit := div (add 1.0 $cos) 2.0 }}
+                {{- if $crescent }}{{ $lit = div (sub 1.0 $cos) 2.0 }}{{ end }}
+                {{- $rx := printf "%.2f" (mul 10.0 $cos) }}
+                {{- $moonPath := "" }}
+                {{- if lt $phase 0.5 }}
+                  {{- $moonPath = concat "M12 2A10 10 0 0 1 12 22A" $rx " 10 0 0 " (or (and $crescent "0") "1") " 12 2Z" }}
+                {{- else }}
+                  {{- $moonPath = concat "M12 2A10 10 0 0 0 12 22A" $rx " 10 0 0 " (or (and $crescent "1") "0") " 12 2Z" }}
+                {{- end }}
+                {{- $phaseIdx := mod (toInt (add (mul $phase 8.0) 0.5)) 8 }}
+        
+            <div class="sun-widget">
+              <svg class="sun-arc" viewBox="0 0 240 78" aria-hidden="true">
+                <line class="sun-horizon" x1="4" y1="70" x2="236" y2="70"/>
+                <path class="sun-path-rest" d="M20 70Q120 -40 220 70"/>
+                {{- if $isDay }}
+                <path class="sun-path-done" d="M20 70Q{{ printf "%.1f" $ctrlX }} {{ printf "%.1f" $ctrlY }} {{ printf "%.1f" $sunX }} {{ printf "%.1f" $sunY }}"/>
+                {{- end }}
+                <circle class="sun-end" cx="20" cy="70" r="2.5"/>
+                <circle class="sun-end" cx="220" cy="70" r="2.5"/>
+                {{- if not $isDay }}
+                <g transform="translate(106 22) scale(1.15)">
+                  <circle class="sun-moon-dark" cx="12" cy="12" r="10"/>
+                  <path class="sun-moon-lit" d="{{ $moonPath }}"{{ if findMatch "^-" $lat }} transform="matrix(-1 0 0 1 24 0)"{{ end }}/>
+                </g>
+                {{- end }}
+                {{- if $isDay }}
+                <circle class="sun-glow" cx="{{ printf "%.1f" $sunX }}" cy="{{ printf "%.1f" $sunY }}" r="11"/>
+                <circle class="sun-disc" cx="{{ printf "%.1f" $sunX }}" cy="{{ printf "%.1f" $sunY }}" r="6"/>
+                {{- end }}
+              </svg>
+        
+              <div class="sun-times">
+                <div class="sun-time" data-popover-type="text" data-popover-text="Nascer do sol">
+                  <div class="sun-value">
+                    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v8"/><path d="m4.93 10.93 1.41 1.41"/><path d="M2 18h2"/><path d="M20 18h2"/><path d="m19.07 10.93-1.41 1.41"/><path d="M22 22H2"/><path d="m8 6 4-4 4 4"/><path d="M16 18a4 4 0 0 0-8 0"/></svg>
+                    <span class="size-h3 color-highlight">{{ $sunrise.Format $layout }}</span>
+                  </div>
+                  <div class="sun-caption size-h6">Nascer</div>
+                </div>
+                <div class="sun-time" data-popover-type="text" data-popover-text="Luz do dia: {{ if ge $delta 0.0 }}{{ printf "%.0f" $delta }}s a mais{{ else }}{{ printf "%.0f" (mul $delta -1.0) }}s a menos{{ end }} que ontem">
+                  <div class="sun-value">
+                    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 22h14"/><path d="M5 2h14"/><path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22"/><path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2"/></svg>
+                    <span class="size-h3 color-highlight">{{ template "sun-hm" $daylight }}</span>
+                  </div>
+                  <div class="sun-caption size-h6">Luz do dia</div>
+                </div>
+                <div class="sun-time" data-popover-type="text" data-popover-text="Pôr do sol">
+                  <div class="sun-value">
+                    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 10V2"/><path d="m4.93 10.93 1.41 1.41"/><path d="M2 18h2"/><path d="M20 18h2"/><path d="m19.07 10.93-1.41 1.41"/><path d="M22 22H2"/><path d="m16 6-4 4-4-4"/><path d="M16 18a4 4 0 0 0-8 0"/></svg>
+                    <span class="size-h3 color-highlight">{{ $sunset.Format $layout }}</span>
+                  </div>
+                  <div class="sun-caption size-h6">Pôr do sol</div>
+                </div>
+              </div>
+        
+              <div class="sun-footer">
+                <div class="size-h5">
+                  {{- if $isDay }}Pôr do sol em{{ else }}Nascer do sol em{{ end }} <span class="color-highlight">{{ template "sun-hm" $countdown }}</span>
+                </div>
+                <div class="sun-moon-row size-h5" data-popover-type="text" data-popover-text="Cerca de {{ printf "%.0f" (mul $lit 100.0) }}% iluminada">
+                  <svg class="sun-moon" viewBox="0 0 24 24" aria-hidden="true">
+                    <circle class="sun-moon-dark" cx="12" cy="12" r="10"/>
+                    <path class="sun-moon-lit" d="{{ $moonPath }}"{{ if findMatch "^-" $lat }} transform="matrix(-1 0 0 1 24 0)"{{ end }}/>
+                  </svg>
+                  <span>
+                    {{- if eq $phaseIdx 0 }}Lua nova
+                    {{- else if eq $phaseIdx 1 }}Lua crescente
+                    {{- else if eq $phaseIdx 2 }}Quarto crescente
+                    {{- else if eq $phaseIdx 3 }}Gibosa crescente
+                    {{- else if eq $phaseIdx 4 }}Lua cheia
+                    {{- else if eq $phaseIdx 5 }}Gibosa minguante
+                    {{- else if eq $phaseIdx 6 }}Quarto minguante
+                    {{- else }}Lua minguante{{ end -}}
+                  </span>
+                </div>
+              </div>
+            </div>
+              {{- end }}
+            {{- end }}
+        - type: custom-api
+          title: Duolingo
+          cache: 1h
+          url: https://www.duolingo.com/2023-05-23/users/${DUO_USER_ID}?fields=id,name,username,learningLanguage,creationDate,totalXp,gemsConfig,hasPlus,xpGoal,streak,email,fromLanguage,currentCourseId,lastResurrectionTimestamp,courses
+          headers:
+            Authorization: Bearer ${DUO_JWT_TOKEN}
+          template: |
+            <ul class="list list-gap-14 collapsible-container">
+              <li class="separator margin-top-10 margin-bottom-10"></li>
+              
+              <li class="flex items-center gap-12">
+                <div class="flex items-center justify-center shrink-0" style="width: 24px; height: 24px;">
+                  <svg width="20" height="20" viewBox="0 0 16 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6.77271 0.532617C7.336 -0.177539 8.414 -0.177539 8.97729 0.532616L14.0623 6.94342C15.1193 8.23421 15.75 9.86374 15.75 11.6351C15.75 15.8233 12.2242 19.2185 7.875 19.2185C3.52576 19.2185 0 15.8233 0 11.6351C0 11.3414 0.0173457 11.0515 0.0511046 10.7664L0.0333507 4.37841C0.0307386 3.43858 0.542464 2.74527 1.41725 2.89269C1.59157 2.92207 1.9601 3.0331 2.12522 3.12149L3.94611 4.09617L6.77271 0.532617Z" fill="#FF9600"/>
+                    <path d="M8.40677 8.24144C8.1299 7.86443 7.5667 7.86443 7.28982 8.24144L5.30202 10.9482C5.28343 10.9735 5.2689 11 5.25814 11.027C4.7842 11.5866 4.5 12.3011 4.5 13.0796C4.5 14.8745 6.01104 16.3296 7.875 16.3296C9.73896 16.3296 11.25 14.8745 11.25 13.0796C11.25 12.2008 10.8878 11.4035 10.2993 10.8185L8.40677 8.24144Z" fill="#FFC800"/>
+                  </svg>
+                </div>
+                <span class="color-highlight text-truncate block grow font-medium" style="line-height: 24px;">Streak</span>
+                <span class="font-bold text-large color-warning" style="line-height: 24px;">{{ .JSON.Int "streak" }} days</span>
+              </li>
+              
+              <li class="flex items-center gap-12">
+                <div class="flex items-center justify-center shrink-0" style="width: 24px; height: 24px;">
+                  <svg width="20" height="20" viewBox="0 0 22 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M14.0367 2.67272C13.8379 0.718003 11.3282 0.0455378 10.1787 1.63898L0.717665 14.7538C-0.157342 15.9667 0.452676 17.6801 1.89732 18.0672L7.2794 19.5093L8.07445 27.3273C8.27323 29.282 10.7829 29.9545 11.9324 28.361L21.3935 15.2462C22.2685 14.0333 21.6585 12.3199 20.2138 11.9328L14.8317 10.4907L14.0367 2.67272Z" fill="#FFD900"/>
+                    <path d="M2.574 16.4882C2.08457 16.3561 2.03731 15.6803 2.50359 15.4813L6.24415 13.8853C6.58188 13.7412 6.96093 13.973 6.98654 14.3393L7.17226 16.9952C7.19787 17.3615 6.85477 17.6438 6.50027 17.5481L2.574 16.4882Z" fill="#F7C100"/>
+                    <path d="M19.717 13.2505C20.2064 13.3826 20.2537 14.0584 19.7874 14.2573L16.0469 15.8533C15.7091 15.9974 15.3301 15.7656 15.3045 15.3993L15.1188 12.7435C15.0931 12.3772 15.4362 12.0949 15.7907 12.1906L19.717 13.2505Z" fill="#FFEF8F"/>
+                  </svg>
+                </div>
+                <span class="color-highlight text-truncate block grow font-medium" style="line-height: 24px;">Total XP</span>
+                <span class="font-bold text-large" style="line-height: 24px;">{{ .JSON.Int "totalXp" }} XP</span>
+              </li>
+              
+              <li class="flex items-center gap-12">
+                <div class="flex items-center justify-center shrink-0" style="width: 24px; height: 24px;">
+                  <svg width="20" height="20" viewBox="0 0 24 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3.12035 6.45972C1.80438 7.25391 1 8.67887 1 10.2159V19.8822C1 21.4192 1.80438 22.8442 3.12035 23.6384L9.59501 27.5458C10.9891 28.3872 12.7345 28.3872 14.1287 27.5459L20.6037 23.6384C21.9197 22.8442 22.7241 21.4192 22.7241 19.8821V10.216C22.7241 8.67889 21.9197 7.2539 20.6037 6.45972L14.1287 2.55221C12.7345 1.71089 10.9891 1.71091 9.59501 2.55226L3.12035 6.45972Z" fill="#1CB0F6" stroke="white" stroke-width="2"/>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M10.2449 5.45314C10.9645 5.01112 11.8902 5.52889 11.8902 6.37339V9.53852C11.8902 9.91649 11.6926 10.267 11.3692 10.4626L8.42194 12.2455C8.05585 12.4669 7.59354 12.4514 7.24315 12.2058L4.85711 10.5338C4.22068 10.0878 4.24944 9.13584 4.91163 8.7291L10.2449 5.45314Z" fill="#DDF4FF"/>
+                  </svg>
+                </div>
+                <span class="color-highlight text-truncate block grow font-medium" style="line-height: 24px;">Gems</span>
+                <span class="font-bold color-info" style="line-height: 24px;">{{ .JSON.Int "gemsConfig.gems" }} Gems</span>
+              </li>
+              
+              <li class="separator margin-top-10 margin-bottom-10"></li>
+              
+              <li class="collapsible-item">
+                <details>
+                  <summary class="flex items-center gap-12 cursor-pointer">
+                    <span class="color-highlight text-truncate block grow font-medium">My Courses</span>
+                    <span class="text-muted">{{ .JSON.Array "courses" | len }} courses</span>
+                  </summary>
+                  <ul class="list list-gap-10 margin-top-14">
+                    {{ range .JSON.Array "courses" }}
+                      <li class="flex items-center gap-12 padding-left-24">
+                        <span class="text-truncate block grow">
+                          <span class="font-medium">
+                            {{ if .String "title" }}
+                              {{ .String "title" }}
+                            {{ else }}
+                              {{ if eq (.String "subject") "math" }}
+                                Mathematics
+                              {{ else if eq (.String "subject") "music" }}
+                                Music Theory
+                              {{ else if eq (.String "subject") "chess" }}
+                                Chess
+                              {{ else }}
+                                {{ .String "subject" }}
+                              {{ end }}
+                            {{ end }}
+                          </span>
+                          <span class="text-muted text-small block">{{ .String "topic" }}</span>
+                        </span>
+                        <span class="text-right">
+                          <span class="font-bold">{{ .Int "xp" }}</span>
+                          <span class="text-muted text-small block">XP</span>
+                        </span>
+                      </li>
+                    {{ end }}
+                  </ul>
+                </details>
+              </li>
+            </ul>
 
     - size: full
-      widgets:       
-        - type: docker-containers
-          containers:
-            zabbix-database:
-              parent: zabbix
-              name: Database
-            slskd:
-              name: Soulseek
-              url: http://slskd.local
-              icon: di:slskd
-            navidrome:
-              name: Navidrome
-              url: http://navidrome.local
-              icon: di:navidrome
-            umami:
-              id: umami
-              name: Umami
-              url: https://server.henriquesebastiao.com:8006
-              icon: auto-invert di:umami
-            umami-db:
-              parent: umami
-              name: Umami DB
-            calibre-web:
-              name: Calibre Web
-              url: https://server.henriquesebastiao.com:8008
-              icon: di:calibre-web
-            zabbix-agent:
-              parent: zabbix
-              name: Agent
-            zabbix-server:
-              id: zabbix
-              name: Zabbix
-              url: https://server.henriquesebastiao.com:8003
-              icon: di:zabbix
-            duplicati:
-              name: Duplicati
-              url: http://172.16.0.2:8018
-              icon: di:duplicati
-            glance:
-              hide: true
-            stirling-pdf:
-              name: Stirling PDF
-              url: http://stirling.local/?lang=pt_BR
-              icon: di:stirling-pdf
-            filebrowser:
-              name: File Browser
-              url: https://server.henriquesebastiao.com:8010
-              icon: di:filebrowser
-            pihole:
-              name: Pi-hole
-              url: https://server.henriquesebastiao.com:8001/admin/
-              icon: di:pi-hole
-            uptime-kuma:
-              name: Uptime Kuma
-              url: http://uptime.local/dashboard
-              icon: di:uptime-kuma
-            zabbix-frontend:
-              parent: zabbix
-              name: Front End
-            n8n:
-              name: n8n
-              url: https://n8n.local
-              icon: di:n8n
-            grafana:
-              name: Grafana
-              url: https://server.henriquesebastiao.com:8004
-              icon: di:grafana
-            cloudflared:
-              name: Cloudflared
-              icon: di:cloudflare
-            dozzle:
-              name: Dozzle
-              url: https://server.henriquesebastiao.com:8005
-              icon: di:dozzle
-            vaultwarden:
-              name: Vaultwarden
-              url: https://server.henriquesebastiao.com:8019
-              icon: auto-invert di:vaultwarden
-            librespeed:
-              name: LibreSpeed
-              url: https://server.henriquesebastiao.com:8012
-              icon: di:librespeed
-            speedtest-tracker:
-              name: Speedtest Tracker
-              url: http://speedtest.local
-              icon: sh:speedtest-tracker
-            metube:
-              name: MeTube
-              url: http://metube.local
-              icon: sh:metube
-            freshrss:
-              name: FreshRSS
-              url: https://server.henriquesebastiao.com:8036
-              icon: sh:freshrss
-            n8n-postgres-chat-memory:
-              hide: true
-            nginx:
-              name: Nginx
-              icon: di:nginx
-            immich-server:
-              name: Immich
-              icon: di:immich
-              id: immich
-              url: https://server.henriquesebastiao.com:8002
-            immich-machine-learning:
-              parent: immich
-              name: Machine Learning
-            immich-redis:
-              parent: immich
-              name: Redis
-            immich-database:
-              parent: immich
-              name: Database
-            downtify:
-              name: Downtify
-              url: https://server.henriquesebastiao.com:8020
-              icon: sh:downtify
-            qbittorrent:
-              name: Qbittorrent
-              url: http://qbittorrent.local
-              icon: di:qbittorrent
-            nextcloud-aio-mastercontainer:
-              name: Nextcloud
-              url: https://server.henriquesebastiao.com
-              icon: di:nextcloud
-              id: nextcloud
-            nextcloud-aio-apache:
-              parent: nextcloud
-              name: Apache
-            nextcloud-aio-imaginary:
-              parent: nextcloud
-              name: Imaginary
-            nextcloud-aio-notify-push:
-              parent: nextcloud
-              name: Notify Push
-            nextcloud-aio-whiteboard:
-              parent: nextcloud
-              name: Whiteboard
-            nextcloud-aio-database:
-              parent: nextcloud
-              name: Database
-            nextcloud-aio-redis:
-              parent: nextcloud
-              name: Redis
-            nextcloud-aio-eurooffice:
-              parent: nextcloud
-              name: Euro Office
-            nextcloud-aio-nextcloud:
-              parent: nextcloud
-              name: Nextcloud
-            nextcloud-aio-talk:
-              parent: nextcloud
-              name: Talk
+      widgets:
+        - type: group
+          widgets:
+            - type: hacker-news
+            - type: lobsters
+        - type: videos
+          channels:
+            - UCSTlOTcyUmzvhQi6F8lFi5w # Atila Lamarino
+            - UCS0N5baNlQWJCUrhCEo8WlA # Ben Eater
+            - UCcGk83PAQ5aGR7IVlD_cBaw # Brincando com Ideias
+            - UCQQNn842GN-Jh4GaK0WcGuA # Daniel Romero
+            - UCP7WmQ_U4GB3K51Od9QvM0w # David Bombal
+            - UC8EGrwe_DXSzrCQclf_pv9g # debxp
+            - UCEf5U1dB5a2e2S-XUlnhxSA # Diolinux
+            - UCAaKeg-BocRqphErdtIUFFw # Live de Python
+            - UCcw2dzrBBmt4HriBCg_iLng # Julio Lobo
+            - UCR9sFzaG9Ia_kXJhfxtFMBA # melodysheep
+            - UC7Xog4-zhRQKbahvs27I7Ow # Pinho
+            - UClz3DneoYlccluy4hBlx86Q # Slackjeff
+            - UClQfWNWk9UsUj317ce5FtXg # Sobrevivencialismo
         - type: bookmarks
           groups:
             - title:
@@ -285,20 +434,13 @@
                   url: https://meubc.bcb.gov.br/meubc/
 
     - size: small
-      widgets:        
-        - type: server-stats
-          servers:
-            - type: local
-              name: Servidor
-              hide-mountpoints-by-default: true
-              hide-swap: true
-              mountpoints:
-                "/":
-                  name: Root
-                  hide: false
-        - type: dns-stats
-          service: pihole-v6
-          url: https://server.henriquesebastiao.com:8001
-          password: ${PIHOLE_PASSWORD}
-          allow-insecure: true
+      widgets:
+        - type: weather
+          units: metric
           hour-format: 24h
+          location: Aripuanã, Brazil
+        - type: repository
+          repository: henriquesebastiao/downtify
+          pull-requests-limit: 5
+          issues-limit: 3
+        

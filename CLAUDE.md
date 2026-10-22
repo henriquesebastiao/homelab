@@ -90,11 +90,8 @@ Adicione um bloco `server { listen <porta> ssl; ... }` em `containers/nginx/conf
 | Vaultwarden | 8019 | Gerenciador de senhas (Bitwarden) |
 | Downtify | 8020 | Downloader de músicas (Spotify) |
 | Speedtest Tracker | 8021 | Histórico de velocidade de internet |
-| qBittorrent | 8022 | Cliente BitTorrent |
 | Uptime Kuma | 8026 | Monitoramento de uptime |
 | FreshRSS | 8036 | Leitor de RSS |
-| Navidrome | 4533 | Servidor de música |
-| slskd | 5030/5031 | Cliente Soulseek |
 
 ## Makefile
 

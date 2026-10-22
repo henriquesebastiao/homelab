@@ -152,8 +152,6 @@ services:
     image: linuxserver/duplicati:2.4.0@sha256:48897c65f01c7cb34a90d6aa722fd5674f3d5b9f3d82fa2f279141836826c1e3
     container_name: duplicati
     privileged: true
-    ports:
-      - 8018:8200
     volumes:
       - ${BASE}/duplicati/config:/config
       - /home/hick/backups:/backups
@@ -291,27 +289,10 @@ services:
   metube:
     container_name: metube
     image: ghcr.io/alexta69/metube:2026.10.19@sha256:67393366fb5a38ebd559596c6efe76833dbb647dd737ec1f55333d4da38d9a56
-    ports:
-      - 8009:8081
     volumes:
       - ${BASE}/metube/downloads:/downloads
     environment:
       <<: [*metube-env, *user-permissions]
-    <<: [*local-dns, *restart]
-
-  navidrome:
-    image: deluan/navidrome:0.64.2@sha256:38dc2727bfcfd5ede290f8ada114fc90368146f265ae4701ddddbcbe2a44ee52
-    container_name: navidrome
-    environment:
-      <<: [*timezone-env, *user-permissions]
-    ports:
-      - 4533:4533
-    # environment:
-    #   # Optional: put your config options customization here. Examples:
-    #   # ND_LOGLEVEL: debug
-    volumes:
-      - ${BASE}/navidrome/data:/data
-      - ${BASE}/navidrome/music:/music:ro
     <<: [*local-dns, *restart]
   
   # # https://docs.n8n.io/hosting/installation/docker/
@@ -376,11 +357,15 @@ services:
       - '8006:8006' # Umami
       - '8007:8007' # Glance
       - '8008:8008' # Calibre Web
+      - '8009:8009' # Metube
       - '8010:8010' # File Browser
+      - '8011:8011' # Stirling PDF
       - '8012:8012' # Libre Speed
       - '8013:8013' # Nextcloud
+      - '8018:8018' # Duplicati
       - '8019:8019' # Vaultwarden
       - '8020:8020' # Downtify
+      - '8021:8021' # Speedtest Tracker
       - '8036:8036' # FreshRSS
     volumes:
       - ${BASE}/nginx/conf.d:/etc/nginx/conf.d:ro
@@ -424,43 +409,9 @@ services:
       - SYS_NICE
     <<: [*cloudflare-dns, *restart]
   
-  # https://github.com/linuxserver/docker-qbittorrent
-  qbittorrent:
-    image: lscr.io/linuxserver/qbittorrent:5.2.4@sha256:1ea873647c43d566f251a7122aee330b184509c57ee3257ed19f62dac0f8f24b
-    container_name: qbittorrent
-    environment:
-      <<: [*timezone-env, *user-permissions]
-      WEBUI_PORT: 8022
-      TORRENTING_PORT: 6881
-    volumes:
-      - qbittorrent-config:/config
-      - ${BASE}/qbittorrent/downloads:/downloads #optional
-    ports:
-      - 8022:8022
-      - 6881:6881
-      - 6881:6881/udp
-    stop_grace_period: "10s" #optional
-    <<: [*local-dns, *restart]
-  
-  slskd:
-    image: slskd/slskd:0.26.0@sha256:ecd4026d4f8fb504e2cc55323efa2c1f5b56d20d3686b018249cc36b48ea17a6
-    container_name: slskd
-    environment:
-      SLSKD_REMOTE_CONFIGURATION: true
-      <<: [*timezone-env, *user-permissions]
-    ports:
-      - 5030:5030
-      - 5031:5031
-      - 50300:50300
-    volumes:
-      - ${BASE}/slskd/data:/app
-    <<: [*local-dns, *restart]
-  
   speedtest-tracker:
     image: linuxserver/speedtest-tracker:1.15.0@sha256:1eeed2307699c083407bd4c1eb86f14d5179f9e1cd960f57d4cbab6f1f8b8a42
     container_name: speedtest-tracker
-    ports:
-        - 8021:80
     environment:
       DB_CONNECTION: sqlite
       APP_KEY: base64:7MVqhKqatr4m9fsyoYm/WUSE88mWb9qMSA6i+Aa6qpY=
@@ -479,8 +430,6 @@ services:
   stirling-pdf:
     image: stirlingtools/stirling-pdf:1.6.0@sha256:1f73a8f898fe269cbbccea3be577064dd87fc4334de349fcc5b1afa1bcebf240
     container_name: stirling-pdf
-    ports:
-      - 8011:8080
     environment:
       <<: [*stirling-pdf-env, *user-permissions]
     <<: [*local-dns, *restart]
@@ -591,5 +540,4 @@ volumes:
   nextcloud_aio_mastercontainer:
     name: nextcloud_aio_mastercontainer
   pihole_data:
-  qbittorrent-config:
   umami-db-data:
