@@ -443,4 +443,56 @@
           repository: henriquesebastiao/downtify
           pull-requests-limit: 5
           issues-limit: 3
+        - type: custom-api
+          title: Feed RSS
+          title-url: ${FRESHRSS_URL}
+          cache: 5m
+          url: ${FRESHRSS_URL}/api/greader.php/reader/api/0/unread-count?output=json
+          headers:
+            Authorization: GoogleLogin auth=${FRESHRSS_API_TOKEN}
+          options:
+            item-count: 5
+          template: |
+            {{ $unread := 0 }}
+            {{ range .JSON.Array "unreadcounts" }}
+              {{ if eq (.String "id") "user/-/state/com.google/reading-list" }}{{ $unread = .Int "count" }}{{ end }}
+            {{ end }}
+
+            <div class="flex justify-between items-center margin-bottom-15">
+              <span class="color-subdue">Unread articles</span>
+              <span class="color-highlight size-h3">{{ $unread | formatNumber }}</span>
+            </div>
+
+            {{ $stream := newRequest (printf "%s/api/greader.php/reader/api/0/stream/contents/user/-/state/com.google/reading-list?output=json&xt=user/-/state/com.google/read&n=%d" "${FRESHRSS_URL}" (.Options.IntOr "item-count" 5))
+                | withHeader "Authorization" "GoogleLogin auth=${FRESHRSS_API_TOKEN}"
+                | getResponse }}
+
+            {{ if ne $stream.Response.StatusCode 200 }}
+              <p class="color-negative">Could not load the articles: {{ $stream.Response.Status }}</p>
+            {{ else }}
+              {{ $items := $stream.JSON.Array "items" }}
+              {{ if eq (len $items) 0 }}
+                <p class="color-positive">All caught up</p>
+              {{ else }}
+                <ul class="list list-gap-10">
+                  {{ range $items }}
+                    {{/* FreshRSS sends "&" as the full-width "＆" for compatibility with older clients */}}
+                    {{ $title := .String "title" | replaceAll "＆" "&" }}
+                    {{ $href := "" }}
+                    {{ range .Array "alternate" }}{{ $href = .String "href" }}{{ end }}
+                    <li>
+                      {{ if $href }}
+                        <a class="size-h5 color-primary-if-not-visited text-truncate-2-lines" href="{{ $href }}" target="_blank" rel="noreferrer">{{ $title }}</a>
+                      {{ else }}
+                        <span class="size-h5 text-truncate-2-lines">{{ $title }}</span>
+                      {{ end }}
+                      <ul class="list-horizontal-text color-subdue size-h6">
+                        <li>{{ .String "origin.title" | replaceAll "＆" "&" }}</li>
+                        <li {{ .String "published" | parseRelativeTime "unix" }}></li>
+                      </ul>
+                    </li>
+                  {{ end }}
+                </ul>
+              {{ end }}
+            {{ end }}
         
