@@ -287,6 +287,232 @@
                 </details>
               </li>
             </ul>
+        - type: custom-api
+          title: Usina Sítio
+          cache: 10m                 # o iSolarCloud atualiza a cada ~5 min; não reduza muito (há limite de logins)
+          options:
+            gateway: https://gateway.isolarcloud.com.hk   # Internacional (Brasil). Europa: https://gateway.isolarcloud.eu
+            appkey: "${SUNGROW_APPKEY}"
+            secret-key: "${SUNGROW_SECRET_KEY}"           # enviada no header x-access-key
+            username: "${SUNGROW_USERNAME}"
+            password: "${SUNGROW_PASSWORD}"
+            # plant-id: 1234567     # opcional: só esta usina (ps_id); sem isso mostra todas da conta
+            history-days: 7          # barras de geração diária; 0 desliga (economiza 2 chamadas por usina)
+          template: |
+            <style>
+              .solar-plant + .solar-plant { margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--color-separator); }
+              .solar-head { display: flex; align-items: center; gap: 1rem; }
+              .solar-icon { width: 2.4rem; height: 2.4rem; flex-shrink: 0; color: var(--color-primary); }
+              .solar-dot { width: 0.8rem; height: 0.8rem; border-radius: 50%; flex-shrink: 0; background: var(--color-positive); }
+              .solar-dot.is-warn { background: var(--color-primary); }
+              .solar-dot.is-bad { background: var(--color-negative); }
+              .solar-now { display: flex; align-items: baseline; gap: 0.5rem; margin-top: 1.2rem; }
+              .solar-now-value { font-size: 3.2rem; line-height: 1; color: var(--color-text-highlight); font-variant-numeric: tabular-nums; }
+              .solar-cap { margin-top: 0.8rem; }
+              .solar-cap .progress-bar { margin-top: 0.4rem; }
+              .solar-stats { display: flex; flex-wrap: wrap; gap: 1rem 2rem; margin-top: 1.4rem; }
+              .solar-stats > div { min-width: 0; }
+              .solar-bars { display: flex; align-items: flex-end; gap: 0.4rem; height: 7rem; margin-top: 1.6rem; }
+              .solar-bar { flex: 1; min-width: 0; height: 100%; display: flex; flex-direction: column; align-items: center; gap: 0.4rem; }
+              .solar-bar-track { flex: 1; width: 100%; display: flex; align-items: flex-end; justify-content: center; }
+              .solar-bar-fill { width: 100%; max-width: 2.6rem; min-height: 2px; border-radius: 0.3rem 0.3rem 0.1rem 0.1rem; background: var(--color-text-subdue); opacity: 0.55; }
+              .solar-bar.is-today .solar-bar-fill { background: var(--color-primary); opacity: 1; }
+              .solar-bar:hover .solar-bar-fill { opacity: 1; }
+              .solar-bar-label { font-size: var(--font-size-h6); color: var(--color-text-subdue); white-space: nowrap; }
+              .solar-bar.is-today .solar-bar-label { color: var(--color-text-highlight); }
+              .solar-foot { display: flex; justify-content: space-between; gap: 1rem; margin-top: 0.8rem; white-space: nowrap; }
+            </style>
+
+            {{- define "solar-num" -}}
+              {{- if or (ge . 100.0) (eq . 0.0) }}{{ printf "%.0f" . }}{{ else if ge . 10.0 }}{{ printf "%.1f" . | replaceAll "." "," }}{{ else }}{{ printf "%.2f" . | replaceAll "." "," }}{{ end -}}
+            {{- end -}}
+
+            {{- $gw := .Options.StringOr "gateway" "https://gateway.isolarcloud.com.hk" | trimSuffix "/" }}
+            {{- $secret := .Options.StringOr "secret-key" "" }}
+            {{- $appkey := .Options.JSON "appkey" }}
+            {{- $days := .Options.IntOr "history-days" 7 }}
+            {{- $only := .Options.StringOr "plant-id" "" }}
+            {{- if not $only }}{{ $n := .Options.IntOr "plant-id" 0 }}{{ if $n }}{{ $only = printf "%d" $n }}{{ end }}{{ end }}
+            {{- $names := .JSON.Get `!{"wd":["dom","seg","ter","qua","qui","sex","sáb"],"mon":["","jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"]}` }}
+
+            {{- /* 1. login de usuário (API v1): devolve um token válido por 24 h */ -}}
+            {{- $login := newRequest (concat $gw "/openapi/login")
+                | withHeader "Content-Type" "application/json;charset=UTF-8"
+                | withHeader "x-access-key" $secret
+                | withHeader "sys_code" "901"
+                | withStringBody (concat `{"appkey":` $appkey `,"user_account":` (.Options.JSON "username") `,"user_password":` (.Options.JSON "password") `,"lang":"_pt_BR"}`)
+                | getResponse }}
+            {{- $code := $login.JSON.String "result_code" }}
+            {{- $token := $login.JSON.String "result_data.token" }}
+
+            {{- if or (ne $code "1") (not $token) }}
+            <p class="color-negative">iSolarCloud: {{ or ($login.JSON.String "result_data.msg") ($login.JSON.String "result_msg") $login.Response.Status }}{{ if and $code (ne $code "1") }} ({{ $code }}){{ end }}</p>
+            <p class="size-h6 margin-top-5">
+              {{- if eq $code "E00000" }}Appkey inválida: o app no portal de desenvolvedor ainda pode estar em análise, ou a chave leva alguns minutos para valer depois de aprovada.
+              {{- else if or (eq $code "E912") (eq $code "E914") (eq $code "E911") }}Confira a Secret Key (vai no header x-access-key) e se ela é do mesmo app da appkey.
+              {{- else if eq $code "E916" }}Logins demais em pouco tempo. Aumente o cache do widget e aguarde alguns minutos.
+              {{- else if or (eq $code "E998") (eq $code "E999") (eq $code "E901") }}Limite de chamadas da API atingido. Aumente o cache do widget.
+              {{- else if eq $code "1" }}Confira usuário e senha da conta iSolarCloud e o servidor (gateway) da conta.
+              {{- else }}Confira o gateway (servidor da sua conta), a appkey e a Secret Key.{{ end -}}
+            </p>
+            {{- else }}
+              {{- $base := concat `{"appkey":` $appkey `,"token":"` $token `","lang":"_pt_BR"` }}
+
+              {{- /* 2. usinas da conta, já com potência atual e energia do dia/total */ -}}
+              {{- $list := newRequest (concat $gw "/openapi/getPowerStationList")
+                  | withHeader "Content-Type" "application/json;charset=UTF-8"
+                  | withHeader "x-access-key" $secret
+                  | withHeader "sys_code" "901"
+                  | withStringBody (concat $base `,"curPage":1,"size":50}`)
+                  | getResponse }}
+
+              {{- if ne ($list.JSON.String "result_code") "1" }}
+            <p class="color-negative">Falha ao listar usinas: {{ or ($list.JSON.String "result_msg") $list.Response.Status }}</p>
+              {{- else if eq (len ($list.JSON.Array "result_data.pageList")) 0 }}
+            <p class="color-subdue">Nenhuma usina nesta conta. Compartilhe a usina com ela no app iSolarCloud.</p>
+              {{- end }}
+
+              {{- range $list.JSON.Array "result_data.pageList" }}
+                {{- if or (not $only) (eq (.String "ps_id") $only) }}
+                  {{- $psId := (.Get "ps_id").Raw }}
+
+                  {{- /* potência atual vs. potência instalada, normalizando W/kW/MW */ -}}
+                  {{- $pw := .Float "curr_power.value" }}
+                  {{- $pwUnit := .String "curr_power.unit" }}
+                  {{- $pwW := $pw }}{{ if findMatch "^k" $pwUnit }}{{ $pwW = mul $pw 1000.0 }}{{ else if findMatch "^M" $pwUnit }}{{ $pwW = mul $pw 1000000.0 }}{{ end }}
+                  {{- $cap := .Float "total_capcity.value" }}
+                  {{- $capUnit := .String "total_capcity.unit" }}
+                  {{- $capW := $cap }}{{ if findMatch "^k" $capUnit }}{{ $capW = mul $cap 1000.0 }}{{ else if findMatch "^M" $capUnit }}{{ $capW = mul $cap 1000000.0 }}{{ end }}
+                  {{- $pct := 0 }}{{ if gt $capW 0.0 }}{{ $pct = toInt (div (mul $pwW 100.0) $capW) }}{{ end }}
+                  {{- if gt $pct 100 }}{{ $pct = 100 }}{{ end }}
+
+                  {{- $today := .Float "today_energy.value" }}
+                  {{- $todayUnit := .String "today_energy.unit" }}
+                  {{- $todayWh := $today }}{{ if findMatch "^k" $todayUnit }}{{ $todayWh = mul $today 1000.0 }}{{ else if findMatch "^M" $todayUnit }}{{ $todayWh = mul $today 1000000.0 }}{{ end }}
+
+                  {{- $online := or (eq (.String "ps_status") "1") (eq (.String "online_status") "1") }}
+                  {{- $fault := .String "ps_fault_status" }}
+
+            <div class="solar-plant">
+              <div class="solar-head">
+                <svg class="solar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+                <div class="grow min-width-0">
+                  <div class="size-h3 color-highlight text-truncate">{{ .String "ps_name" }}</div>
+                  {{- with .String "ps_location" }}
+                  <div class="size-h6 text-truncate">{{ . }}</div>
+                  {{- end }}
+                </div>
+                <span class="solar-dot{{ if not $online }} is-bad{{ else if eq $fault "1" }} is-bad{{ else if eq $fault "2" }} is-warn{{ end }}" data-popover-type="text"
+                  data-popover-text="{{ if not $online }}Offline{{ else if eq $fault "1" }}Online, com falha{{ else if eq $fault "2" }}Online, com alarme{{ else }}Online{{ end }}{{ with .String "update_time" }} (atualizado {{ . }}){{ end }}"></span>
+              </div>
+
+              <div class="solar-now">
+                <span class="solar-now-value">{{ template "solar-num" $pw }}</span>
+                <span class="size-h4">{{ or $pwUnit "W" }}</span>
+                <span class="size-h6 color-subdue">agora</span>
+              </div>
+              {{- if gt $capW 0.0 }}
+              <div class="solar-cap">
+                <div class="flex justify-between size-h6">
+                  <span>{{ $pct }}% da potência instalada</span>
+                  <span>{{ template "solar-num" $cap }} {{ $capUnit }}</span>
+                </div>
+                <div class="progress-bar"><div class="progress-value" style="--percent: {{ $pct }}"></div></div>
+              </div>
+              {{- end }}
+
+              <div class="solar-stats">
+                <div>
+                  <div class="size-h6">Hoje</div>
+                  <div class="size-h3 color-highlight">{{ template "solar-num" $today }} <span class="size-h6 color-base">{{ $todayUnit }}</span></div>
+                </div>
+                {{- if .Exists "total_energy.value" }}
+                <div>
+                  <div class="size-h6">Total</div>
+                  <div class="size-h3 color-highlight">{{ template "solar-num" (.Float "total_energy.value") }} <span class="size-h6 color-base">{{ .String "total_energy.unit" }}</span></div>
+                </div>
+                {{- end }}
+                {{- if gt (.Float "today_income.value") 0.0 }}
+                <div>
+                  <div class="size-h6">Economia hoje</div>
+                  <div class="size-h3 color-highlight"><span class="size-h6 color-base">{{ .String "today_income.unit" }}</span> {{ printf "%.2f" (.Float "today_income.value") | replaceAll "." "," }}</div>
+                </div>
+                {{- end }}
+              </div>
+
+                  {{- /* 3. histórico diário: soma o rendimento diário de todos os inversores da usina */ -}}
+                  {{- if gt $days 0 }}
+                    {{- $devs := newRequest (concat $gw "/openapi/getDeviceList")
+                        | withHeader "Content-Type" "application/json;charset=UTF-8"
+                        | withHeader "x-access-key" $secret
+                        | withHeader "sys_code" "901"
+                        | withStringBody (concat $base `,"ps_id":` $psId `,"curPage":1,"size":100}`)
+                        | getResponse }}
+                    {{- /* inversor comum (tipo 1): ponto p1 "Yield Today"; híbrido/armazenamento (tipo 14): p13112 "Daily PV Yield" */ -}}
+                    {{- $keys := "" }}{{ $pointOf := "" }}
+                    {{- range $devs.JSON.Array "result_data.pageList" }}
+                      {{- $t := .String "device_type" }}
+                      {{- if or (eq $t "1") (eq $t "14") }}
+                        {{- $keys = concat $keys "," (.Get "ps_key").Raw }}
+                        {{- $pointOf = concat $pointOf `,"` (.String "ps_key") `":"` (or (and (eq $t "14") "p13112") "p1") `"` }}
+                      {{- end }}
+                    {{- end }}
+
+                    {{- if $keys }}
+                      {{- $first := (now).AddDate 0 0 (sub 1 $days) | formatTime "20060102" }}
+                      {{- $last := now | formatTime "20060102" }}
+                      {{- $hist := newRequest (concat $gw "/openapi/getDevicePointsDayMonthYearDataList")
+                          | withHeader "Content-Type" "application/json;charset=UTF-8"
+                          | withHeader "x-access-key" $secret
+                          | withHeader "sys_code" "901"
+                          | withStringBody (concat $base `,"ps_key_list":[` (trimPrefix "," $keys) `],"data_point":"p1,p13112","query_type":"1","data_type":"2","start_time":"` $first `","end_time":"` $last `","order":"1"}`)
+                          | getResponse }}
+                      {{- $points := $.JSON.Get (concat "!{" (trimPrefix "," $pointOf) "}") }}
+
+                      {{- if eq ($hist.JSON.String "result_code") "1" }}
+                        {{- $bars := "" }}{{ $max := 0.0 }}{{ $sum := 0.0 }}{{ $count := 0 }}
+                        {{- range $i := $days }}
+                          {{- $day := (now).AddDate 0 0 (sub $i (sub $days 1)) }}
+                          {{- $ymd := $day | formatTime "20060102" }}
+                          {{- $wh := 0.0 }}
+                          {{- if eq $i (sub $days 1) }}
+                            {{- /* hoje: usa o valor ao vivo da lista de usinas */ -}}
+                            {{- $wh = $todayWh }}
+                          {{- else }}
+                            {{- range $key, $point := $points.Value }}
+                              {{- $wh = add $wh ($hist.JSON.Float (concat "result_data." $key "." $point `.#(time_stamp=="` $ymd `").2`)) }}
+                            {{- end }}
+                            {{- $sum = add $sum $wh }}{{ $count = add $count 1 }}
+                          {{- end }}
+                          {{- if gt $wh $max }}{{ $max = $wh }}{{ end }}
+                          {{- $bars = concat $bars `,{"wh":` (printf "%.0f" $wh) `,"wd":` (printf "%d" $day.Weekday) `,"d":` (printf "%d" $day.Day) `,"m":` (printf "%d" $day.Month) `,"today":` (printf "%t" (eq $i (sub $days 1))) `}` }}
+                        {{- end }}
+
+              <div class="solar-bars">
+                        {{- range ($.JSON.Get (concat "![" (trimPrefix "," $bars) "]")).Array "" }}
+                          {{- $h := 0.0 }}{{ if gt $max 0.0 }}{{ $h = div (mul (.Float "wh") 100.0) $max }}{{ end }}
+                <div class="solar-bar{{ if .Bool "today" }} is-today{{ end }}" data-popover-type="text"
+                  data-popover-text="{{ if .Bool "today" }}Hoje até agora{{ else }}{{ $names.String (printf "wd.%d" (.Int "wd")) }}, {{ .Int "d" }} {{ $names.String (printf "mon.%d" (.Int "m")) }}{{ end }}: {{ template "solar-num" (div (.Float "wh") 1000.0) }} kWh">
+                  <div class="solar-bar-track"><div class="solar-bar-fill" style="height: {{ printf "%.1f" $h }}%"></div></div>
+                  <div class="solar-bar-label">{{ if le $days 7 }}{{ $names.String (printf "wd.%d" (.Int "wd")) }}{{ else }}{{ .Int "d" }}{{ end }}</div>
+                </div>
+                        {{- end }}
+              </div>
+              <div class="solar-foot size-h6">
+                <span>últimos {{ $days }} dias</span>
+                {{- if gt $count 0 }}
+                <span data-popover-type="text" data-popover-text="Média dos {{ $count }} dias completos, sem contar hoje">média {{ template "solar-num" (div (div $sum (toFloat $count)) 1000.0) }} kWh/dia</span>
+                {{- end }}
+              </div>
+                      {{- else }}
+              <p class="size-h6 color-negative margin-top-10">Histórico indisponível: {{ or ($hist.JSON.String "result_msg") $hist.Response.Status }}</p>
+                      {{- end }}
+                    {{- end }}
+                  {{- end }}
+            </div>
+                {{- end }}
+              {{- end }}
+            {{- end }}
 
     - size: full
       widgets:
