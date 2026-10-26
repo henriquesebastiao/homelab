@@ -487,7 +487,7 @@ services:
 
   # https://www.zabbix.com/documentation/current/en/manual/installation/containers  
   zabbix-frontend:
-    image: zabbix/zabbix-web-nginx-pgsql:7.4.15-alpine@sha256:8c139abe303577c1dc49983f81d272ec832835c370912a681f2695803f342be0
+    image: zabbix/zabbix-web-nginx-pgsql:7.4.16-alpine@sha256:898f28064ef8fdac969da0088663b27e2a66c28e5f865ebaf642839106e65fde
     hostname: zabbix-frontend
     container_name: zabbix-frontend
     environment:
